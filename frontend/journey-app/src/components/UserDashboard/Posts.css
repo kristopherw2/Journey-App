@@ -1,0 +1,17 @@
+img {
+  width: 75%;
+  height: auto;
+}
+
+#post-container {
+  text-align: center;
+}
+
+.util-btn {
+    width: 40px;
+      height: 40px;
+      border-style: solid;
+      border-color: #FFFFFF;
+      box-shadow: 0 0 8px 3px #B8B8B8;
+      position: absolute;
+}
