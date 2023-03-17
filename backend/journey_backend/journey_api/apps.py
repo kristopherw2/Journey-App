@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class JourneyappApiConfig(AppConfig):
+class JourneyApiConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'journeyapp_api'
+    name = 'journey_api'
