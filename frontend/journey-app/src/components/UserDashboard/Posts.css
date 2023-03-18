@@ -5,8 +5,9 @@ img {
 
 #post-container {
   text-align: center;
-  position: relative
-  
+  position: relative;
+  margin-top: 3.5rem;
+  overflow: auto;
 }
 
 /* #post-container > img {

@@ -7,8 +7,6 @@ function UserDashBoard() {
     <div>
       <Navbar />
       <Posts />
-      <Description />
-      <Comments />
     </div>
   );
 }
