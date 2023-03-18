@@ -1,5 +1,24 @@
 from rest_framework import serializers
-from .models import PostDB
+from .models import PostDB, CommentDB
+
+class CommentSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    comment_text = serializers.CharField(style={'base_template': 'textarea.html'})
+    date_commented = serializers.DateTimeField(read_only=True)
+    # post_id = serializers.PrimaryKeyRelatedField(queryset=PostDB.objects.filter(id=1))
+
+
+    def create(self, instance, validated_data):
+        # instance.post_id = validated_data.get('post_id', instance.post_id)
+        return CommentDB.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.id = validated_data.get('id', instance.id)
+        instance.comment_text = validated_data.get('comment_text', instance.comment_text)
+        instance.date_commented = validated_data.get('date_commented', instance.date_commented)
+        # instance.post_id = validated_data.get('post_id', instance.post_id)
+        instance.save()
+        return instance
 
 
 class JourneySerializer(serializers.Serializer):
@@ -10,6 +29,8 @@ class JourneySerializer(serializers.Serializer):
     latitude = serializers.CharField(max_length=255)
     longitude = serializers.CharField(max_length=255)
     date_posted = serializers.DateTimeField(read_only=True)
+    # comments = CommentSerializer(many=True)
+
 
     def create(self, validated_data):
         return PostDB.objects.create(**validated_data)
@@ -24,3 +45,4 @@ class JourneySerializer(serializers.Serializer):
         instance.date_posted = validated_data.get('date_posted', instance.date_posted)
         instance.save()
         return instance
+
