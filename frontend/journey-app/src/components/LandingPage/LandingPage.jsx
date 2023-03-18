@@ -5,9 +5,9 @@ import "./LandingPage.css";
 function LandingPage() {
   return (
     <div id="landing-container">
-      <button id="signup-btn" type="button">
+      {/* <button id="signup-btn" type="button">
         Sign up
-      </button>
+      </button> */}
       <SignIn />
     </div>
   );

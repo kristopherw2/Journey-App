@@ -1,0 +1,152 @@
+body {
+  margin: 40px;
+}
+
+.sidebar {
+    grid-area: sidebar;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .content {
+    grid-area: content;
+  }
+
+  .header {
+    grid-area: header;
+  }
+
+  .footer {
+    grid-area: footer;
+  }
+
+
+  body {
+    margin: 0;
+  }
+  
+  .wrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
+    grid-template-areas:
+      "header header header"
+      "sidebar content content"
+      "footer footer footer";
+    background-color: #fff;
+    color: #444;
+  }
+button {
+  font-size:12px;
+  padding: 5px 10px;
+}
+#difficulty {
+  font-size: 12px;
+  padding: 5px 10px;
+  width: 100px; /* set width to adjust size */
+}
+#image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+
+.box {
+  background-color: #b9b9b91e;
+  color: #fff;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.file-upload label {
+  display: none;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.file-upload label button {
+  font-size: 10px;
+  padding: 3px 6px; 
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display:none;
+}
+.file-upload input[type="file"] {
+  display: none;
+}
+
+#preview {
+  display: none;
+  margin-top: 10px;
+}
+
+#image:not(:valid) + img {
+  display: none;
+}
+
+#image:not(:valid) + label > span {
+  display: none;
+}
+
+#image:valid + img {
+  display: inline-block;
+}
+
+#image:valid + label > span {
+  display: none;
+}
+
+#difficulty-wrapper {
+  text-align: center;
+}
+
+#difficulty-wrapper label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+#difficulty {
+  font-size: 12px;
+  padding: 5px 10px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.box.header form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.box.header form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.file-upload-container {
+  position: relative;
+}
+
+.file-upload-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.image-preview-container {
+  max-width: 100%;
+  max-height: 200px;
+  overflow: hidden;
+}
