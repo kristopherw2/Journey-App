@@ -5,13 +5,22 @@ img {
 
 #post-container {
   text-align: center;
+  position: relative
+  
 }
 
+/* #post-container > img {
+  display: block;
+} */
+
 .util-btn {
-    width: 40px;
-      height: 40px;
+    width: 20px;
+      height: 20px;
       border-style: solid;
-      border-color: #FFFFFF;
       box-shadow: 0 0 8px 3px #B8B8B8;
-      position: absolute;
+      position: absolute; top: 0; right: 3rem;
+}
+
+#pencil-btn {
+  right: 4.5rem;
 }
