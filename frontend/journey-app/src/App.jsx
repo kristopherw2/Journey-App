@@ -18,6 +18,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route exact path="/signup" element={<SignUpForm />} />
           <Route exact path="/signin" element={<SignInForm />} />
+
           <Route element={<PrivateRoutes />}>
             <Route exact path="/dashboard" element={<UserDashBoard />} />
             <Route exact path="/post" element={<PostInteraction />} />
