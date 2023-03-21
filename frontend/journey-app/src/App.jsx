@@ -18,8 +18,8 @@ function App() {
           <Route exact path="/signup" element={<SignUpForm />} />
           <Route exact path="/signin" element={<SignInForm />} />
           <Route exact path="/dashboard" element={<UserDashBoard />} />
-          <Route exact path="post" element={<PostInteraction />} />
-          <Route exact path="createpost" element={<CreatePost />} />
+          <Route exact path="/post" element={<PostInteraction />} />
+          <Route exact path="/createpost" element={<CreatePost />} />
         </Routes>
       </div>
     </Router>

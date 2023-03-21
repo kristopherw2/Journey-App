@@ -11,15 +11,24 @@ from rest_framework import status
 
 
 class SignupView(APIView):
+    queryset = User.objects.all()
     serializer_class = SignupSerializer
     permission_classes = [AllowAny]
 
     def post(self, request):
+        print("SIGN-UP REQUEST")
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            print("SIGN-UP VALID")
+            username = serializer.validated_data['username']
+            password = serializer.validated_data['password']
+            email = serializer.validated_data['email']
+            User.objects.create_user(username=username, password=password, email=email)
+            # serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
+            print("SIGN-UP INVALID")
+            print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -29,7 +38,8 @@ class SigninView(APIView):
     def post(self, request):
         username = request.data.get("username")
         password = request.data.get("password")
-        user = authenticate(username=username, password=password)
+        email = request.data.get("email")
+        user = authenticate(username=username, password=password, email=email)
         if user:
             token, _ = Token.objects.get_or_create(user=user)
             return Response({"token": token.key}, status=200)

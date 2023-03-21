@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import {
   Container,
   Button,
@@ -17,11 +17,14 @@ function SignIn() {
     password: "",
   });
 
+  const [redirect, setRedirect] = useState(false);
+
   const onChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
   const onLoginClick = async () => {
+    console.log("this fired");
     try {
       const config = {
         headers: {
@@ -34,12 +37,17 @@ function SignIn() {
         body,
         config
       );
-      localStorage.setItem("token", res.data.token);
       console.log(res.data);
+      localStorage.setItem("token", res.data.token);
+      setRedirect(true);
     } catch (err) {
       console.error(err);
     }
   };
+
+  if (redirect) {
+    return <Navigate to="/dashboard" replace={true} />;
+  }
 
   return (
     <Container>
@@ -100,6 +108,97 @@ function SignIn() {
 }
 
 export default SignIn;
+
+// import React from 'react';
+// import { Link, useNavigate } from 'react-router-dom';
+// import Signout from './Signout';
+// import '../styles/Footer.css'
+
+// const Footer = () => {
+//   const navigate = useNavigate();
+
+//   return (
+//     <div className="footer-container">
+//       <div className="footer">
+//         <Link to="/" className="animated-button-link left">Home Page</Link>
+//         <Link to="/disclaimers" className="animated-button-link">Disclaimers</Link>
+//         <Signout className="signout" onSignout={() => navigate('/login')} />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Footer;
+
+// import React, { useState } from 'react'
+// import axios from 'axios'
+// import { Link, Navigate } from 'react-router-dom'
+
+// const SigninPage = () => {
+//   const [formData, setFormData] = useState({
+//     username: '',
+//     password: ''
+//   })
+//   const { username, password } = formData
+//   const [redirect, setRedirect] = useState(false)
+
+//   const onChange = e => {
+//     setFormData({ ...formData, [e.target.name]: e.target.value })
+//   }
+
+//   const onSubmit = async e => {
+//     e.preventDefault()
+//     const user = {
+//       username,
+//       password
+//     }
+
+//     try {
+//       const config = {
+//         headers: {
+//           'Content-Type': 'application/json'
+//         }
+//       }
+//       const body = JSON.stringify(user)
+//       const res = await axios.post('http://127.0.0.1:8000/accounts/signin/', body, config)
+//       localStorage.setItem('token', res.data.token)
+//       setRedirect(true)
+//     } catch (err) {
+//       console.error(err)
+//     }
+//   }
+
+//   if (redirect) {
+//     return <Navigate to="/letterslist" replace={true} />
+//   }
+
+//   return (
+//     <div>
+//       <h1>Get Your Arcade Tokens Here</h1>
+//       <form onSubmit={e => onSubmit(e)}>
+//         <input
+//           type="text"
+//           placeholder="Username"
+//           name="username"
+//           value={username}
+//           onChange={e => onChange(e)}
+//         />
+//         <input
+//           type="password"
+//           placeholder="Password"
+//           name="password"
+//           value={password}
+//           onChange={e => onChange(e)}
+//         />
+//         <input type="submit" value="SignIn" />
+//       </form>
+//       <br></br>
+//       <Link to="/">Not Ready For Your Adventure?  Go Back Home Here.</Link>
+//     </div>
+//   )
+// }
+
+// export default SigninPage
 
 // // SignIn.js
 
