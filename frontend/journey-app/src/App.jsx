@@ -7,6 +7,7 @@ import SignUpForm from "./components/LandingPage/SignUpForm";
 import UserDashBoard from "./components/UserDashboard/UserDashboard";
 import SignInForm from "./components/LandingPage/SignInForm";
 import PostInteraction from "./components/PostInteraction/PostInteraction";
+import CreatePost from "./components/CreatePost/CreatePost";
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
           <Route exact path="/signup" element={<SignUpForm />} />
           <Route exact path="/signin" element={<SignInForm />} />
           <Route exact path="/dashboard" element={<UserDashBoard />} />
-          <Route exact path="post" element={<PostInteraction />} />
+          <Route exact path="/post" element={<PostInteraction />} />
+          <Route exact path="/createpost" element={<CreatePost />} />
         </Routes>
       </div>
     </Router>
