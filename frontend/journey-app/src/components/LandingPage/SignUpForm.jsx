@@ -24,13 +24,13 @@ function SignUpForm() {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
+  //Signs user up....still needs error handling
   const onSignupClick = async () => {
     const user = {
       username: userData.username,
       email: userData.email,
       password: userData.password,
     };
-    console.log(userData.password);
     try {
       const config = {
         headers: {
@@ -43,7 +43,6 @@ function SignUpForm() {
         body,
         config
       );
-      console.log(res.data);
       setRedirect(true);
     } catch (err) {
       console.error(err);
