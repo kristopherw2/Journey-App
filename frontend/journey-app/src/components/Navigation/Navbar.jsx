@@ -6,12 +6,13 @@ function Navbar() {
   const [isLoggedin, setIsLoggedin] = useState(false);
   const [redirect, setRedirect] = useState(false);
 
+  //removes token from localStorage and redirects user to signin
   const logout = () => {
     localStorage.removeItem("token");
-    // return <Navigate to="/signin" replace={true} />;
     setRedirect(true);
   };
 
+  //checks if redirect is true then sends user to signin page
   if (redirect) {
     return <Navigate to="/signin" replace={false} />;
   }

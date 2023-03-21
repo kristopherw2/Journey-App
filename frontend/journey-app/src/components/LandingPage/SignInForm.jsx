@@ -23,8 +23,8 @@ function SignIn() {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
+  //when user clicks login it sends a post request then redirects to the dashboard...This will need error handling later.
   const onLoginClick = async () => {
-    console.log("this fired");
     try {
       const config = {
         headers: {
@@ -37,7 +37,6 @@ function SignIn() {
         body,
         config
       );
-      console.log(res.data);
       localStorage.setItem("token", res.data.token);
       setRedirect(true);
     } catch (err) {

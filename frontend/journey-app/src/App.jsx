@@ -8,21 +8,24 @@ import UserDashBoard from "./components/UserDashboard/UserDashboard";
 import SignInForm from "./components/LandingPage/SignInForm";
 import PostInteraction from "./components/PostInteraction/PostInteraction";
 import CreatePost from "./components/CreatePost/CreatePost";
+import PrivateRoutes from "./utils/PrivateRoutes";
 
 function App() {
   return (
-    <Router>
-      <div className="App">
+    <div className="App">
+      <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route exact path="/signup" element={<SignUpForm />} />
           <Route exact path="/signin" element={<SignInForm />} />
-          <Route exact path="/dashboard" element={<UserDashBoard />} />
-          <Route exact path="/post" element={<PostInteraction />} />
-          <Route exact path="/createpost" element={<CreatePost />} />
+          <Route element={<PrivateRoutes />}>
+            <Route exact path="/dashboard" element={<UserDashBoard />} />
+            <Route exact path="/post" element={<PostInteraction />} />
+            <Route exact path="/createpost" element={<CreatePost />} />
+          </Route>
         </Routes>
-      </div>
-    </Router>
+      </Router>
+    </div>
   );
 }
 
