@@ -1,46 +1,16 @@
 from rest_framework import serializers
 from .models import PostDB, CommentDB
 
-class CommentSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    comment_text = serializers.CharField(style={'base_template': 'textarea.html'})
-    date_commented = serializers.DateTimeField(read_only=True)
-    post_id = serializers.IntegerField()
-   
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CommentDB
+        fields = ['id', 'comment_text', 'date_commented', 'post']
 
-    def create(self, validated_data):
-        return CommentDB.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        instance.id = validated_data.get('id', instance.id)
-        instance.comment_text = validated_data.get('comment_text', instance.comment_text)
-        instance.date_commented = validated_data.get('date_commented', instance.date_commented)
-        instance.save()
-        return instance
-
-
-class PostSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    image = serializers.CharField(max_length=255)
-    difficulty_level = serializers.CharField(max_length=255)
-    description = serializers.CharField(style={'base_template': 'textarea.html'})
-    latitude = serializers.CharField(max_length=255)
-    longitude = serializers.CharField(max_length=255)
-    date_posted = serializers.DateTimeField(read_only=True)
+class PostSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = PostDB
+        fields = ['id', 'title', 'image', 'difficulty_level', 'description', 'latitude', 'longitude', 'date_posted', 'comments']
 
-
-    def create(self, validated_data):
-        return PostDB.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        instance.id = validated_data.get('id', instance.id)
-        instance.image = validated_data.get('image', instance.image)
-        instance.difficulty_level = validated_data.get('difficulty_level', instance.difficulty_level)
-        instance.description = validated_data.get('description', instance.description)
-        instance.latitude = validated_data.get('latitude', instance.latitude)
-        instance.longitude = validated_data.get('longitude', instance.longitude)
-        instance.date_posted = validated_data.get('date_posted', instance.date_posted)
-        instance.save()
-        return instance
 

@@ -8,43 +8,45 @@ body {
     align-items: center;
   }
 
-  .content {
-    grid-area: content;
-  }
+.content {
+  grid-area: content;
+}
 
-  .header {
-    grid-area: header;
-  }
+.header {
+  grid-area: header;
+}
 
-  .footer {
-    grid-area: footer;
-  }
+.footer {
+  grid-area: footer;
+}
 
+body {
+  margin: 0;
+}
 
-  body {
-    margin: 0;
-  }
-  
-  .wrapper {
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
-    grid-template-areas:
-      "header header header"
-      "sidebar content content"
-      "footer footer footer";
-    background-color: #fff;
-    color: #444;
-  }
+.wrapper {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
+  grid-template-areas:
+    "header header header"
+    "sidebar content content"
+    "footer footer footer";
+  background-color: #f44336; /* changed the background color to a lush red */
+  color: #fff;
+}
+
 button {
-  font-size:12px;
+  font-size: 12px;
   padding: 5px 10px;
 }
+
 #difficulty {
   font-size: 12px;
   padding: 5px 10px;
-  width: 100px; /* set width to adjust size */
+  width: 100px;
 }
+
 #image {
   display: flex;
   align-items: center;
@@ -52,7 +54,6 @@ button {
   text-align: center;
   flex-direction: column;
 }
-
 
 .box {
   background-color: #b9b9b91e;
@@ -76,12 +77,13 @@ button {
 
 .file-upload label button {
   font-size: 10px;
-  padding: 3px 6px; 
+  padding: 3px 6px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  display:none;
+  display: none;
 }
+
 .file-upload input[type="file"] {
   display: none;
 }
@@ -128,11 +130,13 @@ button {
   flex-direction: column;
   align-items: center;
 }
+
 .box.header form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .file-upload-container {
   position: relative;
 }
