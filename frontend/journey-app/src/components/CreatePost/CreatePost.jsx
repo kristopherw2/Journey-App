@@ -28,6 +28,7 @@ const CreatePost = () => {
 
       try {
         console.log("Submitting form data: ", formData);
+
         const response = await axios.post(
           "http://localhost:8000/api/posts/",
           formData,
@@ -35,6 +36,7 @@ const CreatePost = () => {
             headers: {
               Authorization: `Token ${localStorage.getItem("token")}`,
             },
+            withCredentials: true,
           }
         );
         console.log("Form submission successful: ", response);

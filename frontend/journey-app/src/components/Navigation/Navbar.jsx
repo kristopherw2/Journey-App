@@ -1,21 +1,12 @@
 import "./Navbar.css";
-import { useState } from "react";
-import { Link, Navigate, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function Navbar() {
-  const [isLoggedin, setIsLoggedin] = useState(false);
-  const [redirect, setRedirect] = useState(false);
-
-  //removes token from localStorage and redirects user to signin
-  const logout = () => {
-    localStorage.removeItem("token");
-    setRedirect(true);
+function Navbar({ isLoggedIn, onLogout }) {
+  const handleLogout = () => {
+    if (onLogout) {
+      onLogout();
+    }
   };
-
-  //checks if redirect is true then sends user to signin page
-  if (redirect) {
-    return <Navigate to="/signin" replace={false} />;
-  }
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,7 +21,7 @@ function Navbar() {
               </a>
             </li>
             <li className="nav-item">
-              <Link to="/createpost" className="nav-link"> {/* Chad added a Link component */}
+              <Link to="/createpost" className="nav-link">
                 Create
               </Link>
             </li>
@@ -39,11 +30,13 @@ function Navbar() {
                 Explore
               </a>
             </li>
-            <li className="nav-item" onClick={logout}>
-              <a className="nav-link disabled" href="#">
-                Signout
-              </a>
-            </li>
+            {isLoggedIn && (
+              <li className="nav-item">
+                <Link className="nav-link" to="#" onClick={handleLogout}>
+                  Signout
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </nav>
@@ -52,6 +45,67 @@ function Navbar() {
 }
 
 export default Navbar;
+
+/////chads changes above, old code below/////
+
+
+// import "./Navbar.css";
+// import { useState } from "react";
+// import { Link, Navigate, redirect } from "react-router-dom";
+
+// function Navbar() {
+//   const [isLoggedin, setIsLoggedin] = useState(false);
+//   const [redirect, setRedirect] = useState(false);
+
+//   //removes token from localStorage and redirects user to signin
+//   const logout = () => {
+//     localStorage.removeItem("token");
+//     setRedirect(true);
+//   };
+
+//   //checks if redirect is true then sends user to signin page
+//   if (redirect) {
+//     return <Navigate to="/signin" replace={false} />;
+//   }
+//   return (
+//     <>
+//       <nav className="navbar navbar-expand-lg navbar-light bg-light">
+//         <a className="navbar-brand" href="#">
+//           Navbar
+//         </a>
+//         <div id="navbarNav">
+//           <ul className="navbar-nav">
+//             <li className="nav-item active">
+//               <a className="nav-link" href="#">
+//                 Home
+//               </a>
+//             </li>
+//             <li className="nav-item">
+//               <Link to="/createpost" className="nav-link"> {/* Chad added a Link component */}
+//                 Create
+//               </Link>
+//             </li>
+//             <li className="nav-item">
+//               <a className="nav-link" href="#">
+//                 Explore
+//               </a>
+//             </li>
+//             <li className="nav-item" onClick={logout}>
+//               <a className="nav-link disabled" href="#">
+//                 Signout
+//               </a>
+//             </li>
+//           </ul>
+//         </div>
+//       </nav>
+//     </>
+//   );
+// }
+
+// export default Navbar;
+
+
+
 
 // import React from 'react';
 // import { Link, useNavigate } from 'react-router-dom';

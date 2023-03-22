@@ -10,11 +10,23 @@ from rest_framework import parsers
 import exifread
 from django.contrib.auth.models import User
 from rest_framework import permissions, generics, status
+from django.shortcuts import get_object_or_404
+from django.core.exceptions import PermissionDenied
+
 
 
 class BasicPagination(PageNumberPagination):
     page_size_query_param = 'limit'
 
+
+# class PostListAPIView(generics.ListCreateAPIView):
+#     queryset = PostDB.objects.all()
+#     serializer_class = PostSerializer
+#     pagination_class = BasicPagination
+#     permission_classes = [permissions.IsAuthenticated]
+
+#     def perform_create(self, serializer):
+#         serializer.save(user=self.request.user)
 
 class PostListAPIView(generics.ListCreateAPIView):
     queryset = PostDB.objects.all()
@@ -23,7 +35,9 @@ class PostListAPIView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        user_id = self.request.COOKIES.get("user_id")
+        user = get_object_or_404(User, id=user_id)
+        serializer.save(user=user)
 
 
 class PostDetailAPIView(RetrieveUpdateDestroyAPIView):
@@ -46,8 +60,18 @@ class UserPostsAPIView(ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        user = self.request.user
+        user_id = self.request.COOKIES.get("user_id")
+        user = get_object_or_404(User, id=user_id)
         return PostDB.objects.filter(user=user)
+
+
+# class UserPostsAPIView(ListCreateAPIView):
+#     serializer_class = PostSerializer
+#     permission_classes = [permissions.IsAuthenticated]
+
+#     def get_queryset(self):
+#         user = self.request.user
+#         return PostDB.objects.filter(user=user)
 
 
 class ExtractLocationAPIView(APIView):
