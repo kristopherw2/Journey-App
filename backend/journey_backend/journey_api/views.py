@@ -36,8 +36,16 @@ class PostListAPIView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         user_id = self.request.COOKIES.get("user_id")
-        user = get_object_or_404(User, id=user_id)
+        user = None
+        if user_id:
+            try:
+                user = User.objects.get(id=user_id)
+            except User.DoesNotExist:
+                pass
+        if not user:
+            user = self.request.user  #this is the old django setup if cookie rerival doesnt work.
         serializer.save(user=user)
+
 
 
 class PostDetailAPIView(RetrieveUpdateDestroyAPIView):
@@ -55,14 +63,46 @@ class CommentDetailAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = CommentSerializer
 
 
+
+
 class UserPostsAPIView(ListCreateAPIView):
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         user_id = self.request.COOKIES.get("user_id")
-        user = get_object_or_404(User, id=user_id)
+        user = None
+        if user_id:
+            try:
+                user = User.objects.get(id=user_id)
+            except User.DoesNotExist:
+                pass
+        if not user:
+            user = self.request.user  # Fall back to the authenticated user if cookie retrieval fails.
         return PostDB.objects.filter(user=user)
+
+    def perform_create(self, serializer):
+        user_id = self.request.COOKIES.get("user_id")
+        user = None
+        if user_id:
+            try:
+                user = User.objects.get(id=user_id)
+            except User.DoesNotExist:
+                pass
+        if not user:
+            user = self.request.user  # Fall back to the authenticated user if cookie retrieval fails.
+        serializer.save(user=user)
+
+
+
+# class UserPostsAPIView(ListCreateAPIView):
+#     serializer_class = PostSerializer
+#     permission_classes = [permissions.IsAuthenticated]
+
+#     def get_queryset(self):
+#         user_id = self.request.COOKIES.get("user_id")
+#         user = get_object_or_404(User, id=user_id)
+#         return PostDB.objects.filter(user=user)
 
 
 # class UserPostsAPIView(ListCreateAPIView):

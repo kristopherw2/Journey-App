@@ -1,12 +1,9 @@
+// Navbar.js
 import "./Navbar.css";
 import { Link } from "react-router-dom";
+import Signout from "./Signout";
 
 function Navbar({ isLoggedIn, onLogout }) {
-  const handleLogout = () => {
-    if (onLogout) {
-      onLogout();
-    }
-  };
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,13 +27,9 @@ function Navbar({ isLoggedIn, onLogout }) {
                 Explore
               </a>
             </li>
-            {isLoggedIn && (
-              <li className="nav-item">
-                <Link className="nav-link" to="#" onClick={handleLogout}>
-                  Signout
-                </Link>
-              </li>
-            )}
+            <li className="nav-item">
+              <Signout onLogout={onLogout} />
+            </li>
           </ul>
         </div>
       </nav>
@@ -45,6 +38,8 @@ function Navbar({ isLoggedIn, onLogout }) {
 }
 
 export default Navbar;
+
+
 
 /////chads changes above, old code below/////
 

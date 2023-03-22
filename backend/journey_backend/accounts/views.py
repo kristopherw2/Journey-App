@@ -51,35 +51,22 @@ class SignupView(APIView):
 
 
 class SigninView(APIView):
-    # Set the permission class to AllowAny, so any user (authenticated or not) can access this view
     permission_classes = (AllowAny,)
 
-    # Define the post method for this view
     def post(self, request):
-        # Retrieve the submitted username, password, and email from the request data
         username = request.data.get("username")
         password = request.data.get("password")
         email = request.data.get("email")
-
-        # Authenticate the user with the provided credentials (username, password, and email)
         user = authenticate(username=username, password=password, email=email)
 
-        # If the user is authenticated successfully
         if user:
-            # Get or create an authentication token for the user
             token, _ = Token.objects.get_or_create(user=user)
-
-            # Create a JSON response with the token
-            response = JsonResponse({"token": token.key}, status=200)
-
-            # Set the user_id cookie with the user's ID, making it HTTP-only and setting the SameSite attribute to "Strict"
+            response = JsonResponse({"token": token.key, "user_id": user.pk}, status=200)  # Add the user_id to the response
             response.set_cookie("user_id", user.id, httponly=True, samesite="Strict")
-
-            # Return the JSON response with the token and user_id cookie
             return response
         else:
-            # If the authentication failed, return an error message with a 400 status code
             return JsonResponse({"error": "Invalid credentials"}, status=400)
+
 
 
 

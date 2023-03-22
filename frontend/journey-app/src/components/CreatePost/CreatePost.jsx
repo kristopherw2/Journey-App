@@ -3,6 +3,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { Navigate } from "react-router-dom";
 import "./CreatePost.css";
+import Cookies from "js-cookie";
 
 const CreatePost = () => {
   const [navigate, setNavigate] = useState(false);
@@ -64,6 +65,7 @@ const CreatePost = () => {
             Authorization: `Token ${localStorage.getItem("token")}`,
             "Content-Type": "multipart/form-data",
           },
+          withCredentials: true, // Added this line
         }
       );
 
