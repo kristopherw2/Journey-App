@@ -1,8 +1,8 @@
 import "./Description.css";
 function Description() {
   return (
-    <div class="image-description">
-      <p maxlength="255">
+    <div className="image-description">
+      <p maxLength="255">
         Username: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
         dignissim, ligula non consectetur pharetra, turpis ipsum suscipit orci,
         et consectetur mi mauris eu justo. Donec egestas pellentesque sem at

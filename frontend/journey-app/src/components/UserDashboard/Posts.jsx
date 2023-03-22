@@ -10,8 +10,8 @@ function Posts() {
   return (
     <>
       <div id="post-container">
-        <img class="util-btn" id="pencil-btn" src={pencilEdit} />
-        <img class="util-btn" id="trash-btn" src={trash} />
+        <img className="util-btn" id="pencil-btn" src={pencilEdit} />
+        <img className="util-btn" id="trash-btn" src={trash} />
         <img src={testPhoto} />
       </div>
       <Description />

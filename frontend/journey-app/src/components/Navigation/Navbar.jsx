@@ -18,29 +18,29 @@ function Navbar() {
   }
   return (
     <>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <a className="navbar-brand" href="#">
           Navbar
         </a>
         <div id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">
+          <ul className="navbar-nav">
+            <li className="nav-item active">
+              <a className="nav-link" href="#">
                 Home
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
+            <li className="nav-item">
+              <Link to="/createpost" className="nav-link"> {/* Chad added a Link component */}
                 Create
-              </a>
+              </Link>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
+            <li className="nav-item">
+              <a className="nav-link" href="#">
                 Explore
               </a>
             </li>
-            <li class="nav-item" onClick={logout}>
-              <a class="nav-link disabled" href="#">
+            <li className="nav-item" onClick={logout}>
+              <a className="nav-link disabled" href="#">
                 Signout
               </a>
             </li>
@@ -62,11 +62,11 @@ export default Navbar;
 //   const navigate = useNavigate();
 
 //   return (
-//     <div className="footer-container">
-//       <div className="footer">
-//         <Link to="/" className="animated-button-link left">Home Page</Link>
-//         <Link to="/disclaimers" className="animated-button-link">Disclaimers</Link>
-//         <Signout className="signout" onSignout={() => navigate('/login')} />
+//     <div className=ame="footer-container">
+//       <div className=ame="footer">
+//         <Link to="/" className=ame="animated-button-link left">Home Page</Link>
+//         <Link to="/disclaimers" className=ame="animated-button-link">Disclaimers</Link>
+//         <Signout className=ame="signout" onSignout={() => navigate('/login')} />
 //       </div>
 //     </div>
 //   );
@@ -100,7 +100,7 @@ export default Navbar;
 //   };
 
 //   return (
-//     <button className="animated-button-link signout-button" onClick={handleSignout}>
+//     <button className=ame="animated-button-link signout-button" onClick={handleSignout}>
 //       Sign out
 //     </button>
 //   );

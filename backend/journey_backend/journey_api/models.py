@@ -1,9 +1,12 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class PostDB(models.Model):
-   image = models.CharField(max_length=255)
+   user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
+   title = models.CharField(max_length=255, blank=True) 
+   image = models.ImageField(upload_to='uploadPhotos')
    difficulty_level = models.CharField(max_length=255, blank=True)
    description = models.TextField()
    latitude = models.CharField(max_length=255, blank=True)
@@ -12,7 +15,8 @@ class PostDB(models.Model):
 
 
    def __str__(self):
-       return f"ID: self.id , PHOTO: self.image, DIFFICULTY_LEVEL: self.difficulty_level, DATE: self.date_posted"
+            return f"HikePostTitle: {self.title}, DIFFICULTY_LEVEL {self.difficulty_level}, Hiker {self.user}"
+
 
 
 class CommentDB(models.Model): 

@@ -1,7 +1,7 @@
 import "./Comments.css";
 function Comments() {
   return (
-    <div class="comments-container">
+    <div className="comments-container">
       <p>Comments go Here</p>
     </div>
   );

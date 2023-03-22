@@ -4,7 +4,7 @@ import testMap from "../../assets/map.jpeg";
 import "./PostInteraction.css";
 function PostInteraction() {
   return (
-    <div class="interaction-container">
+    <div className="interaction-container">
       <Navbar />
       <img src={testPhoto} />
       <img id="map-interaction" src={testMap} />
