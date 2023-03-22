@@ -48,6 +48,13 @@ class UserPostsAPIView(ListCreateAPIView):
     def get_queryset(self):
         user = self.request.user
         return PostDB.objects.filter(user=user)
+    #Just Trying
+
+    def delete(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        queryset.delete()  # CAREFUL! This could easily delete all the items in this queryset.
+                                       
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class ExtractLocationAPIView(APIView):

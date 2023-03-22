@@ -15,7 +15,7 @@ class PostDB(models.Model):
 
 
    def __str__(self):
-            return f"HikePostTitle: {self.title}, DIFFICULTY_LEVEL {self.difficulty_level}, Hiker {self.user}"
+            return f"UserID: {self.user.id}, HikePostTitle: {self.title}, DIFFICULTY_LEVEL {self.difficulty_level}, Hiker {self.user}"
 
 
 
