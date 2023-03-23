@@ -11,6 +11,7 @@ import UserPosts from "./components/PostInteraction/UserPosts";
 import PrivateRoutes from "./utils/PrivateRoutes";
 import Navbar from './components/Navigation/Navbar'
 import React, { useState } from "react";
+import Parks from "./components/ParksPage/Parks";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -36,6 +37,7 @@ function App() {
             <Route exact path="/post" element={<PostInteraction />} />
             <Route exact path="/createpost" element={<CreatePost />} />
             <Route exact path="/userposts" element={<UserPosts />} />
+            <Route exact path="/parks" element={<Parks />} />
           </Route>
         </Routes>
       </Router>
