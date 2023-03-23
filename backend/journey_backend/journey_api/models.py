@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class PostDB(models.Model):
@@ -12,6 +13,11 @@ class PostDB(models.Model):
    latitude = models.CharField(max_length=255, blank=True)
    longitude = models.CharField(max_length=255, blank=True)
    date_posted = models.DateTimeField(default=timezone.now)
+
+   def get_image_url(self):
+      if self.image:
+         return f'{settings.MEDIA_URL}{self.image}'
+      return None
 
 
    def __str__(self):

@@ -44,7 +44,8 @@ const UserPosts = () => {
             <h3>{post.title}</h3>
             <p>Difficulty Level: {post.difficulty_level}</p>
             <p>{post.description}</p>
-            <img src={post.image} alt={post.title} />
+            <img src={`http://localhost:8000${post.image_url}`} alt={post.title} />
+
           </li>
         ))}
       </ul>
@@ -53,6 +54,8 @@ const UserPosts = () => {
 };
 
 export default UserPosts;
+
+
 
 
 
