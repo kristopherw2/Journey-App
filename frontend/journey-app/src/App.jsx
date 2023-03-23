@@ -45,38 +45,3 @@ function App() {
 
 export default App;
 
-
-
-
-////chads changes below saved code above///
-
-// function App() {
-//   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-//   const handleLogin = (loggedIn) => {
-//     setIsLoggedIn(loggedIn);
-//   };
-
-//   const handleLogout = () => {
-//     localStorage.removeItem("token");
-//     setIsLoggedIn(false);
-//   };
-
-//   return (
-//     <div className="App">
-//       <Router>
-//         <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
-//         <Routes>
-//           <Route
-//             path="/"
-//             element={<LandingPage onLogin={handleLogin} />}
-//           />
-//           {/* ... */}
-//         </Routes>
-//       </Router>
-//     </div>
-//   );
-// }
-
-// export default App;
-
