@@ -1,70 +1,33 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+// components/ParksPage/Parks.js
+import { Link } from "react-router-dom";
+import "./Parks.css"; // Import CSS for styling the links
 
 const Parks = () => {
-  const [webcams, setWebcams] = useState([]);
-  const [activitiesParks, setActivitiesParks] = useState([]);
-
-  useEffect(() => {
-    const fetchParksData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:8000/api/parks/", {
-          headers: { Authorization: `Token ${token}` },
-        });
-        console.log("API response:", response); // Log the response object
-        setWebcams(response.data.webcams);
-        setActivitiesParks(response.data.activities_parks);
-      } catch (error) {
-        console.error("Error fetching parks data: ", error);
-      }
-    };
-
-    fetchParksData();
-  }, []);
-
-  useEffect(() => {
-    console.log("Webcams state:", webcams); // Log the webcams state after setting it
-  }, [webcams]);
-
   return (
     <div>
-      <h1>National Parks</h1>
-      <h2>Webcams</h2>
-      <ul>
-        {webcams.map((webcam) => (
-          <li key={webcam.id}>
-            <h3>{webcam.title}</h3>
-            <p>{webcam.description}</p>
-            <iframe
-              src={webcam.url}
-              title={webcam.title}
-              width="640"
-              height="480"
-              frameBorder="0"
-              allowFullScreen
-            />
-          </li>
-        ))}
-      </ul>
-      <h2>Activities Parks</h2>
-      <ul>
-        {activitiesParks.map((activity) => (
-          <li key={activity.id}>
-            <h3>{activity.name}</h3>
-            <ul>
-              {activity.parks.map((park) => (
-                <li key={park.parkCode}>
-                  <h4>{park.fullName}</h4>
-                  <a href={park.url} target="_blank" rel="noopener noreferrer">
-                    {park.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
+      <h1>Explore the U.S. National Parks</h1>
+      <div className="parks-links">
+        <Link to="/webcams" className="parks-link">
+          <div className="parks-link-card" style={{ backgroundImage: "url('/explore.jpeg')" }}>
+            <h2>Webcams</h2>
+          </div>
+        </Link>
+        <Link to="/activities" className="parks-link">
+          <div className="parks-link-card" style={{ backgroundImage: "url('/explore2.jpeg')" }}>
+            <h2>Activities</h2>
+          </div>
+        </Link>
+        <Link to="/tours" className="parks-link">
+          <div className="parks-link-card" style={{ backgroundImage: "url('/explore3.jpeg')" }}>
+            <h2>Tours</h2>
+          </div>
+        </Link>
+        <Link to="/videos" className="parks-link">
+          <div className="parks-link-card" style={{ backgroundImage: "url('/explore4.jpeg')" }}>
+            <h2>Videos</h2>
+          </div>
+        </Link>
+      </div>
     </div>
   );
 };

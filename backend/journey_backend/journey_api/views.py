@@ -15,25 +15,26 @@ from django.core.exceptions import PermissionDenied
 import requests
 
 
-# class ParksAPIView(APIView):
-#     permission_classes = [permissions.IsAuthenticated]
 
-#     def get(self, request, *args, **kwargs):
-#         api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
-#         webcams_url = f"https://developer.nps.gov/api/v1/webcams?api_key={api_key}"
-#         activities_parks_url = f"https://developer.nps.gov/api/v1/activities/parks?api_key={api_key}"
 
-#         webcams_response = requests.get(webcams_url)
-#         activities_parks_response = requests.get(activities_parks_url)
 
-#         if webcams_response.status_code == 200 and activities_parks_response.status_code == 200:
-#             data = {
-#                 "webcams": webcams_response.json()["data"],
-#                 "activities_parks": activities_parks_response.json()["data"]
-#             }
-#             return Response(data)
-#         else:
-#             return Response({"error": "Error fetching National Parks data."}, status=400)
+class ToursAPIView(generics.GenericAPIView):
+    def get(self, request):
+        api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
+        response = requests.get(
+            "https://developer.nps.gov/api/v1/tours",
+            params={"api_key": api_key},
+        )
+        return Response(response.json())
+
+class VideosAPIView(generics.GenericAPIView):
+    def get(self, request):
+        api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
+        response = requests.get(
+            "https://developer.nps.gov/api/v1/multimedia/videos",
+            params={"api_key": api_key},
+        )
+        return Response(response.json())
 
 
 class ParksAPIView(APIView):

@@ -12,6 +12,10 @@ import PrivateRoutes from "./utils/PrivateRoutes";
 import Navbar from './components/Navigation/Navbar'
 import React, { useState } from "react";
 import Parks from "./components/ParksPage/Parks";
+import WebcamPage from "./components/ParksPage/WebcamPage";
+import Activities from "./components/ParksPage/Activites";
+import Videos from "./components/ParksPage/Videos";
+import Tours from "./components/ParksPage/Tours";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -38,6 +42,10 @@ function App() {
             <Route exact path="/createpost" element={<CreatePost />} />
             <Route exact path="/userposts" element={<UserPosts />} />
             <Route exact path="/parks" element={<Parks />} />
+            <Route exact path="/webcams" element={<WebcamPage />} />
+            <Route exact path="/activities" element={<Activities />} />
+            <Route exact path="/videos" element={<Videos />} />
+            <Route exact path="/tours" element={<Tours />} />
           </Route>
         </Routes>
       </Router>
