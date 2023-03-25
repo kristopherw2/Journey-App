@@ -13,7 +13,9 @@ from rest_framework import permissions, generics, status
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
 import requests
-
+from rest_framework.response import Response
+import requests
+from django.conf import settings
 
 
 
@@ -21,6 +23,7 @@ import requests
 class ToursAPIView(generics.GenericAPIView):
     def get(self, request):
         api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
+        # api_key = "xOxom9QnYRp4ClWc9828eKHrGCykgSg1CPlorrK9"
         response = requests.get(
             "https://developer.nps.gov/api/v1/tours",
             params={"api_key": api_key},
@@ -30,33 +33,101 @@ class ToursAPIView(generics.GenericAPIView):
 class VideosAPIView(generics.GenericAPIView):
     def get(self, request):
         api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
+        # api_key = "xOxom9QnYRp4ClWc9828eKHrGCykgSg1CPlorrK9"
         response = requests.get(
             "https://developer.nps.gov/api/v1/multimedia/videos",
             params={"api_key": api_key},
         )
         return Response(response.json())
 
+# class ParksAPIView(APIView):
+#     permission_classes = [permissions.IsAuthenticated]
+
+#     def get(self, request, *args, **kwargs):
+#         api_key = "xOxom9QnYRp4ClWc9828eKHrGCykgSg1CPlorrK9"
+#         parks_url = f"https://developer.nps.gov/api/v1/parks?limit=500&api_key={api_key}"
+
+#         parks_response = requests.get(parks_url)
+
+#         if parks_response.status_code == 200:
+#             parks = parks_response.json()["data"]
+#             parks_with_webcams = []
+
+#             for park in parks:
+#                 park_code = park["parkCode"]
+#                 webcams_url = f"https://developer.nps.gov/api/v1/webcams?parkCode={park_code}&api_key={api_key}"
+#                 webcams_response = requests.get(webcams_url)
+#                 if webcams_response.status_code == 200:
+#                     webcams = webcams_response.json()["data"]
+#                     if any(webcam["isStreaming"] for webcam in webcams):
+#                         parks_with_webcams.append(park)
+
+#             data = {
+#                 "parks": parks_with_webcams,
+#             }
+#             return Response(data)
+#         else:
+#             print(f"Error fetching National Parks data: {parks_response.status_code} - {parks_response.text}")  # Add this line
+#             return Response({"error": "Error fetching National Parks data."}, status=400)
+
 
 class ParksAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
+        # api_key = "xOxom9QnYRp4ClWc9828eKHrGCykgSg1CPlorrK9"
         api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
-        park_codes = "yose,grca"  # Hardcoding park codes (Yosemite and Grand Canyon)
-        webcams_url = f"https://developer.nps.gov/api/v1/webcams?parkCode={park_codes}&api_key={api_key}"
-        activities_parks_url = f"https://developer.nps.gov/api/v1/activities/parks?api_key={api_key}"
+        parks_url = f"https://developer.nps.gov/api/v1/parks?limit=500&api_key={api_key}"
 
-        webcams_response = requests.get(webcams_url)
-        activities_parks_response = requests.get(activities_parks_url)
+        parks_response = requests.get(parks_url)
 
-        if webcams_response.status_code == 200 and activities_parks_response.status_code == 200:
+        if parks_response.status_code == 200:
             data = {
-                "webcams": webcams_response.json()["data"],
-                "activities_parks": activities_parks_response.json()["data"]
+                "parks": parks_response.json()["data"],
             }
             return Response(data)
         else:
             return Response({"error": "Error fetching National Parks data."}, status=400)
+
+
+
+class ParkWebcamsAPIView(generics.ListAPIView):
+    def list(self, request, *args, **kwargs):
+        park_code = self.kwargs['park_code']
+        api_key = "xOxom9QnYRp4ClWc9828eKHrGCykgSg1CPlorrK9"
+        url = f'https://developer.nps.gov/api/v1/webcams?parkCode={park_code}&api_key={api_key}'
+        response = requests.get(url)
+
+        if response.status_code == 200:
+            webcams = response.json()['data']
+            filtered_webcams = [webcam for webcam in webcams if webcam['isStreaming']]
+            return Response(filtered_webcams, status=status.HTTP_200_OK)
+        else:
+            return Response({"error": "Unable to fetch webcams"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+# class ParksAPIView(APIView):
+#     permission_classes = [permissions.IsAuthenticated]
+
+#     def get(self, request, *args, **kwargs):
+#         api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
+#         park_codes = "yose,grca"  # Hardcoding park codes (Yosemite and Grand Canyon)
+#         webcams_url = f"https://developer.nps.gov/api/v1/webcams?parkCode={park_codes}&api_key={api_key}"
+#         activities_parks_url = f"https://developer.nps.gov/api/v1/activities/parks?api_key={api_key}"
+
+#         webcams_response = requests.get(webcams_url)
+#         activities_parks_response = requests.get(activities_parks_url)
+
+#         if webcams_response.status_code == 200 and activities_parks_response.status_code == 200:
+#             data = {
+#                 "webcams": webcams_response.json()["data"],
+#                 "activities_parks": activities_parks_response.json()["data"]
+#             }
+#             return Response(data)
+#         else:
+#             return Response({"error": "Error fetching National Parks data."}, status=400)
 
 
 

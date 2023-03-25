@@ -11,6 +11,7 @@ urlpatterns = [
     path("parks/", views.ParksAPIView.as_view(), name="parks"),
     path("tours/", views.ToursAPIView.as_view(), name="tours"),
     path("videos/", views.VideosAPIView.as_view(), name="videos"),
+    path("api/parks/<str:park_code>/webcams/", views.ParkWebcamsAPIView.as_view(), name="park-webcams"),
 ]
 
 
