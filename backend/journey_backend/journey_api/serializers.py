@@ -8,9 +8,10 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many=True, read_only=True)
+    image_url = serializers.CharField(source='get_image_url', read_only=True)
     
     class Meta:
         model = PostDB
-        fields = ['id', 'title', 'image', 'difficulty_level', 'description', 'latitude', 'longitude', 'date_posted', 'comments', 'user']
+        fields = ['id', 'title', 'image', 'image_url','difficulty_level', 'description', 'latitude', 'longitude', 'date_posted', 'comments']
 
 

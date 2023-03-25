@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class PostDB(models.Model):
@@ -13,9 +14,14 @@ class PostDB(models.Model):
    longitude = models.CharField(max_length=255, blank=True)
    date_posted = models.DateTimeField(default=timezone.now)
 
+   def get_image_url(self):
+      if self.image:
+         return f'{settings.MEDIA_URL}{self.image}'
+      return None
+
 
    def __str__(self):
-            return f"UserID: {self.user.id}, HikePostTitle: {self.title}, DIFFICULTY_LEVEL {self.difficulty_level}, Hiker {self.user}"
+            return f"User_ID {self.user.id},HikePostTitle: {self.title}, DIFFICULTY_LEVEL {self.difficulty_level}, Hiker {self.user}"
 
 
 

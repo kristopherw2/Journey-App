@@ -3,7 +3,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { Navigate } from "react-router-dom";
 import "./CreatePost.css";
-import Navbar from "../Navigation/Navbar";
+import Cookies from "js-cookie";
 
 const CreatePost = () => {
   const [navigate, setNavigate] = useState(false);
@@ -29,6 +29,7 @@ const CreatePost = () => {
 
       try {
         console.log("Submitting form data: ", formData);
+
         const response = await axios.post(
           "http://localhost:8000/api/posts/",
           formData,
@@ -36,6 +37,7 @@ const CreatePost = () => {
             headers: {
               Authorization: `Token ${localStorage.getItem("token")}`,
             },
+            withCredentials: true,
           }
         );
         console.log("Form submission successful: ", response);
@@ -63,6 +65,7 @@ const CreatePost = () => {
             Authorization: `Token ${localStorage.getItem("token")}`,
             "Content-Type": "multipart/form-data",
           },
+          withCredentials: true, // Added this line
         }
       );
 

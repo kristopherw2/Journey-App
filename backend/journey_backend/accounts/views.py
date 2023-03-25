@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework import status
+from django.http import JsonResponse
 
 
 class SignupView(APIView):
@@ -32,6 +33,23 @@ class SignupView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# class SigninView(APIView):
+#     permission_classes = (AllowAny,)
+
+#     def post(self, request):
+#         username = request.data.get("username")
+#         password = request.data.get("password")
+#         email = request.data.get("email")
+#         user = authenticate(username=username, password=password, email=email)
+#         if user:
+#             token, _ = Token.objects.get_or_create(user=user)
+#             return Response({"token": token.key}, status=200)
+#         else:
+#             return Response({"error": "Invalid credentials"}, status=400)
+
+
+
+
 class SigninView(APIView):
     permission_classes = (AllowAny,)
 
@@ -40,11 +58,17 @@ class SigninView(APIView):
         password = request.data.get("password")
         email = request.data.get("email")
         user = authenticate(username=username, password=password, email=email)
+
         if user:
             token, _ = Token.objects.get_or_create(user=user)
-            return Response({"token": token.key, "userid": user.pk}, status=200)
+            response = JsonResponse({"token": token.key, "user_id": user.pk}, status=200)  # Add the user_id to the response
+            response.set_cookie("user_id", user.id, httponly=True, samesite="Strict")
+            return response
         else:
-            return Response({"error": "Invalid credentials"}, status=400)
+            return JsonResponse({"error": "Invalid credentials"}, status=400)
+
+
+
 
 class SignoutView(APIView):
     def post(self, request):

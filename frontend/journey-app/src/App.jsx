@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LandingPage from "./components/LandingPage/LandingPage";
@@ -10,13 +9,30 @@ import PostInteraction from "./components/PostInteraction/PostInteraction";
 import CreatePost from "./components/CreatePost/CreatePost";
 import UserPosts from "./components/PostInteraction/UserPosts";
 import PrivateRoutes from "./utils/PrivateRoutes";
+import Navbar from './components/Navigation/Navbar'
+import React, { useState } from "react";
+import Parks from "./components/ParksPage/Parks";
+import WebcamPage from "./components/ParksPage/WebcamPage";
+import Activities from "./components/ParksPage/Activites";
+import Videos from "./components/ParksPage/Videos";
+import Tours from "./components/ParksPage/Tours";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const handleLogin = (loggedIn) => {
+    setIsLoggedIn(loggedIn);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+  };
   return (
     <div className="App">
       <Router>
+        <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} /> {/* Include Navbar component */}
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<LandingPage onLogin={handleLogin} />} />
           <Route exact path="/signup" element={<SignUpForm />} />
           <Route exact path="/signin" element={<SignInForm />} />
 
@@ -25,6 +41,11 @@ function App() {
             <Route exact path="/post" element={<PostInteraction />} />
             <Route exact path="/createpost" element={<CreatePost />} />
             <Route exact path="/userposts" element={<UserPosts />} />
+            <Route exact path="/parks" element={<Parks />} />
+            <Route exact path="/webcams" element={<WebcamPage />} />
+            <Route exact path="/activities" element={<Activities />} />
+            <Route exact path="/videos" element={<Videos />} />
+            <Route exact path="/tours" element={<Tours />} />
           </Route>
         </Routes>
       </Router>
@@ -33,3 +54,4 @@ function App() {
 }
 
 export default App;
+

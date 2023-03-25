@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 
-function SignIn() {
+function SignIn({ onLogin }) {
   const [userData, setUserData] = useState({
     username: "",
     email: "",
@@ -39,7 +39,10 @@ function SignIn() {
       );
       console.log(res);
       localStorage.setItem("token", res.data.token);
+      if (onLogin) onLogin(true);
       setRedirect(true);
+
+      console.log("Cookies after login:", document.cookie);
     } catch (err) {
       console.error(err);
     }
