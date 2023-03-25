@@ -25,12 +25,12 @@ function Navbar() {
         <div id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item active">
-              <a className="nav-link" href="#">
+              <Link className="nav-link" href="#" to="/dashboard">
                 Home
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/createpost" className="nav-link"> {/* Chad added a Link component */}
+              <Link to="/createpost" className="nav-link">
                 Create
               </Link>
             </li>

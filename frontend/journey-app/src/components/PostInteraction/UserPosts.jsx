@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Navbar } from "react-bootstrap";
+import Navbars from "../Navigation/Navbar";
 
 const UserPosts = () => {
   // Declare a state variable 'posts' and initialize it with an empty array
@@ -11,11 +13,14 @@ const UserPosts = () => {
     const fetchPosts = async () => {
       try {
         // Send a GET request to the API endpoint with the Authorization header
-        const response = await axios.get("http://localhost:8000/api/userposts/", {
-          headers: {
-            Authorization: `Token ${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await axios.get(
+          "http://localhost:8000/api/userposts/",
+          {
+            headers: {
+              Authorization: `Token ${localStorage.getItem("token")}`,
+            },
+          }
+        );
 
         console.log("Response data: ", response.data); // Log the response data to the console
         // Update the 'posts' state variable with the fetched data
@@ -34,6 +39,7 @@ const UserPosts = () => {
   // Render the component with fetched posts
   return (
     <div>
+      <Navbars />
       <h1>Your Posts</h1>
       <ul>
         {/* Iterate through the 'posts' array and render a list item for each post */}
@@ -51,4 +57,3 @@ const UserPosts = () => {
 };
 
 export default UserPosts;
-

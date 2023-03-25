@@ -37,6 +37,7 @@ function SignIn() {
         body,
         config
       );
+      console.log(res);
       localStorage.setItem("token", res.data.token);
       setRedirect(true);
     } catch (err) {

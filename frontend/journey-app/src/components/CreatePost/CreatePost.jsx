@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { Navigate } from "react-router-dom";
 import "./CreatePost.css";
+import Navbar from "../Navigation/Navbar";
 
 const CreatePost = () => {
   const [navigate, setNavigate] = useState(false);

@@ -42,7 +42,7 @@ class SigninView(APIView):
         user = authenticate(username=username, password=password, email=email)
         if user:
             token, _ = Token.objects.get_or_create(user=user)
-            return Response({"token": token.key, "userid": user}, status=200)
+            return Response({"token": token.key, "userid": user.pk}, status=200)
         else:
             return Response({"error": "Invalid credentials"}, status=400)
 
