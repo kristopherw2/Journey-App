@@ -9,7 +9,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework import status
 from django.http import JsonResponse
-
+from rest_framework.authtoken.views import ObtainAuthToken
 
 class SignupView(APIView):
     queryset = User.objects.all()
@@ -62,11 +62,16 @@ class SigninView(APIView):
         if user:
             token, _ = Token.objects.get_or_create(user=user)
             response = JsonResponse({"token": token.key, "user_id": user.pk}, status=200)  # Add the user_id to the response
-            response.set_cookie("user_id", user.id, httponly=True, samesite="Strict")
+            # response.set_cookie("user_id", user.id, httponly=True, samesite="Strict")
             return response
         else:
             return JsonResponse({"error": "Invalid credentials"}, status=400)
 
+# class SigninView(ObtainAuthToken):
+#     def post(self, request, *args, **kwargs):
+#         response = super(SigninView, self).post(request, *args, **kwargs)
+#         token = Token.objects.get_or_create(key=response.data['token'])
+#         return Response({'token': token.key, 'id': token.user})
 
 
 
