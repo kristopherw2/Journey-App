@@ -55,7 +55,7 @@ function SignIn({ onLogin }) {
   return (
     <Container>
       <Row>
-        <Col md="4">
+        {/* <Col md="4"> */}
           <center>
             <h1>Sign-in</h1>
           </center>
@@ -104,7 +104,7 @@ function SignIn({ onLogin }) {
               Don't have account? <Link to="/signup">Signup</Link>
             </p>
           </center>
-        </Col>
+        {/* </Col> */}
       </Row>
     </Container>
   );

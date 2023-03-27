@@ -59,10 +59,6 @@ class ParksAPIView(APIView):
             return Response({"error": "Error fetching National Parks data."}, status=400)
 
 
-
-
-
-
 class BasicPagination(PageNumberPagination):
     page_size_query_param = 'limit'
 
@@ -86,7 +82,6 @@ class PostListAPIView(generics.ListCreateAPIView):
         serializer.save(user=user)
 
 
-
 class PostDetailAPIView(RetrieveUpdateDestroyAPIView):
     queryset = PostDB.objects.all()
     serializer_class = PostSerializer
@@ -100,8 +95,6 @@ class CommentListCreateAPIView(ListCreateAPIView):
 class CommentDetailAPIView(RetrieveUpdateDestroyAPIView):
     queryset = CommentDB.objects.all()
     serializer_class = CommentSerializer
-
-
 
 
 class UserPostsAPIView(ListCreateAPIView):
@@ -138,6 +131,16 @@ class UserPostsAPIView(ListCreateAPIView):
         if not user:
             user = self.request.user  # Fall back to the authenticated user if cookie retrieval fails.
         serializer.save(user=user)
+
+
+class DetailedUserPostsAPIView(RetrieveUpdateDestroyAPIView):
+   serializer_class = PostSerializer
+   permission_classes = [permissions.IsAuthenticated]
+
+
+   def get_queryset(self):
+       user = self.request.user
+       return PostDB.objects.filter(user=user)
 
 
 class ExtractLocationAPIView(APIView):

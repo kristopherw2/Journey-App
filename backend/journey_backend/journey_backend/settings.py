@@ -142,8 +142,6 @@ CORS_ALLOW_HEADERS = [
     'cookie',
 ]
 
-
-
 MEDIA_ROOT = BASE_DIR / 'media'
 
 CORS_ALLOW_CREDENTIALS = True
@@ -153,7 +151,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True #Added for the Delete 
 
 
 # from pathlib import Path
