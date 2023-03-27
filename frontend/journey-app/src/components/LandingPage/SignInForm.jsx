@@ -39,6 +39,7 @@ function SignIn({ onLogin }) {
       );
       console.log(res);
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("id", res.data.user_id);
       if (onLogin) onLogin(true);
       setRedirect(true);
 
