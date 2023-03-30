@@ -1,4 +1,14 @@
-/* components/ParksPage/Parks.css */
+
+.parks-header {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+  color: #757575;
+}
+
+
+
 .parks-links {
   display: flex;
   flex-wrap: wrap;
@@ -10,7 +20,6 @@
   margin-bottom: 2rem;
 }
 
-
 .parks-link-card {
   background-size: cover;
   background-position: center;
@@ -18,9 +27,12 @@
   margin: 10px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 240px;
+  overflow: hidden;
 }
 
 .parks-link-card h2 {
   color: #ffffff;
+  font-size: 1.5rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }

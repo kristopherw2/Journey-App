@@ -1,0 +1,108 @@
+.activities-container {
+  max-width: 90vw;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.activities-header {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+  color: #333;
+}
+
+.activities-select details {
+  display: inline-block;
+  margin-right: 33%;
+}
+
+.activities-select-dropdown {
+  background-color: #fff;
+}
+
+
+.activities-select summary {
+  font-size: 1rem;
+  color: #444;
+  cursor: pointer;
+}
+
+.activities-select select {
+  font-size: 1rem;
+  color: #444;
+  width: 100%;
+  max-width: 300px;
+}
+
+
+.activities-search {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #444;
+  /* changed search bar background color to lighter shade */
+  background-color: #f2f2f2;
+  /* added padding to give search bar more space */
+  padding: 0.5rem;
+  /* centered text within search bar */
+  text-align: center;
+}
+
+.activities-search label {
+  margin-bottom: 5px;
+}
+
+.activities-search input {
+  margin-right: 10px;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  color: #444;
+  width: 100%;
+  max-width: 300px;
+  height: 2rem;
+  /* changed search bar background color to lighter shade */
+  background-color: #f2f2f2;
+}
+
+.activities-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.activities-list li {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(58, 36, 36, 0.1);
+  background-color: #f8f8f8;
+  word-break: break-word;
+}
+
+.activities-list h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.activities-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.activities-list li.activities-sublist-item {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #444;
+}
+
+.activities-list li.activities-sublist-item:last-child {
+  margin-bottom: 0;
+}

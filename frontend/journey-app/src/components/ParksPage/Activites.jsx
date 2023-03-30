@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./Activities.css";
 
 const Activities = () => {
   const [parks, setParks] = useState([]);
@@ -54,38 +55,40 @@ const Activities = () => {
   };
 
   return (
-    <div>
-      <h1>National Park Activities</h1>
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
-        <label htmlFor="parkSelect">Select a park: </label>
-        <select id="parkSelect" onChange={handleParkNameChange}>
-          <option value="">All Parks</option>
-          {parks.map((park) => (
-            <option key={park.parkCode} value={park.fullName}>
-              {park.fullName}
-            </option>
-          ))}
-        </select>
-        <br />
-        {selectedParkName === "" && (
-          <>
-            <label htmlFor="activitySearch">Search Activities Here: </label>
-            <input
-              id="activitySearch"
-              type="text"
-              placeholder=""
-              onChange={filterActivities}
-            />
-          </>
-        )}
+    <div className="activities-container">
+      <h1 className="activities-header">National Park Activities</h1>
+      <div className="activities-select">
+        <details>
+          <summary>Select a park:</summary>
+          <select id="parkSelect" onChange={handleParkNameChange} className="activities-select-dropdown">
+            <option value="">All Parks</option>
+            {parks.map((park) => (
+              <option key={park.parkCode} value={park.fullName}>
+                {park.fullName}
+              </option>
+            ))}
+          </select>
+        </details>
       </div>
-      <ul>
+
+      {selectedParkName === "" && (
+        <div className="activities-search">
+          <input
+            id="activitySearch"
+            type="text"
+            placeholder="Activities Search:"
+            onChange={filterActivities}
+            className="activities-search-bar"
+          />
+        </div>
+      )}
+      <ul className="activities-list">
         {filteredParks.map((park) => (
-          <li key={park.parkCode}>
+          <li key={park.parkCode} className="activities-list-item">
             <h3>{park.fullName}</h3>
-            <ul>
+            <ul className="activities-sublist">
               {park.activities.map((activity) => (
-                <li key={activity.id}>{activity.name}</li>
+                <li key={activity.id} className="activities-sublist-item">{activity.name}</li>
               ))}
             </ul>
           </li>
@@ -96,195 +99,3 @@ const Activities = () => {
 };
 
 export default Activities;
-
-
-
-
-
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-
-// const Activities = () => {
-//   const [parks, setParks] = useState([]);
-//   const [filteredParks, setFilteredParks] = useState([]);
-
-//   useEffect(() => {
-//     const fetchParks = async () => {
-//       try {
-//         const token = localStorage.getItem("token");
-//         const response = await axios.get("http://localhost:8000/api/parks/", {
-//           headers: { Authorization: `Token ${token}` },
-//         });
-//         console.log("API response:", response);
-//         setParks(response.data.parks);
-//         setFilteredParks(response.data.parks);
-//       } catch (error) {
-//         console.error("Error fetching parks data: ", error);
-//       }
-//     };
-
-//     fetchParks();
-//   }, []);
-
-//   const filterActivities = (e) => {
-//     const filterText = e.target.value.toLowerCase();
-//     const filtered = parks.filter((park) =>
-//       park.activities.some((activity) =>
-//         activity.name.toLowerCase().includes(filterText)
-//       )
-//     );
-//     setFilteredParks(filtered);
-//   };
-
-//   return (
-//     <div>
-//       <h1>National Park Activities</h1>
-//       <div style={{ textAlign: "center", marginTop: "20px" }}>
-//         <label htmlFor="activitySearch">Search Activities Here: </label>
-//         <input
-//           id="activitySearch"
-//           type="text"
-//           placeholder=""
-//           onChange={filterActivities}
-//         />
-//       </div>
-//       <ul>
-//         {filteredParks.map((park) => (
-//           <li key={park.parkCode}>
-//             <h3>{park.fullName}</h3>
-//             <ul>
-//               {park.activities.map((activity) => (
-//                 <li key={activity.id}>
-//                   {activity.name}
-//                 </li>
-//               ))}
-//             </ul>
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Activities;
-
-
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-
-// const Activities = () => {
-//   const [activitiesParks, setActivitiesParks] = useState([]);
-//   const [filteredActivities, setFilteredActivities] = useState([]);
-
-//   useEffect(() => {
-//     const fetchActivitiesParks = async () => {
-//       try {
-//         const token = localStorage.getItem("token");
-//         const response = await axios.get("http://localhost:8000/api/parks/", {
-//           headers: { Authorization: `Token ${token}` },
-//         });
-//         console.log("API response:", response);
-//         setActivitiesParks(response.data.activities_parks);
-//         setFilteredActivities(response.data.activities_parks);
-//       } catch (error) {
-//         console.error("Error fetching activities parks data: ", error);
-//       }
-//     };
-
-//     fetchActivitiesParks();
-//   }, []);
-
-//   const filterActivities = (e) => {
-//     const filterText = e.target.value.toLowerCase();
-//     const filtered = activitiesParks.filter((activity) =>
-//       activity.name.toLowerCase().includes(filterText)
-//     );
-//     setFilteredActivities(filtered);
-//   };
-
-//   return (
-//     <div>
-//       <h1>National Park Activities</h1>
-//       <div style={{ textAlign: "center", marginTop: "20px" }}>
-//         <label htmlFor="activitySearch">Search Activities Here: </label>
-//         <input
-//           id="activitySearch"
-//           type="text"
-//           placeholder=""
-//           onChange={filterActivities}
-//         />
-//       </div>
-//       <ul>
-//         {filteredActivities.map((activity) => (
-//           <li key={activity.id}>
-//             <h3>{activity.name}</h3>
-//             <ul>
-//               {activity.parks.map((park) => (
-//                 <li key={park.parkCode}>
-//                   <h4>{park.fullName}</h4>
-//                   <a href={park.url} target="_blank" rel="noopener noreferrer">
-//                     {park.name}
-//                   </a>
-//                 </li>
-//               ))}
-//             </ul>
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Activities;
-
-
-// below does not have search just the full list
-// // components/ActivitiesPage/Activities.js 
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-
-// const Activities = () => {
-//   const [activitiesParks, setActivitiesParks] = useState([]);
-
-//   useEffect(() => {
-//     const fetchActivitiesParks = async () => {
-//       try {
-//         const token = localStorage.getItem("token");
-//         const response = await axios.get("http://localhost:8000/api/parks/", {
-//           headers: { Authorization: `Token ${token}` },
-//         });
-//         console.log("API response:", response);
-//         setActivitiesParks(response.data.activities_parks);
-//       } catch (error) {
-//         console.error("Error fetching activities parks data: ", error);
-//       }
-//     };
-
-//     fetchActivitiesParks();
-//   }, []);
-
-//   return (
-//     <div>
-//       <h1>National Park Activities</h1>
-//       <ul>
-//         {activitiesParks.map((activity) => (
-//           <li key={activity.id}>
-//             <h3>{activity.name}</h3>
-//             <ul>
-//               {activity.parks.map((park) => (
-//                 <li key={park.parkCode}>
-//                   <h4>{park.fullName}</h4>
-//                   <a href={park.url} target="_blank" rel="noopener noreferrer">
-//                     {park.name}
-//                   </a>
-//                 </li>
-//               ))}
-//             </ul>
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default Activities;
