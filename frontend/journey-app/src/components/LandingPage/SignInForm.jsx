@@ -39,6 +39,7 @@ function SignIn({ onLogin }) {
       );
       console.log(res);
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("id", res.data.user_id);
       if (onLogin) onLogin(true);
       setRedirect(true);
 
@@ -55,7 +56,7 @@ function SignIn({ onLogin }) {
   return (
     <Container>
       <Row>
-        <Col md="4">
+        {/* <Col md="4"> */}
           <center>
             <h1>Sign-in</h1>
           </center>
@@ -104,7 +105,7 @@ function SignIn({ onLogin }) {
               Don't have account? <Link to="/signup">Signup</Link>
             </p>
           </center>
-        </Col>
+        {/* </Col> */}
       </Row>
     </Container>
   );

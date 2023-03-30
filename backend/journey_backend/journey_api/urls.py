@@ -8,6 +8,7 @@ urlpatterns = [
     path("comments/<int:pk>/", views.CommentDetailAPIView.as_view(), name="comment-detail"),
     path("extract_location/", views.ExtractLocationAPIView.as_view(), name="extract-location"),
     path("userposts/", views.UserPostsAPIView.as_view(), name="user-posts"),
+    path("userposts/<int:pk>/", views.DetailedUserPostsAPIView.as_view(), name="user-posts-details"),
     path("parks/", views.ParksAPIView.as_view(), name="parks"),
     path("tours/", views.ToursAPIView.as_view(), name="tours"),
     path("tours/<str:tour_id>/", views.TourDetailAPIView.as_view(), name="tour-detail"),

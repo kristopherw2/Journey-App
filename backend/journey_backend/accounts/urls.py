@@ -5,7 +5,7 @@ from .views import SignupView
 from .views import SignoutView
 
 urlpatterns = [
-    path('signin/', obtain_auth_token),
+    path('signin/', SigninView.as_view()),
     path('signup/', SignupView.as_view()),
     path('signout/', SignoutView.as_view()),
 ]

@@ -32,8 +32,8 @@ body {
     "header header header"
     "sidebar content content"
     "footer footer footer";
-  background-color: #f44336; /* changed the background color to a lush red */
-  color: #fff;
+   background-color: #f44336; /*changed the background color to a lush red */
+  /* color: #fff; */
 }
 
 button {

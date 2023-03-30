@@ -9,7 +9,7 @@ import PostInteraction from "./components/PostInteraction/PostInteraction";
 import CreatePost from "./components/CreatePost/CreatePost";
 import UserPosts from "./components/PostInteraction/UserPosts";
 import PrivateRoutes from "./utils/PrivateRoutes";
-import Navbar from './components/Navigation/Navbar'
+import Navbar from "./components/Navigation/Navbar";
 import React, { useState } from "react";
 import Parks from "./components/ParksPage/Parks";
 import WebcamPage from "./components/ParksPage/WebcamPage";
@@ -28,12 +28,14 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("id");
     setIsLoggedIn(false);
   };
   return (
     <div className="App">
       <Router>
-        <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} /> {/* Include Navbar component */}
+        <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />{" "}
+        {/* Include Navbar component */}
         <Routes>
           <Route path="/" element={<LandingPage onLogin={handleLogin} />} />
           <Route exact path="/signup" element={<SignUpForm />} />
@@ -59,4 +61,3 @@ function App() {
 }
 
 export default App;
-

@@ -1,0 +1,24 @@
+#update-modal{
+  margin-top: 4rem;
+}
+
+#modal-header{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 95%
+}
+
+#modal-update-body{
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#update_desc{
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 450px;
+}
