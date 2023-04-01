@@ -42,7 +42,7 @@ function App() {
             <Route exact path="/dashboard" element={<UserDashBoard />} />
             <Route exact path="/post" element={<PostInteraction />} />
             <Route exact path="/createpost" element={<CreatePost />} />
-            <Route exact path="/userposts" element={<UserPosts />} />
+            {/* <Route exact path="/userposts" element={<UserPosts />} /> */}
             <Route exact path="/parks" element={<Parks />} />
             <Route exact path="/webcams" element={<WebcamPage />} />
             <Route exact path="/activities" element={<Activities />} />
