@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import UpdateForm from "./UpdateForm";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Loader from "../../utils/Loader";
+import EndMessage from "../../utils/EndMessage";
 
 function Posts() {
   const [userPosts, setUserPosts] = useState([]);
@@ -33,7 +35,6 @@ function Posts() {
 
   useEffect(() => {
     axios.get(url, options).then((response) => {
-      console.log(response.data.results);
       setUserPosts(response.data.results);
       setDataUpdated(false);
     });
@@ -101,15 +102,21 @@ function Posts() {
   };
 
   const fetchPosts = async () => {
-    axios.get(url + `?page=${nextPage}`, options).then((response) => {
-      setUserPosts([...userPosts, ...response.data.results]);
+    let data;
+    return axios.get(url + `?page=${nextPage}`, options).then((response) => {
+      // setUserPosts([...userPosts, ...response.data.results]);
+      return response.data.results;
     });
   };
 
   const fetchData = async () => {
     const loadPages = await fetchPosts();
-    // if(loadPages.length === 0 || )
-    setNoMore(false);
+    console.log(loadPages);
+    setUserPosts([...userPosts, ...loadPages]);
+    if (loadPages.length === 0 || loadPages.length < 20) {
+      setNoMore(false);
+    }
+
     setNextPage(nextPage + 1);
   };
 
@@ -119,12 +126,8 @@ function Posts() {
         dataLength={userPosts.length} //This is important field to render the next data
         next={fetchData}
         hasMore={noMore}
-        loader={<h4>Loading...</h4>}
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>Yay! You have seen it all</b>
-          </p>
-        }
+        loader={<Loader />}
+        endMessage={null}
       >
         <div name={item.id} id="post-container">
           <h3>{item.title}</h3>
