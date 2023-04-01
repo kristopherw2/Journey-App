@@ -11,7 +11,9 @@ urlpatterns = [
     path("userposts/<int:pk>/", views.DetailedUserPostsAPIView.as_view(), name="user-posts-details"),
     path("parks/", views.ParksAPIView.as_view(), name="parks"),
     path("tours/", views.ToursAPIView.as_view(), name="tours"),
+    path("tours/<str:tour_id>/", views.TourDetailAPIView.as_view(), name="tour-detail"),
     path("videos/", views.VideosAPIView.as_view(), name="videos"),
+    path("webcams/", views.WebcamsAPIView.as_view(), name="webcams"),
 ]
 
 

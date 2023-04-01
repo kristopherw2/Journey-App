@@ -1,0 +1,124 @@
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Lato', sans-serif;
+  font-weight: bold;
+  margin: 0 0 1rem;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+.tours-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.tours-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.tour-card {
+  padding: 1rem;
+  background-color: #f0f0f0;
+  border-radius: 0.5rem;
+  max-width: 400px;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.tour-card h3 {
+  font-size: 2rem;
+}
+
+.tour-card p {
+  margin: 0 0 1rem;
+}
+
+.tour-card a {
+  color: #333;
+  text-decoration: none;
+}
+
+.tour-details-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+}
+
+.tour-details-container h2 {
+  margin-bottom: 1rem;
+}
+
+
+.tour-images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.tour-image {
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.tour-image img {
+  max-width: 100%;
+}
+
+.tour-activities, .tour-topics {
+  margin-top: 2rem;
+}
+
+.tour-activities h3, .tour-topics h3 {
+  margin: 0 0 1rem;
+}
+
+.tour-activities ul, .tour-topics ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tour-activities li, .tour-topics li {
+  margin: 0.5rem 0;
+  font-weight: bold;
+}
+

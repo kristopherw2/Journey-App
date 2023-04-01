@@ -16,6 +16,9 @@ import WebcamPage from "./components/ParksPage/WebcamPage";
 import Activities from "./components/ParksPage/Activites";
 import Videos from "./components/ParksPage/Videos";
 import Tours from "./components/ParksPage/Tours";
+import TourDetails from "./components/ParksPage/TourDetails";
+
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -48,6 +51,8 @@ function App() {
             <Route exact path="/activities" element={<Activities />} />
             <Route exact path="/videos" element={<Videos />} />
             <Route exact path="/tours" element={<Tours />} />
+            <Route exact path="/tours/:id" element={<TourDetails />} />
+
           </Route>
         </Routes>
       </Router>
