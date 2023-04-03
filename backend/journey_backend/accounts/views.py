@@ -17,10 +17,8 @@ class SignupView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        print("SIGN-UP REQUEST")
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            print("SIGN-UP VALID")
             username = serializer.validated_data['username']
             password = serializer.validated_data['password']
             email = serializer.validated_data['email']
@@ -28,24 +26,8 @@ class SignupView(APIView):
             # serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            print("SIGN-UP INVALID")
             print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# class SigninView(APIView):
-#     permission_classes = (AllowAny,)
-
-#     def post(self, request):
-#         username = request.data.get("username")
-#         password = request.data.get("password")
-#         email = request.data.get("email")
-#         user = authenticate(username=username, password=password, email=email)
-#         if user:
-#             token, _ = Token.objects.get_or_create(user=user)
-#             return Response({"token": token.key}, status=200)
-#         else:
-#             return Response({"error": "Invalid credentials"}, status=400)
 
 
 
@@ -62,16 +44,9 @@ class SigninView(APIView):
         if user:
             token, _ = Token.objects.get_or_create(user=user)
             response = JsonResponse({"token": token.key, "user_id": user.pk}, status=200)  # Add the user_id to the response
-            # response.set_cookie("user_id", user.id, httponly=True, samesite="Strict")
             return response
         else:
             return JsonResponse({"error": "Invalid credentials"}, status=400)
-
-# class SigninView(ObtainAuthToken):
-#     def post(self, request, *args, **kwargs):
-#         response = super(SigninView, self).post(request, *args, **kwargs)
-#         token = Token.objects.get_or_create(key=response.data['token'])
-#         return Response({'token': token.key, 'id': token.user})
 
 
 
