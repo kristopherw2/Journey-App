@@ -29,6 +29,25 @@ class SignupView(APIView):
             print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    # def post(self, request):
+    #     serializer = self.serializer_class(data=request.data)
+    #     if serializer.is_valid():
+    #         username = serializer.validated_data['username']
+    #         password = serializer.validated_data['password']
+    #         email = serializer.validated_data['email']
+    #         user = User.objects.create_user(username=username, password=password, email=email)
+
+    #         # Create and return an authentication token for the newly registered user
+    #         token, _ = Token.objects.get_or_create(user=user)
+    #         response_data = serializer.data
+    #         response_data['token'] = token.key
+
+    #         return Response(response_data, status=status.HTTP_201_CREATED)
+    #     else:
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 
 
 

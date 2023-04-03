@@ -31,13 +31,13 @@ function Posts() {
     withCredentials: true,
   };
 
-  const url = "http://127.0.0.1:8000/api/userposts/";
-
   useEffect(() => {
-    axios.get(url, options).then((response) => {
-      setUserPosts(response.data.results);
-      setDataUpdated(false);
-    });
+    axios
+      .get(`http://${import.meta.env.VITE_BASE_URL}/api/userposts/`, options)
+      .then((response) => {
+        setUserPosts(response.data.results);
+        setDataUpdated(false);
+      });
   }, [dataUpdated]);
 
   let copiedUserPosts = [...userPosts];
@@ -47,10 +47,17 @@ function Posts() {
       `Trying to Delete a post : ${e.target.getAttribute("post_id")}`
     );
     let item_id = e.target.getAttribute("post_id");
-    axios.delete(`${url}${item_id}/`, options).then(() => {
-      setDataUpdated(true);
-      alert("Successfully Deleted Your Post!");
-    });
+    axios
+      .delete(
+        `${`http://${
+          import.meta.env.VITE_BASE_URL
+        }/api/userposts/`}${item_id}/`,
+        options
+      )
+      .then(() => {
+        setDataUpdated(true);
+        alert("Successfully Deleted Your Post!");
+      });
   };
 
   // Function to get the value entered in the update form
@@ -68,7 +75,14 @@ function Posts() {
   // Function that calls the POST API to update the post
   const getPostDetailsByID = async (item_id) => {
     try {
-      const response = await axios.get(`${url}${item_id}/`, options);
+      const response = await axios.get(
+        `${`http://${
+          import.meta.env.VITE_BASE_URL
+        }/api/userposts/`}${item_id}/`,
+        options
+      );
+      console.log("Able to Get Data");
+      console.log(response.data);
       setItemToUpdate(response.data);
       setOriginalDesc(response.data.description);
     } catch (err) {
@@ -82,7 +96,9 @@ function Posts() {
     console.log(originalDesc);
     axios
       .patch(
-        `${url}${e.target.getAttribute("post_id")}/`,
+        `${`http://${
+          import.meta.env.VITE_BASE_URL
+        }/api/userposts/`}${e.target.getAttribute("post_id")}/`,
         {
           description: originalDesc,
         },

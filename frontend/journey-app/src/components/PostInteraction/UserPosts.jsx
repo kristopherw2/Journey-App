@@ -13,7 +13,7 @@ const UserPosts = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/userposts/?limit=10&page=${page}`,
+        `http://${import.meta.env.VITE_BASE_URL}/api/userposts/?limit=10&page=${page}`,
         {
           headers: {
             Authorization: `Token ${localStorage.getItem("token")}`,

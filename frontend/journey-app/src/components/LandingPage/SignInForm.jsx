@@ -31,9 +31,10 @@ function SignIn({ onLogin }) {
           "Content-Type": "application/json",
         },
       };
+      console.log(`LOGIN URL: ${import.meta.env.VITE_BASE_URL}`)
       const body = JSON.stringify(userData);
       const res = await axios.post(
-        "http://127.0.0.1:8000/accounts/signin/",
+        `http://${import.meta.env.VITE_BASE_URL}/api/accounts/signin_api/`,
         body,
         config
       );

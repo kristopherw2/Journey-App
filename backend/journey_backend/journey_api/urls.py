@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -14,6 +14,7 @@ urlpatterns = [
     path("tours/<str:tour_id>/", views.TourDetailAPIView.as_view(), name="tour-detail"),
     path("videos/", views.VideosAPIView.as_view(), name="videos"),
     path("webcams/", views.WebcamsAPIView.as_view(), name="webcams"),
+    path('accounts/', include('accounts.urls')),
 ]
 
 

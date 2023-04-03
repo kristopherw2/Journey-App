@@ -15,6 +15,7 @@ import requests
 from django.conf import settings
 from django.http import Http404
 
+import os  # for getting environment variables
 
 class TourDetailAPIView(generics.GenericAPIView):
     def get(self, request, tour_id):
@@ -41,6 +42,10 @@ class ToursAPIView(generics.GenericAPIView):
     def get(self, request):
         api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
         # api_key = "xOxom9QnYRp4ClWc9828eKHrGCykgSg1CPlorrK9"
+        # api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L" removed hard coded api key
+
+        #so i changed this for all parks api views an this will be passed in as a parameter when we build the images.
+        api_key = os.getenv("National_Parks_API_Key")
         response = requests.get(
             "https://developer.nps.gov/api/v1/tours",
             params={"api_key": api_key},
@@ -49,8 +54,7 @@ class ToursAPIView(generics.GenericAPIView):
 
 class VideosAPIView(generics.GenericAPIView):
     def get(self, request):
-        api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
-        # api_key = "xOxom9QnYRp4ClWc9828eKHrGCykgSg1CPlorrK9"
+        api_key = os.getenv("National_Parks_API_Key")
         response = requests.get(
             "https://developer.nps.gov/api/v1/multimedia/videos",
             params={"api_key": api_key},
@@ -92,9 +96,10 @@ class ParksAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
-        # api_key = "xOxom9QnYRp4ClWc9828eKHrGCykgSg1CPlorrK9"
-        api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
-        parks_url = f"https://developer.nps.gov/api/v1/parks?limit=500&api_key={api_key}"
+        api_key = os.getenv("National_Parks_API_Key")
+        park_codes = "yose,grca"  # Hardcoding park codes (Yosemite and Grand Canyon)
+        webcams_url = f"https://developer.nps.gov/api/v1/webcams?parkCode={park_codes}&api_key={api_key}"
+        activities_parks_url = f"https://developer.nps.gov/api/v1/activities/parks?api_key={api_key}"
 
         parks_response = requests.get(parks_url)
 
