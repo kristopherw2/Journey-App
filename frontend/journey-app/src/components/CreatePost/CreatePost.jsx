@@ -84,7 +84,7 @@ const CreatePost = () => {
   };
 
   return navigate ? (
-    <Navigate to="/userposts" />
+    <Navigate to="/dashboard" />
   ) : (
     <div className="wrapper">
       <form onSubmit={formik.handleSubmit}>

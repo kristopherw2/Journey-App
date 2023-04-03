@@ -119,10 +119,17 @@ function Posts() {
 
   const fetchPosts = async () => {
     let data;
-    return axios.get(url + `?page=${nextPage}`, options).then((response) => {
-      // setUserPosts([...userPosts, ...response.data.results]);
-      return response.data.results;
-    });
+    return axios
+      .get(
+        `http://${
+          import.meta.env.VITE_BASE_URL
+        }/api/userposts/?page=${nextPage}`,
+        options
+      )
+      .then((response) => {
+        // setUserPosts([...userPosts, ...response.data.results]);
+        return response.data.results;
+      });
   };
 
   const fetchData = async () => {
@@ -161,7 +168,11 @@ function Posts() {
             src={trash}
             onClick={handleDelete}
           />
-          <img src={`http://localhost:8000${item.image_url}`} />
+          <img
+            src={`http://${import.meta.env.VITE_BASE_URL}:8000/${
+              item.image_url
+            }`}
+          />
         </div>
         <Description description={item.description} />
         <div id="modal-container">
