@@ -13,14 +13,17 @@ from rest_framework import permissions, generics, status
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
 import requests
-
+import os  # for getting environment variables
 
 
 
 
 class ToursAPIView(generics.GenericAPIView):
     def get(self, request):
-        api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
+        # api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L" removed hard coded api key
+
+        #so i changed this for all parks api views an this will be passed in as a parameter when we build the images.
+        api_key = os.getenv("National_Parks_API_Key")
         response = requests.get(
             "https://developer.nps.gov/api/v1/tours",
             params={"api_key": api_key},
@@ -29,7 +32,7 @@ class ToursAPIView(generics.GenericAPIView):
 
 class VideosAPIView(generics.GenericAPIView):
     def get(self, request):
-        api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
+        api_key = os.getenv("National_Parks_API_Key")
         response = requests.get(
             "https://developer.nps.gov/api/v1/multimedia/videos",
             params={"api_key": api_key},
@@ -41,7 +44,7 @@ class ParksAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
-        api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
+        api_key = os.getenv("National_Parks_API_Key")
         park_codes = "yose,grca"  # Hardcoding park codes (Yosemite and Grand Canyon)
         webcams_url = f"https://developer.nps.gov/api/v1/webcams?parkCode={park_codes}&api_key={api_key}"
         activities_parks_url = f"https://developer.nps.gov/api/v1/activities/parks?api_key={api_key}"

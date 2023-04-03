@@ -7,7 +7,6 @@ import Cookies from "js-cookie";
 
 const CreatePost = () => {
   const [navigate, setNavigate] = useState(false);
-
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -31,7 +30,7 @@ const CreatePost = () => {
         console.log("Submitting form data: ", formData);
 
         const response = await axios.post(
-          "http://localhost:8000/api/posts/",
+          `http://${import.meta.env.VITE_BASE_URL}/api/posts/`,
           formData,
           {
             headers: {
@@ -58,7 +57,7 @@ const CreatePost = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/extract_location/",
+        `http://${import.meta.env.VITE_BASE_URL}/api/extract_location/`,
         formData,
         {
           headers: {

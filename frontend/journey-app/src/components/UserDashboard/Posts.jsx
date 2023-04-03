@@ -16,23 +16,17 @@ function Posts() {
   const [originalDesc, setOriginalDesc] =useState("")
   const [show, setShow] = useState(false)
   const [dataUpdated, setDataUpdated] = useState(false)
-
-
-
-  const my_token = localStorage.getItem("token");
+  const my_token = localStorage.getItem("token")
   const options = {
     headers: {
       "Content-type": "application/json",
       "Authorization": `Token ${my_token}`
     },
     withCredentials: true, 
-  };
-
-  const url = "http://127.0.0.1:8000/api/userposts/";
+  }
 
   useEffect(() => {
-    // const url = "http://127.0.0.1:8000/api/userposts/";
-    axios.get(url, options).then((response) => {
+    axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/userposts/`, options).then((response) => {
       setUserPosts(response.data.results);
       setDataUpdated(false)
     });
@@ -44,7 +38,7 @@ function Posts() {
     console.log(`Trying to Delete a post : ${e.target.getAttribute('post_id')}`)
     let item_id = e.target.getAttribute('post_id')
     axios
-      .delete(`${url}${item_id}/`,options)
+      .delete(`${`http://${import.meta.env.VITE_BASE_URL}/api/userposts/`}${item_id}/`,options)
       .then(() =>  {
         setDataUpdated(true)
         alert("Successfully Deleted Your Post!")
@@ -64,7 +58,7 @@ function Posts() {
   // Function that calls the POST API to update the post
   const getPostDetailsByID = async (item_id) => {
     try {
-      const response = await axios.get(`${url}${item_id}/`, options)
+      const response = await axios.get(`${`http://${import.meta.env.VITE_BASE_URL}/api/userposts/`}${item_id}/`, options)
       console.log("Able to Get Data")
       console.log(response.data)
       setItemToUpdate(response.data)
@@ -79,7 +73,7 @@ function Posts() {
     console.log(e.target.getAttribute('post_id'))
     console.log(originalDesc)
     axios
-      .patch(`${url}${e.target.getAttribute('post_id')}/`, {
+      .patch(`${`http://${import.meta.env.VITE_BASE_URL}/api/userposts/`}${e.target.getAttribute('post_id')}/`, {
         description: originalDesc
       }, options)
       .then((response) => {

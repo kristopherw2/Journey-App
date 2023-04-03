@@ -22,7 +22,7 @@ function SignUpForm() {
 
   const onChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
-  };
+  };  
 
   //Signs user up....still needs error handling
   const onSignupClick = async () => {
@@ -37,9 +37,10 @@ function SignUpForm() {
           "Content-Type": "application/json",
         },
       };
-      const body = JSON.stringify(user);
+      const body = JSON.stringify(user);      
+      
       const res = await axios.post(
-        "http://127.0.0.1:8000/accounts/signup/",
+        `http://${import.meta.env.VITE_BASE_URL}/api/accounts/signup_api/`,
         body,
         config
       );
