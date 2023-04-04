@@ -12,6 +12,7 @@ services:
     environment:
       - SECRET_KEY=$SECRET_KEY
       - DEBUG=$DEBUG
+      - PARK_API_KEY=$PARK_API_KEY
   nginx:
     build: 
       context: .

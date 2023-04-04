@@ -10,7 +10,7 @@ const WebcamPage = () => {
     const fetchWebcams = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:8000/api/webcams/", {
+        const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/webcams/`, {
           headers: { Authorization: `Token ${token}` },
         });
         console.log("API response:", response);

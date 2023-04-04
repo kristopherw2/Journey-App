@@ -11,7 +11,7 @@ const Videos = () => {
     const fetchVideos = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:8000/api/videos/", {
+        const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/videos/`, {
           headers: { Authorization: `Token ${token}` },
         });
         console.log("Videos response:", response);
