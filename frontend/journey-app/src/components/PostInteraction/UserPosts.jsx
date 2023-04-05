@@ -1,78 +1,65 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-import { Navbar } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import Navbars from "../Navigation/Navbar";
 import Map from "./Map";
 
 const UserPosts = () => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
 
-  const fetchPosts = useCallback(async () => {
-    setLoading(true);
+  const fetchPosts = useCallback(async (url) => {
     try {
-      const response = await axios.get(
-        `http://${import.meta.env.VITE_BASE_URL}/api/userposts/?limit=10&page=${page}`,
-        {
-          headers: {
-            Authorization: `Token ${localStorage.getItem("token")}`,
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
-
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: `Token ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      console.log(response.data);
       setPosts((prevPosts) => [...prevPosts, ...response.data.results]);
-      setPage((prevPage) => prevPage + 1);
+
+      // If there's a next page, fetch it
+      if (response.data.next) {
+        const nextUrl = new URL(response.data.next);
+        const path = nextUrl.pathname + nextUrl.search;
+        fetchPosts(`http://${import.meta.env.VITE_BASE_URL}${path}`);
+      }
     } catch (error) {
       console.error("Error fetching user's posts: ", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [page]);
-
-  const handleScroll = useCallback(() => {
-    if (
-      window.innerHeight + window.scrollY >=
-      document.documentElement.scrollHeight
-    ) {
-      fetchPosts();
     }
   }, []);
 
   useEffect(() => {
-    fetchPosts();
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [fetchPosts, handleScroll]);
+    fetchPosts(`http://${import.meta.env.VITE_BASE_URL}/api/userposts/`);
+  }, [fetchPosts]);
 
   return (
-    <div>
+    <div style={{ textAlign: "center" }}>
       <Navbars />
-      <h1>Your Posts</h1>
-      <ul>
+      <h1 style={{ margin: "0 auto" }}>Your Posts</h1>
+      <ul style={{ display: "flex", flexDirection: "column", alignItems: "center", margin: "0 auto", listStyleType: "none" }}>
         {posts.map((post) => (
-          <li key={post.id}>
-            <h3>{post.title}</h3>
-            <p>Difficulty Level: {post.difficulty_level}</p>
-            <p>{post.description}</p>
-            <img
-              src={`http://localhost:8000${post.image_url}`}
-              alt={post.title}
-            />
+          <li key={post.id} style={{ margin: "20px 0" }}>
+            <h3><Link to={`/userposts/${post.id}`}>{post.title}</Link>
+            </h3>
+            <p style={{ color: "yellow" }}>Difficulty Level: {post.difficulty_level}</p>
+            <img src={`http://localhost:8000${post.image_url}`} alt={post.title} style={{ width: "100%" }} />
             <Map lat={post.latitude} lng={post.longitude} />
           </li>
         ))}
       </ul>
-      {loading && <p>Loading more posts...</p>}
     </div>
   );
 };
 
 export default UserPosts;
+
+
+
+
+
+
 
 // // ok Infinity scroll with the correct geotag loc is working below
 // import React, { useEffect, useState } from "react";

@@ -14,7 +14,6 @@ from django.core.exceptions import PermissionDenied
 import requests
 from django.conf import settings
 from django.http import Http404
-
 import os  # for getting environment variables
 
 class TourDetailAPIView(generics.GenericAPIView):
@@ -129,23 +128,45 @@ class BasicPagination(PageNumberPagination):
     page_size_query_param = 'limit'
 
 
+
+
 class PostListAPIView(generics.ListCreateAPIView):
-    queryset = PostDB.objects.all()
     serializer_class = PostSerializer
-    pagination_class = BasicPagination
     permission_classes = [permissions.IsAuthenticated]
+   
+
+    def get_queryset(self):
+        user = self.request.user
+        return PostDB.objects.filter(user=user)
 
     def perform_create(self, serializer):
-        user_id = self.request.COOKIES.get("user_id")
-        user = None
-        if user_id:
-            try:
-                user = User.objects.get(id=user_id)
-            except User.DoesNotExist:
-                pass
-        if not user:
-            user = self.request.user  #this is the old django setup if cookie rerival doesnt work.
+        user = self.request.user
         serializer.save(user=user)
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+
+# class PostListAPIView(generics.ListCreateAPIView):
+#     queryset = PostDB.objects.all()
+#     serializer_class = PostSerializer
+#     pagination_class = BasicPagination
+#     permission_classes = [permissions.IsAuthenticated]
+
+#     def perform_create(self, serializer):
+#         user_id = self.request.COOKIES.get("user_id")
+#         user = None
+#         if user_id:
+#             try:
+#                 user = User.objects.get(id=user_id)
+#             except User.DoesNotExist:
+#                 pass
+#         if not user:
+#             user = self.request.user  #this is the old django setup if cookie rerival doesnt work.
+#         serializer.save(user=user)
 
 
 class PostDetailAPIView(RetrieveUpdateDestroyAPIView):
@@ -163,39 +184,53 @@ class CommentDetailAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = CommentSerializer
 
 
-class UserPostsAPIView(ListCreateAPIView):
+# class UserPostsAPIView(ListCreateAPIView):
+#     serializer_class = PostSerializer
+#     permission_classes = [permissions.IsAuthenticated]
+
+#     def get_queryset(self):
+#         user_id = self.request.COOKIES.get("user_id")
+#         user = None
+#         if user_id:
+#             try:
+#                 user = User.objects.get(id=user_id)
+#             except User.DoesNotExist:
+#                 pass
+#         if not user:
+#             user = self.request.user  # Fall back to the authenticated user if cookie retrieval fails.
+#         return PostDB.objects.filter(user=user)
+#     #Just Trying
+
+#     # def delete(self, request, *args, **kwargs):
+#     #     queryset = self.filter_queryset(self.get_queryset())
+#     #     queryset.delete()  # CAREFUL! This could easily delete all the items in this queryset.
+                                       
+#     #     return Response(status=status.HTTP_204_NO_CONTENT)
+
+#     def perform_create(self, serializer):
+#         user_id = self.request.COOKIES.get("user_id")
+#         user = None
+#         if user_id:
+#             try:
+#                 user = User.objects.get(id=user_id)
+#             except User.DoesNotExist:
+#                 pass
+#         if not user:
+#             user = self.request.user  # Fall back to the authenticated user if cookie retrieval fails.
+#         serializer.save(user=user)
+
+
+
+class UserPostsAPIView(generics.ListCreateAPIView):
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        user_id = self.request.COOKIES.get("user_id")
-        user = None
-        if user_id:
-            try:
-                user = User.objects.get(id=user_id)
-            except User.DoesNotExist:
-                pass
-        if not user:
-            user = self.request.user  # Fall back to the authenticated user if cookie retrieval fails.
+        user = self.request.user
         return PostDB.objects.filter(user=user)
-    #Just Trying
-
-    # def delete(self, request, *args, **kwargs):
-    #     queryset = self.filter_queryset(self.get_queryset())
-    #     queryset.delete()  # CAREFUL! This could easily delete all the items in this queryset.
-                                       
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
 
     def perform_create(self, serializer):
-        user_id = self.request.COOKIES.get("user_id")
-        user = None
-        if user_id:
-            try:
-                user = User.objects.get(id=user_id)
-            except User.DoesNotExist:
-                pass
-        if not user:
-            user = self.request.user  # Fall back to the authenticated user if cookie retrieval fails.
+        user = self.request.user
         serializer.save(user=user)
 
 
