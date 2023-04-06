@@ -2,17 +2,17 @@ version: "3.9"
 services:
   api:
     # you'll obviously use your own account
-    image: ccanonizado/journey-backend-prod:$NEW_VERSION 
+    image: ccanonizado/journey-backend-prod:$NEW_VERSION
     ports:
       - "8000:8000"
     environment:
       - SECRET_KEY=$SECRET_KEY
       - DEBUG=$DEBUG
-      - National_Parks_API_Key  #this is our added param that we can now pass in when we build the prod and you have to replace all calls to the API key with this declared variable name.
+      - PARK_API_KEY=$PARK_API_KEY #this is our added param that we can now pass in when we build the prod and you have to replace all calls to the API key with this declared variable name.
       - VITE_BASE_URL=$VITE_BASE_URL
 
   nginx:
-  # you'll obviously use your own account
+    # you'll obviously use your own account
     image: ccanonizado/journey-webserver-prod:$NEW_VERSION
     restart: always
     ports:

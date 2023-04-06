@@ -10,6 +10,8 @@ RUN pip install -r requirements.txt
 # It's not completely secure, but good enough.
 ENV SECRET_KEY=abc123
 ENV DEBUG=True
+ENV PARK_API_KEY="xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
+
 
 # COPY ./journey_backend .
 
@@ -21,5 +23,5 @@ COPY ./journey_backend/db.sqlite3 ./db.sqlite3
 COPY ./journey_backend/manage.py ./manage.py
 
 RUN python manage.py makemigrations && python manage.py migrate
-
+RUN echo "PARK_API_KEY: $PARK_API_KEY"
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "journey_backend.wsgi:application"]
