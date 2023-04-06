@@ -1,3 +1,4 @@
+# docker-compose.dev.yml
 #########################################
 # The "development" compose file builds 
 # the images locally
@@ -12,9 +13,9 @@ services:
     environment:
       - SECRET_KEY=$SECRET_KEY
       - DEBUG=$DEBUG
-      - PARK_API_KEY=$PARK_API_KEY
+      - PARK_API_KEY=xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L
   nginx:
-    build: 
+    build:
       context: .
       dockerfile: ./webserver/Dockerfile
     restart: always

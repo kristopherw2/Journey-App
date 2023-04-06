@@ -1,3 +1,4 @@
+# run-compose-dev.sh
 #!/bin/bash
 
 # These environment variables are consumed by the docker-compose file.
