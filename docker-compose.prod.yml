@@ -8,7 +8,9 @@ services:
     environment:
       - SECRET_KEY=$SECRET_KEY
       - DEBUG=$DEBUG
+
       - PARK_API_KEY=$PARK_API_KEY #this is our added param that we can now pass in when we build the prod and you have to replace all calls to the API key with this declared variable name.
+
       - VITE_BASE_URL=$VITE_BASE_URL
 
   nginx:

@@ -431,3 +431,7 @@ class ExtractLocationAPIView(APIView):
             return JsonResponse(response_data)
         else:
             return JsonResponse({'error': 'Could not extract location from image.'}, status=400)
+
+
+
+
