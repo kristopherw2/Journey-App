@@ -12,6 +12,7 @@
 
 BASE_URL=$1
 NEW_VERSION=$2
+PARK_API_KEY=$3
 
 docker buildx build --platform linux/amd64 --build-arg VITE_BASE_URL=$BASE_URL -t ccanonizado/journey-webserver-prod:$NEW_VERSION -f webserver/Dockerfile . --no-cache
 docker push ccanonizado/journey-webserver-prod:$NEW_VERSION

@@ -14,7 +14,7 @@ const Tours = () => {
     const fetchTours = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:8000/api/tours/", {
+        const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/tours/`, {
           headers: { Authorization: `Token ${token}` },
         });
         console.log("Tours response:", response);
