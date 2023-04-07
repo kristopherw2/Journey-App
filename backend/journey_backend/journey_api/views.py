@@ -19,17 +19,13 @@ import os  # for getting environment variables
 
 ########PARKS API VIEWS##################################################
 
-from rest_framework import generics, permissions
-from rest_framework.response import Response
-import os
-import requests
-
 class ToDoAPIView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         api_key = os.getenv("PARK_API_KEY")
-        todo_url = f"https://developer.nps.gov/api/v1/todo?api_key={api_key}&limit=500"
+        todo_url = f"https://developer.nps.gov/api/v1/thingstodo?api_key={api_key}&limit=500"
+
 
         todo_response = requests.get(todo_url)
 
@@ -37,7 +33,11 @@ class ToDoAPIView(generics.GenericAPIView):
             data = todo_response.json()["data"]
             return Response({"data": data})
         else:
+            print(f"Error: National Parks API returned status code {todo_response.status_code}")
+            print(todo_response.text)
             return Response({"error": "Error fetching National Parks to do data."}, status=400)
+
+
 
 
 class CampgroundsAPIView(generics.GenericAPIView):

@@ -33,7 +33,7 @@ const Parks = () => {
           </div>
         </Link>
         <Link to="/todo" className="parks-link">
-          <div className="parks-link-card" style={{ backgroundImage: "url('/explore5.jpeg')" }}>
+          <div className="parks-link-card" style={{ backgroundImage: "url('/explore2.jpeg')" }}>
             <h2>&nbsp;&nbsp;To Do</h2>
           </div>
         </Link>
