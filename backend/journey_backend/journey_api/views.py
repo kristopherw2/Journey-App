@@ -17,8 +17,28 @@ from django.http import Http404
 import os  # for getting environment variables
 
 
-
 ########PARKS API VIEWS##################################################
+
+from rest_framework import generics, permissions
+from rest_framework.response import Response
+import os
+import requests
+
+class ToDoAPIView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        api_key = os.getenv("PARK_API_KEY")
+        todo_url = f"https://developer.nps.gov/api/v1/todo?api_key={api_key}&limit=500"
+
+        todo_response = requests.get(todo_url)
+
+        if todo_response.status_code == 200:
+            data = todo_response.json()["data"]
+            return Response({"data": data})
+        else:
+            return Response({"error": "Error fetching National Parks to do data."}, status=400)
+
 
 class CampgroundsAPIView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -36,27 +56,8 @@ class CampgroundsAPIView(generics.GenericAPIView):
         else:
             return Response({"error": "Error fetching National Parks data."}, status=400)
 
-
-# class CampgroundsAPIView(generics.GenericAPIView):
-#     permission_classes = [permissions.IsAuthenticated]
-
-#     def get(self, request, *args, **kwargs):
-#         api_key = os.getenv("PARK_API_KEY")
-#         park_codes = "yose,grca"
-#         campgrounds_url = f"https://developer.nps.gov/api/v1/campgrounds?parkCode={park_codes}&api_key={api_key}"
-
-#         campgrounds_response = requests.get(campgrounds_url)
-
-#         if campgrounds_response.status_code == 200:
-#             data = campgrounds_response.json()["data"]
-#             return Response({"campgrounds": data})
-#         else:
-#             return Response({"error": "Error fetching National Parks data."}, status=400)
-
-
 class TourDetailAPIView(generics.GenericAPIView):
     def get(self, request, tour_id):
-        # api_key = "xBbZChwMOwiRzaLjWde5q4gIYFWnGAz8NG2Pvw1L"
         api_key = os.getenv("PARK_API_KEY")
         response = requests.get(
             "https://developer.nps.gov/api/v1/tours",
