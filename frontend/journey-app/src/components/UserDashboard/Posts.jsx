@@ -118,7 +118,7 @@ function Posts() {
   };
 
   const fetchPosts = async () => {
-    let data;
+    console.log(userPosts);
     return axios
       .get(
         `http://${
@@ -127,31 +127,24 @@ function Posts() {
         options
       )
       .then((response) => {
-        // setUserPosts([...userPosts, ...response.data.results]);
         return response.data.results;
       });
   };
 
   const fetchData = async () => {
     const loadPages = await fetchPosts();
-    console.log(loadPages);
+    console.log(loadPages, "load pages is firing");
     setUserPosts([...userPosts, ...loadPages]);
-    if (loadPages.length === 0 || loadPages.length < 20) {
+    if (loadPages.length === 0) {
       setNoMore(false);
     }
 
     setNextPage(nextPage + 1);
   };
 
-  return copiedUserPosts.map((item) => {
+  const postItems = copiedUserPosts.map((item) => {
     return (
-      <InfiniteScroll
-        dataLength={userPosts.length} //This is important field to render the next data
-        next={fetchData}
-        hasMore={noMore}
-        loader={<Loader />}
-        endMessage={null}
-      >
+      <>
         <div name={item.id} id="post-container">
           <h3>{item.title}</h3>
           <img
@@ -185,9 +178,21 @@ function Posts() {
             itemToUpdate={itemToUpdate}
           />
         </div>
-      </InfiniteScroll>
+      </>
     );
   });
+
+  return (
+    <InfiniteScroll
+      dataLength={userPosts.length} //This is important field to render the next data
+      next={fetchData}
+      hasMore={noMore}
+      loader={<Loader />}
+      endMessage={null}
+    >
+      {postItems}
+    </InfiniteScroll>
+  );
 }
 
 export default Posts;

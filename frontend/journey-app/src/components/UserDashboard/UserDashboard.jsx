@@ -23,23 +23,31 @@ function UserDashBoard() {
     setIsLoggedIn(false);
   };
 
-
-
   return (
     <div>
-      <Navbar key={isLoggedIn} isLoggedIn={isLoggedIn} onLogout={handleLogout} />
-      <div style={{ marginTop: "75px", position: "fixed", top: 0, left: 0, zIndex: 1 }}>
-        <Link to="/userposts" style={{ paddingLeft: "20px" }}>MapIT</Link>
+      <Navbar
+        key={isLoggedIn}
+        isLoggedIn={isLoggedIn}
+        onLogout={handleLogout}
+      />
+      <div
+        style={{
+          marginTop: "75px",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          zIndex: 1,
+        }}
+      >
+        <Link to="/userposts" style={{ paddingLeft: "20px" }}>
+          MapIT
+        </Link>
       </div>
       <div style={{ paddingTop: "100px" }}>
         <Posts />
       </div>
     </div>
   );
-
-
-
 }
 
 export default UserDashBoard;
-
