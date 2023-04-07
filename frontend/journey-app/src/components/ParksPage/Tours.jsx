@@ -1,13 +1,12 @@
-// Tours.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Tours.css";
+import ParkCodes from './ParkCodes';
 
 const Tours = () => {
   const [tours, setTours] = useState([]);
   const [filteredTours, setFilteredTours] = useState([]);
-  const [stateFilter, setStateFilter] = useState("");
   const [parkFilter, setParkFilter] = useState("");
 
   useEffect(() => {
@@ -19,7 +18,6 @@ const Tours = () => {
         });
         console.log("Tours response:", response);
         setTours(response.data.data);
-        setFilteredTours(response.data.data);
       } catch (error) {
         console.error("Error fetching tours:", error);
       }
@@ -30,21 +28,18 @@ const Tours = () => {
 
   useEffect(() => {
     filterTours();
-  }, [stateFilter, parkFilter]);
+  }, [parkFilter]);
 
   const filterTours = () => {
-    const filtered = tours.filter(
-      (tour) =>
-        (stateFilter === "" ||
-          tour.park.states.toLowerCase().includes(stateFilter.toLowerCase())) &&
-        (parkFilter === "" ||
-          tour.park.fullName.toLowerCase().includes(parkFilter.toLowerCase()))
-    );
-    setFilteredTours(filtered);
-  };
-
-  const handleStateFilterChange = (e) => {
-    setStateFilter(e.target.value);
+    if (parkFilter === "") {
+      setFilteredTours([]);
+    } else {
+      const filtered = tours.filter(
+        (tour) =>
+          tour.park.fullName.toLowerCase().includes(parkFilter.toLowerCase())
+      );
+      setFilteredTours(filtered);
+    }
   };
 
   const handleParkFilterChange = (e) => {
@@ -55,20 +50,15 @@ const Tours = () => {
     <div className="tours-container">
       <h2>Tours</h2>
       <div>
-        <label htmlFor="stateFilter">Filter by state: </label>
-        <input
-          id="stateFilter"
-          type="text"
-          placeholder="State code (e.g., AK)"
-          onChange={handleStateFilterChange}
-        />
-        <label htmlFor="parkFilter">Filter by park name: </label>
-        <input
-          id="parkFilter"
-          type="text"
-          placeholder="Park name"
-          onChange={handleParkFilterChange}
-        />
+        <label htmlFor="parkFilter">Filter by park: </label>
+        <select id="parkFilter" onChange={handleParkFilterChange}>
+          <option value="">Select a park</option>
+          {Object.entries(ParkCodes).map(([code, name]) => (
+            <option key={code} value={name}>
+              {name}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="tours-grid">
         {filteredTours.map((tour) => (
@@ -92,19 +82,23 @@ export default Tours;
 
 
 
-
+// // Tours.js
+// import React, { useState, useEffect } from "react";
+// import axios from "axios";
+// import { Link } from "react-router-dom";
+// import "./Tours.css";
+// import ParkCodes from './ParkCodes';
 
 // const Tours = () => {
 //   const [tours, setTours] = useState([]);
 //   const [filteredTours, setFilteredTours] = useState([]);
-//   const [stateFilter, setStateFilter] = useState("");
 //   const [parkFilter, setParkFilter] = useState("");
 
 //   useEffect(() => {
 //     const fetchTours = async () => {
 //       try {
 //         const token = localStorage.getItem("token");
-//         const response = await axios.get("http://localhost:8000/api/tours/", {
+//         const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/tours/`, {
 //           headers: { Authorization: `Token ${token}` },
 //         });
 //         console.log("Tours response:", response);
@@ -120,21 +114,15 @@ export default Tours;
 
 //   useEffect(() => {
 //     filterTours();
-//   }, [stateFilter, parkFilter]);
+//   }, [parkFilter]);
 
 //   const filterTours = () => {
 //     const filtered = tours.filter(
 //       (tour) =>
-//         (stateFilter === "" ||
-//           tour.park.states.toLowerCase().includes(stateFilter.toLowerCase())) &&
-//         (parkFilter === "" ||
-//           tour.park.fullName.toLowerCase().includes(parkFilter.toLowerCase()))
+//         parkFilter === "" ||
+//         tour.park.fullName.toLowerCase().includes(parkFilter.toLowerCase())
 //     );
 //     setFilteredTours(filtered);
-//   };
-
-//   const handleStateFilterChange = (e) => {
-//     setStateFilter(e.target.value);
 //   };
 
 //   const handleParkFilterChange = (e) => {
@@ -145,20 +133,15 @@ export default Tours;
 //     <div className="tours-container">
 //       <h2>Tours</h2>
 //       <div>
-//         <label htmlFor="stateFilter">Filter by state: </label>
-//         <input
-//           id="stateFilter"
-//           type="text"
-//           placeholder="State code (e.g., AK)"
-//           onChange={handleStateFilterChange}
-//         />
-//         <label htmlFor="parkFilter">Filter by park name: </label>
-//         <input
-//           id="parkFilter"
-//           type="text"
-//           placeholder="Park name"
-//           onChange={handleParkFilterChange}
-//         />
+//         <label htmlFor="parkFilter">Filter by park: </label>
+//         <select id="parkFilter" onChange={handleParkFilterChange}>
+//           <option value="">Select a park</option>
+//           {Object.entries(ParkCodes).map(([code, name]) => (
+//             <option key={code} value={name}>
+//               {name}
+//             </option>
+//           ))}
+//         </select>
 //       </div>
 //       <div className="tours-grid">
 //         {filteredTours.map((tour) => (
@@ -170,52 +153,6 @@ export default Tours;
 //             <p>
 //               Park: {tour.park.fullName} ({tour.park.states})
 //             </p>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Tours;
-
-
-
-
-
-// import React, { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import "./Tours.css"
-
-
-// const Tours = () => {
-//   const [tours, setTours] = useState([]);
-
-//   useEffect(() => {
-//     const fetchTours = async () => {
-//       try {
-//         const token = localStorage.getItem("token");
-//         const response = await axios.get("http://localhost:8000/api/tours/", {
-//           headers: { Authorization: `Token ${token}` },
-//         });
-//         console.log("Tours response:", response);
-//         setTours(response.data.data);
-//       } catch (error) {
-//         console.error('Error fetching tours:', error);
-//       }
-//     };
-
-//     fetchTours();
-//   }, []);
-
-//   return (
-//     <div className="tours-container">
-//       <h2>Tours</h2>
-//       <div className="tours-grid">
-//         {tours.map((tour) => (
-//           <div key={tour.id} className="tour-card">
-//             <h3>{tour.title}</h3>
-//             <p>{tour.description}</p>
 //           </div>
 //         ))}
 //       </div>

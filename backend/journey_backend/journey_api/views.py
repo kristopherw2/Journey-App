@@ -100,21 +100,18 @@ class ParksAPIView(APIView):
 
     def get(self, request, *args, **kwargs):
         api_key = os.getenv("PARK_API_KEY")
-        park_codes = "yose,grca"  # Hardcoding park codes (Yosemite and Grand Canyon)
-        webcams_url = f"https://developer.nps.gov/api/v1/webcams?parkCode={park_codes}&api_key={api_key}&limit=500"
         activities_parks_url = f"https://developer.nps.gov/api/v1/activities/parks?api_key={api_key}&limit=500"
 
-        webcams_response = requests.get(webcams_url)
         activities_parks_response = requests.get(activities_parks_url)
 
-        if webcams_response.status_code == 200 and activities_parks_response.status_code == 200:
+        if activities_parks_response.status_code == 200:
             data = {
-                "webcams": webcams_response.json()["data"],
                 "activities_parks": activities_parks_response.json()["data"]
             }
             return Response(data)
         else:
             return Response({"error": "Error fetching National Parks data."}, status=400)
+
 
 
 
