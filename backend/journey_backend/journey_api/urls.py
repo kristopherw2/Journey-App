@@ -15,6 +15,7 @@ urlpatterns = [
     path("videos/", views.VideosAPIView.as_view(), name="videos"),
     path("webcams/", views.WebcamsAPIView.as_view(), name="webcams"),
     path('accounts/', include('accounts.urls')),
+    path('campgrounds/', views.CampgroundsAPIView.as_view(), name='get_campgrounds'), 
 ]
 
 
