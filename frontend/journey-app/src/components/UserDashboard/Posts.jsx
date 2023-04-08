@@ -1,6 +1,7 @@
 import testPhoto from "../../assets/testphoto.jpg";
 import pencilEdit from "../../assets/pencil-edit.svg";
 import trash from "../../assets/trash.svg";
+import mapMarker from "../../assets/map-marker.png";
 import Description from "./Description";
 import Comments from "./Comments";
 import "./Posts.css";
@@ -12,12 +13,15 @@ import UpdateForm from "./UpdateForm";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../../utils/Loader";
 import EndMessage from "../../utils/EndMessage";
+import MapModal from "./MapModal";
 
 function Posts() {
   const [userPosts, setUserPosts] = useState([]);
   const [itemToUpdate, setItemToUpdate] = useState("");
   const [originalDesc, setOriginalDesc] = useState("");
   const [show, setShow] = useState(false);
+  const [showMap, setShowMap] = useState(false);
+
   const [dataUpdated, setDataUpdated] = useState(false);
   const [noMore, setNoMore] = useState(true);
   const [nextPage, setNextPage] = useState(2);
@@ -36,11 +40,23 @@ function Posts() {
       .get(`http://${import.meta.env.VITE_BASE_URL}/api/userposts/`, options)
       .then((response) => {
         setUserPosts(response.data.results);
+        console.log(response.data.results, "these are the results")
+        console.log(response.data.results[0].latitude, response.data.results[0].longitude, "this is the latitude and longitude");
+
         setDataUpdated(false);
       });
   }, [dataUpdated]);
 
   let copiedUserPosts = [...userPosts];
+
+  const handleMap = (e) => {
+    console.log(
+      `Viewing Map for post id : ${e.target.getAttribute("post_id")}`
+    );
+    let item_id = e.target.getAttribute("post_id");
+    // getPostDetailsByID(item_id);
+    setShowMap(true);
+  };
 
   const handleDelete = (e) => {
     console.log(
@@ -49,8 +65,7 @@ function Posts() {
     let item_id = e.target.getAttribute("post_id");
     axios
       .delete(
-        `${`http://${
-          import.meta.env.VITE_BASE_URL
+        `${`http://${import.meta.env.VITE_BASE_URL
         }/api/userposts/`}${item_id}/`,
         options
       )
@@ -76,8 +91,7 @@ function Posts() {
   const getPostDetailsByID = async (item_id) => {
     try {
       const response = await axios.get(
-        `${`http://${
-          import.meta.env.VITE_BASE_URL
+        `${`http://${import.meta.env.VITE_BASE_URL
         }/api/userposts/`}${item_id}/`,
         options
       );
@@ -96,8 +110,7 @@ function Posts() {
     console.log(originalDesc);
     axios
       .patch(
-        `${`http://${
-          import.meta.env.VITE_BASE_URL
+        `${`http://${import.meta.env.VITE_BASE_URL
         }/api/userposts/`}${e.target.getAttribute("post_id")}/`,
         {
           description: originalDesc,
@@ -117,12 +130,15 @@ function Posts() {
     setShow(false);
   };
 
+  const handleCloseMap = () => {
+    setShowMap(false);
+  };
+
   const fetchPosts = async () => {
     console.log(userPosts);
     return axios
       .get(
-        `http://${
-          import.meta.env.VITE_BASE_URL
+        `http://${import.meta.env.VITE_BASE_URL
         }/api/userposts/?page=${nextPage}`,
         options
       )
@@ -147,6 +163,17 @@ function Posts() {
       <>
         <div name={item.id} id="post-container">
           <h3>{item.title}</h3>
+          <h2>Latitude{item.latitude}</h2>
+          <h2>Longitude{item.longitude}</h2>
+          <img
+            className="util-map"
+            id="map-btn"
+            post_id={item.id}
+            src={mapMarker}
+            onClick={handleMap}
+          />
+          <h4>Test</h4>
+
           <img
             className="util-btn"
             id="pencil-btn"
@@ -162,9 +189,8 @@ function Posts() {
             onClick={handleDelete}
           />
           <img
-            src={`http://${import.meta.env.VITE_BASE_URL}:8000/${
-              item.image_url
-            }`}
+            src={`http://${import.meta.env.VITE_BASE_URL}:8000/${item.image_url
+              }`}
           />
         </div>
         <Description description={item.description} />
@@ -177,6 +203,14 @@ function Posts() {
             handleClickSaveUpdate={handleClickSaveUpdate}
             itemToUpdate={itemToUpdate}
           />
+          <div>
+            <MapModal
+              showMap={showMap}
+              handleCloseMap={handleCloseMap}
+              lat={item.latitude}
+              long={item.longitude}
+            />
+          </div>
         </div>
       </>
     );

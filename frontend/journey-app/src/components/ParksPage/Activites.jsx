@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import ParkCodes from './ParkCodes';
 
 const Activities = () => {
   const [activitiesParks, setActivitiesParks] = useState([]);
   const [filteredActivities, setFilteredActivities] = useState([]);
-
-  const [searchText, setSearchText] = useState("");
-
+  const [parkFilter, setParkFilter] = useState("");
 
   useEffect(() => {
     const fetchActivitiesParks = async () => {
@@ -17,7 +16,7 @@ const Activities = () => {
         });
         console.log("API response:", response);
         setActivitiesParks(response.data.activities_parks);
-        setFilteredActivities(response.data.activities_parks);
+        setFilteredActivities([]);
       } catch (error) {
         console.error("Error fetching activities parks data: ", error);
       }
@@ -26,45 +25,41 @@ const Activities = () => {
     fetchActivitiesParks();
   }, []);
 
-  const filterActivities = (e) => {
-    const filterText = e.target.value.toLowerCase();
-
-    setSearchText(filterText);
-
-    const filtered = activitiesParks.filter((activity) => {
-      const activityMatch = activity.name.toLowerCase().includes(filterText);
-      const parkMatch = activity.parks.some((park) => park.fullName.toLowerCase().includes(filterText));
-      return activityMatch || parkMatch;
-    });
-
-    setFilteredActivities(filtered);
+  const handleChange = (e) => {
+    const parkName = e.target.value;
+    setParkFilter(parkName);
+    if (parkName) {
+      const filtered = activitiesParks.filter((activity) => {
+        const parkMatch = activity.parks.some((park) => park.fullName.toLowerCase() === parkName.toLowerCase());
+        return parkMatch;
+      });
+      setFilteredActivities(filtered);
+    } else {
+      setFilteredActivities([]);
+    }
   };
 
   return (
     <div>
       <h1>National Park Activities</h1>
       <div style={{ textAlign: "center", marginTop: "20px" }}>
-
-        <label htmlFor="activitySearch">Search Activities and Parks Here: </label>
-
-        <input
-          id="activitySearch"
-          type="text"
-          placeholder=""
-
-          value={searchText}
-
-          onChange={filterActivities}
-        />
+        <label htmlFor="parkFilter">Filter by park: </label>
+        <select id="parkFilter" onChange={handleChange}>
+          <option value="">Select a park</option>
+          {Object.entries(ParkCodes).map(([code, name]) => (
+            <option key={code} value={name}>
+              {name}
+            </option>
+          ))}
+        </select>
       </div>
       <ul>
         {filteredActivities.map((activity) => (
           <li key={activity.id}>
             <h3>{activity.name}</h3>
             <ul>
-
               {activity.parks
-                .filter((park) => park.fullName.toLowerCase().includes(searchText.toLowerCase()))
+                .filter((park) => park.fullName.toLowerCase().includes(parkFilter.toLowerCase()))
                 .map((park) => (
                   <li key={park.parkCode}>
                     <h4>{park.fullName}</h4>
@@ -73,7 +68,6 @@ const Activities = () => {
                     </a>
                   </li>
                 ))}
-
             </ul>
           </li>
         ))}
@@ -83,6 +77,3 @@ const Activities = () => {
 };
 
 export default Activities;
-
-
-

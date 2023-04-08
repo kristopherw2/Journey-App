@@ -18,6 +18,8 @@ import Videos from "./components/ParksPage/Videos";
 import Tours from "./components/ParksPage/Tours";
 import TourDetails from "./components/ParksPage/TourDetails";
 import PostDetail from "./components/PostInteraction/PostDetail";
+import Campgrounds from "./components/ParksPage/Campgrounds";
+import ToDo from "./components/ParksPage/ToDo";
 
 
 function App() {
@@ -53,6 +55,9 @@ function App() {
             <Route exact path="/tours" element={<Tours />} />
             <Route exact path="/tours/:id" element={<TourDetails />} />
             <Route path="/userposts/:id" element={<PostDetail onDelete={() => { }} />} />
+            <Route exact path="/campgrounds" element={<Campgrounds />} />
+            <Route exact path="/todo" element={<ToDo />} />
+
           </Route>
         </Routes>
       </Router>
