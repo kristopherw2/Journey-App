@@ -45,7 +45,10 @@ const UserPosts = () => {
             </h3>
             <p style={{ color: "yellow" }}>Difficulty Level: {post.difficulty_level}</p>
             <img src={`http://localhost:8000${post.image_url}`} alt={post.title} style={{ width: "100%" }} />
-            <Map lat={post.latitude} lng={post.longitude} />
+            {/* <img src={post.image_url} alt={post.title} style={{ width: "100%" }} /> */}
+
+            <Map lat={parseFloat(post.latitude)} lng={parseFloat(post.longitude)} />
+
           </li>
         ))}
       </ul>

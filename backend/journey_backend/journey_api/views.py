@@ -24,8 +24,11 @@ class ToDoAPIView(generics.GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         api_key = os.getenv("PARK_API_KEY")
-        todo_url = f"https://developer.nps.gov/api/v1/thingstodo?api_key={api_key}&limit=500"
+        park_name = request.GET.get('park_name', '')
+        todo_url = f"https://developer.nps.gov/api/v1/thingstodo?api_key={api_key}&limit=50"
 
+        if park_name:
+            todo_url += f"&q={park_name}"
 
         todo_response = requests.get(todo_url)
 
@@ -37,16 +40,16 @@ class ToDoAPIView(generics.GenericAPIView):
             print(todo_response.text)
             return Response({"error": "Error fetching National Parks to do data."}, status=400)
 
-
-
-
 class CampgroundsAPIView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         api_key = os.getenv("PARK_API_KEY")
-        campgrounds_url = f"https://developer.nps.gov/api/v1/campgrounds?api_key={api_key}&limit=500"
+        park_name = request.GET.get('park_name', '')
+        campgrounds_url = f"https://developer.nps.gov/api/v1/campgrounds?api_key={api_key}&limit=50"
 
+        if park_name:
+            campgrounds_url += f"&q={park_name}"
 
         campgrounds_response = requests.get(campgrounds_url)
 
@@ -55,6 +58,8 @@ class CampgroundsAPIView(generics.GenericAPIView):
             return Response({"campgrounds": data})
         else:
             return Response({"error": "Error fetching National Parks data."}, status=400)
+
+
 
 class TourDetailAPIView(generics.GenericAPIView):
     def get(self, request, tour_id):
@@ -91,7 +96,7 @@ class VideosAPIView(generics.GenericAPIView):
         api_key = os.getenv("PARK_API_KEY")
         response = requests.get(
             "https://developer.nps.gov/api/v1/multimedia/videos",
-            params={"api_key": api_key, "limit": 500},
+            params={"api_key": api_key, "limit": 50},
         )
         return Response(response.json())
 
@@ -185,6 +190,7 @@ class UserPostsAPIView(generics.ListCreateAPIView):
         serializer.save(user=user)
 
 
+
 class DetailedUserPostsAPIView(RetrieveUpdateDestroyAPIView):
    serializer_class = PostSerializer
    permission_classes = [permissions.IsAuthenticated]
@@ -236,3 +242,52 @@ class ExtractLocationAPIView(APIView):
 
 
 
+
+#######docker prod fix###########
+
+
+
+# from django.views.generic.edit import CreateView, UpdateView
+# from django.shortcuts import get_object_or_404
+# from rest_framework import generics, permissions
+
+# class UserPostsAPIView(generics.ListAPIView):
+#     serializer_class = PostSerializer
+#     permission_classes = [permissions.IsAuthenticated]
+
+#     def get_queryset(self):
+#         user = self.request.user
+#         return PostDB.objects.filter(user=user)
+
+# class PostDBCreateView(CreateView):
+#     model = PostDB
+#     fields = ['title', 'difficulty_level', 'description', 'latitude', 'longitude', 'image']  
+
+#     def form_valid(self, form):
+#         instance = form.save(commit=False)
+#         image = self.request.FILES.get('image')
+#         if image:
+#             instance.set_image(image)
+#         instance.user = self.request.user  # Set the user
+#         instance.save()
+#         return super().form_valid(form)
+
+# class PostDBUpdateView(UpdateView):
+#     model = PostDB
+#     fields = ['title', 'difficulty_level', 'description', 'latitude', 'longitude']  # Exclude the image_data field
+
+#     def form_valid(self, form):
+#         instance = form.save(commit=False)
+#         image = self.request.FILES.get('image')
+#         if image:
+#             instance.set_image(image)
+#         instance.save()
+#         return super().form_valid(form)
+
+# class UserPostsAPIView(generics.ListAPIView):
+#     serializer_class = PostSerializer
+#     permission_classes = [permissions.IsAuthenticated]
+
+#     def get_queryset(self):
+#         user = self.request.user
+#         return PostDB.objects.filter(user=user)

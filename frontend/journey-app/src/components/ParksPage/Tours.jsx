@@ -1,25 +1,28 @@
+// Tours.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import "./Tours.css";
 import ParkCodes from './ParkCodes';
 
 const Tours = () => {
   const [tours, setTours] = useState([]);
   const [filteredTours, setFilteredTours] = useState([]);
   const [parkFilter, setParkFilter] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchTours = async () => {
       try {
+        setLoading(true);
         const token = localStorage.getItem("token");
         const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/tours/`, {
           headers: { Authorization: `Token ${token}` },
         });
-        console.log("Tours response:", response);
         setTours(response.data.data);
       } catch (error) {
         console.error("Error fetching tours:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -27,19 +30,22 @@ const Tours = () => {
   }, []);
 
   useEffect(() => {
-    filterTours();
+    if (parkFilter) {
+      setLoading(true);
+      filterTours();
+    } else {
+      setFilteredTours([]);
+      setLoading(false);
+    }
   }, [parkFilter]);
 
   const filterTours = () => {
-    if (parkFilter === "") {
-      setFilteredTours([]);
-    } else {
-      const filtered = tours.filter(
-        (tour) =>
-          tour.park.fullName.toLowerCase().includes(parkFilter.toLowerCase())
-      );
-      setFilteredTours(filtered);
-    }
+    const filtered = tours.filter(
+      (tour) =>
+        tour.park.fullName.toLowerCase().includes(parkFilter.toLowerCase())
+    );
+    setFilteredTours(filtered);
+    setLoading(false);
   };
 
   const handleParkFilterChange = (e) => {
@@ -60,6 +66,10 @@ const Tours = () => {
           ))}
         </select>
       </div>
+      {loading && <p>Loading...</p>}
+      {filteredTours.length === 0 && !loading && parkFilter !== "" && (
+        <p>No tours data available for this park.</p>
+      )}
       <div className="tours-grid">
         {filteredTours.map((tour) => (
           <div key={tour.id} className="tour-card">
@@ -82,7 +92,6 @@ export default Tours;
 
 
 
-// // Tours.js
 // import React, { useState, useEffect } from "react";
 // import axios from "axios";
 // import { Link } from "react-router-dom";
@@ -103,7 +112,6 @@ export default Tours;
 //         });
 //         console.log("Tours response:", response);
 //         setTours(response.data.data);
-//         setFilteredTours(response.data.data);
 //       } catch (error) {
 //         console.error("Error fetching tours:", error);
 //       }
@@ -117,12 +125,15 @@ export default Tours;
 //   }, [parkFilter]);
 
 //   const filterTours = () => {
-//     const filtered = tours.filter(
-//       (tour) =>
-//         parkFilter === "" ||
-//         tour.park.fullName.toLowerCase().includes(parkFilter.toLowerCase())
-//     );
-//     setFilteredTours(filtered);
+//     if (parkFilter === "") {
+//       setFilteredTours([]);
+//     } else {
+//       const filtered = tours.filter(
+//         (tour) =>
+//           tour.park.fullName.toLowerCase().includes(parkFilter.toLowerCase())
+//       );
+//       setFilteredTours(filtered);
+//     }
 //   };
 
 //   const handleParkFilterChange = (e) => {
@@ -161,3 +172,4 @@ export default Tours;
 // };
 
 // export default Tours;
+

@@ -17,7 +17,10 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('campgrounds/', views.CampgroundsAPIView.as_view(), name='get_campgrounds'), 
     path("todo/", views.ToDoAPIView.as_view(), name="todo_api"),
+    # path('postdb/create/', views.PostDBCreateView.as_view(), name='postdb_create'),
+    # path('postdb/update/<int:pk>/', views.PostDBUpdateView.as_view(), name='postdb_update'),
 ]
+
 
 
 

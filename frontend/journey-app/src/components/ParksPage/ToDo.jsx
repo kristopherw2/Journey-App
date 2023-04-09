@@ -1,112 +1,49 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import ParkCodes from './ParkCodes';
-
-// const ToDo = () => {
-//   const [toDoData, setToDoData] = useState([]);
-//   const [searchTerm, setSearchTerm] = useState('');
-
-//   useEffect(() => {
-//     const fetchToDoData = async () => {
-//       try {
-//         const token = localStorage.getItem("token");
-//         const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/todo/`, {
-//           headers: { Authorization: `Token ${token}` },
-//         });
-//         setToDoData(response.data[0].data);
-//       } catch (error) {
-//         console.error("Error fetching to do data:", error);
-//       }
-//     };
-
-//     fetchToDoData();
-//   }, []);
-
-//   const handleChange = (e) => {
-//     const parkName = e.target.value;
-//     setSearchTerm(parkName);
-//   };
-
-//   const filteredData = toDoData.filter(item => {
-//     return item.relatedParks.some(park =>
-//       park.fullName.toLowerCase().includes(searchTerm.toLowerCase())
-//     );
-//   });
-
-//   return (
-//     <div>
-//       <h1>National Park To Do</h1>
-//       <select onChange={handleChange}>
-//         <option value="">Select a park</option>
-//         {Object.entries(ParkCodes).map(([code, name]) => (
-//           <option key={code} value={name}>
-//             {name}
-//           </option>
-//         ))}
-//       </select>
-//       <ul>
-//         {filteredData.map((item, index) => (
-//           <li key={index}>
-//             <h3>{item.title}</h3>
-//             <p>{item.shortDescription}</p>
-//             <p>Duration: {item.duration}</p>
-//             <p>{item.durationDescription}</p>
-//             <p>Accessibility Information: {item.accessibilityInformation}</p>
-//             {item.images.map((image, imgIndex) => (
-//               <img
-//                 key={imgIndex}
-//                 src={image.url}
-//                 alt={image.altText}
-//                 title={image.title}
-//               />
-//             ))}
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-// };
-
-// export default ToDo;
-
-
-
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import ParkCodes from './ParkCodes';
+
+const addTargetBlankToLinks = (htmlString) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
+  const links = doc.getElementsByTagName('a');
+  for (const link of links) {
+    link.setAttribute('target', '_blank');
+  }
+  return doc.body.innerHTML;
+};
 
 const ToDo = () => {
   const [toDoData, setToDoData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchToDoData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/todo/`, {
-          headers: { Authorization: `Token ${token}` },
-        });
-        setToDoData(response.data.data);
-      } catch (error) {
-        console.error("Error fetching to do data:", error);
-      }
-    };
-
-    fetchToDoData();
-  }, []);
-
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const parkName = e.target.value;
     setSearchTerm(parkName);
+    setLoading(true);
+
+    // Fetch to-do data based on the selected park
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/todo/`, {
+        headers: { Authorization: `Token ${token}` },
+        params: { park_name: parkName },
+      });
+      setToDoData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching to-do data:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const filteredData = searchTerm
-    ? toDoData.filter(item =>
-      item.relatedParks.some(park =>
-        park.fullName.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    )
-    : toDoData;
+  const displayImages = (images) => {
+    return images.map((image, index) => (
+      <div key={index}>
+        <img src={image.url} alt={image.altText} title={image.title} />
+      </div>
+    ));
+  };
 
   return (
     <div>
@@ -119,22 +56,24 @@ const ToDo = () => {
           </option>
         ))}
       </select>
+      {loading && <p>Loading...</p>}
       <ul>
-        {filteredData.map((item, index) => (
+        {toDoData.map((item, index) => (
           <li key={index}>
             <h3>{item.title}</h3>
             <p>{item.shortDescription}</p>
             <p>Duration: {item.duration}</p>
-            <p>{item.durationDescription}</p>
-            <p>Accessibility Information: {item.accessibilityInformation}</p>
-            {item.images.map((image, imgIndex) => (
-              <img
-                key={imgIndex}
-                src={image.url}
-                alt={image.altText}
-                title={image.title}
-              />
-            ))}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: addTargetBlankToLinks(item.durationDescription),
+              }}
+            />
+            <div
+              dangerouslySetInnerHTML={{
+                __html: addTargetBlankToLinks(item.accessibilityInformation),
+              }}
+            />
+            {displayImages(item.images)}
           </li>
         ))}
       </ul>
