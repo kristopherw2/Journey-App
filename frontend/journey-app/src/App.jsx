@@ -20,6 +20,8 @@ import TourDetails from "./components/ParksPage/TourDetails";
 import PostDetail from "./components/PostInteraction/PostDetail";
 import Campgrounds from "./components/ParksPage/Campgrounds";
 import ToDo from "./components/ParksPage/ToDo";
+import CreatePost2 from "./components/CreatePost/CreatePost2";
+
 
 
 function App() {

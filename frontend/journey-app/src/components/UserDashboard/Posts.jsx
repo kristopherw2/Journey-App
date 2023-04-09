@@ -163,8 +163,6 @@ function Posts() {
       <>
         <div name={item.id} id="post-container">
           <h3>{item.title}</h3>
-          <h2>Latitude{item.latitude}</h2>
-          <h2>Longitude{item.longitude}</h2>
           <img
             className="util-map"
             id="map-btn"
@@ -172,8 +170,6 @@ function Posts() {
             src={mapMarker}
             onClick={handleMap}
           />
-          <h4>Test</h4>
-
           <img
             className="util-btn"
             id="pencil-btn"
@@ -188,10 +184,15 @@ function Posts() {
             src={trash}
             onClick={handleDelete}
           />
-          <img
-            src={`http://${import.meta.env.VITE_BASE_URL}:8000/${item.image_url
+          {/* <img
+            src={`http://${import.meta.env.VITE_BASE_URL}:8000${item.image_url
               }`}
+          /> */}
+
+          <img
+            src={item.photo}
           />
+
         </div>
         <Description description={item.description} />
         <div id="modal-container">

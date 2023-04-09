@@ -7,11 +7,13 @@ import Cookies from "js-cookie";
 
 const CreatePost = () => {
   const [navigate, setNavigate] = useState(false);
+  const [imageURL, setImageURL] = useState("");
   const formik = useFormik({
     initialValues: {
       title: "",
       description: "",
       image: "",
+      photo: "",
       latitude: "",
       longitude: "",
       difficulty_level: "",
@@ -22,6 +24,7 @@ const CreatePost = () => {
       formData.append("title", values.title);
       formData.append("description", values.description);
       formData.append("image", values.image);
+      formData.append("photo", values.photo);
       formData.append("latitude", values.latitude);
       formData.append("longitude", values.longitude);
       formData.append("difficulty_level", values.difficulty_level);
@@ -81,6 +84,28 @@ const CreatePost = () => {
     reader.onloadend = () => {
       formik.setFieldValue("previewImage", reader.result);
     };
+
+    const file2 = event.target.files[0];
+    const formData2 = new FormData()
+    formData2.append("file", file)
+    formData2.append("upload_preset", "nwwq4hji");
+
+
+    console.log("Calling Cloudinary")
+
+    axios.post("https://api.cloudinary.com/v1_1/dnstta9dr/image/upload", formData2)
+    .then((response) =>{
+      setImageURL(response.data.url)
+      console.log("URL FROM CLOUDINARY")
+      console.log(response.data.url)
+      formik.setFieldValue("photo", response.data.url);
+
+    })
+
+    
+
+
+
   };
 
   return navigate ? (

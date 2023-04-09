@@ -22,6 +22,14 @@ img {
       position: absolute; top: 0; right: 3rem;
 }
 
+.util-map {
+  width: 20px;
+  height: 20px;
+  border-style: solid;
+  box-shadow: 0 0 8px 3px #B8B8B8;
+  position: absolute; top: 0; right: 6rem;
+}
+
 #pencil-btn {
   right: 4.5rem;
 }
