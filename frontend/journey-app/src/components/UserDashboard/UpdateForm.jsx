@@ -12,12 +12,23 @@ function UpdateForm(props) {
         </Modal.Header>
         <Modal.Body id="modal-update-body">
           <Form layout="vertical">
-            <Form.Group className="mb-3" controlId="postTextInput">
+          <Form.Group className="mb-3" controlId="postTextInput">
+              <Form.Label>Title</Form.Label>
+              <Form.Control type="text" id = "update_title"
+              value = {props.originalTitle}
+              onChange={props.handleOnChangeTitle}
+              />
+              <Form.Label>Description</Form.Label>
               <Form.Control as="textarea" id = "update_desc"
               value = {props.originalDesc}
               rows={10}
-              onChange={props.handleOnChange}
-            />
+              onChange={props.handleOnChangeDesc}
+              />
+              <Form.Label>Difficulty Level</Form.Label>
+              <Form.Control type="text" id = "update_level"
+              value = {props.originalLevel}
+              onChange={props.handleOnChangeLevel}
+              />
           </Form.Group>
        </Form>
           
