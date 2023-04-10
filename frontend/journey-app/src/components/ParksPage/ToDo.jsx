@@ -26,7 +26,8 @@ const ToDo = () => {
       });
 
       console.log('To Do response:', response);
-      setToDoData((prevToDoData) => [...prevToDoData, ...response.data.data]);
+      const newData = response.data.data.slice(0, limit);
+      setToDoData((prevToDoData) => [...prevToDoData, ...newData]);
     } catch (error) {
       console.error('Error fetching to-do data:', error);
     } finally {

@@ -18,52 +18,6 @@ import os  # for getting environment variables
 
 
 ########PARKS API VIEWS##################################################
-
-# class ToDoAPIView(generics.GenericAPIView):
-#     permission_classes = [permissions.IsAuthenticated]
-
-#     def get(self, request, *args, **kwargs):
-#         api_key = os.getenv("PARK_API_KEY")
-#         park_code = request.query_params.get('parkCode', '')
-#         todo_url = f"https://developer.nps.gov/api/v1/thingstodo?api_key={api_key}&limit=200"
-
-#         if park_code:
-#             todo_url += f"&parkCode={park_code}"
-
-#         todo_response = requests.get(todo_url)
-
-#         if todo_response.status_code == 200:
-#             data = todo_response.json()["data"]
-#             return Response({"data": data})
-#         else:
-#             print(f"Error: National Parks API returned status code {todo_response.status_code}")
-#             print(todo_response.text)
-#             return Response({"error": "Error fetching National Parks to do data."}, status=400)
-
-# class ToDoAPIView(generics.GenericAPIView):
-#     permission_classes = [permissions.IsAuthenticated]
-
-#     def get(self, request, *args, **kwargs):
-#         api_key = os.getenv("PARK_API_KEY")
-#         park_code = request.query_params.get('parkCode', '')
-#         limit = request.query_params.get('limit', 6)
-#         offset = request.query_params.get('offset', 0)
-#         todo_url = f"https://developer.nps.gov/api/v1/thingstodo?api_key={api_key}&limit={limit}&start={offset}"
-
-#         if park_code:
-#             todo_url += f"&parkCode={park_code}"
-
-#         todo_response = requests.get(todo_url)
-
-#         if todo_response.status_code == 200:
-#             data = todo_response.json()["data"]
-#             return Response({"data": data})
-#         else:
-#             print(f"Error: National Parks API returned status code {todo_response.status_code}")
-#             print(todo_response.text)
-#             return Response({"error": "Error fetching National Parks to do data."}, status=400)
-
-
 class CampgroundsAPIView(generics.GenericAPIView):
 
     def get(self, request, *args, **kwargs):
@@ -124,24 +78,6 @@ class ToursAPIView(generics.GenericAPIView):
 #         )
 #         return Response(response.json())
 
-# class ToDoAPIView(generics.GenericAPIView):
-#     def get(self, request):
-#         api_key = os.getenv("PARK_API_KEY")
-#         park_code = request.query_params.get('parkCode', '')
-#         todo_url = f"https://developer.nps.gov/api/v1/thingstodo?api_key={api_key}"
-
-#         if park_code:
-#             todo_url += f"&parkCode={park_code}"
-
-#         todo_response = requests.get(todo_url)
-
-#         if todo_response.status_code == 200:
-#             data = todo_response.json()["data"]
-#             return Response({"data": data})
-#         else:
-#             print(f"Error: National Parks API returned status code {todo_response.status_code}")
-#             print(todo_response.text)
-#             return Response({"error": "Error fetching National Parks to do data."}, status=400)
 
 
 class ToDoAPIView(generics.GenericAPIView):
@@ -151,7 +87,7 @@ class ToDoAPIView(generics.GenericAPIView):
         
         response = requests.get(
             "https://developer.nps.gov/api/v1/thingstodo",
-            params={"api_key": api_key, "limit": 25, "parkCode": park_code},
+            params={"api_key": api_key, "limit": 200, "parkCode": park_code},
         )
         print("NPS API response:", response.json())
         return Response(response.json())
