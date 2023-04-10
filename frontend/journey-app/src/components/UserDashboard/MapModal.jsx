@@ -13,7 +13,8 @@ function MapModal(props) {
           <Modal.Title>Map</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <img src={testMap} />
+          <h2>MAP</h2>
+          {/* <img src={testMap} /> */}
           {/* <Map lat={"18.340"} lng={"-64.75"} /> */}
           <Map lat={props.lat} lng={props.long} />
         </Modal.Body>

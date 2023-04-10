@@ -34,7 +34,9 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PostDB
-        fields = ['id', 'title', 'image_url', 'difficulty_level', 'description']
+
+
+        fields = ['id', 'title', 'image', 'image_url','difficulty_level', 'description', 'latitude', 'longitude', 'date_posted', 'comments', 'photo']
 
     def get_image_url(self, obj):
         if obj.image_data:

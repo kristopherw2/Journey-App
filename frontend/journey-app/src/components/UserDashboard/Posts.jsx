@@ -19,9 +19,10 @@ function Posts() {
   const [userPosts, setUserPosts] = useState([]);
   const [itemToUpdate, setItemToUpdate] = useState("");
   const [originalDesc, setOriginalDesc] = useState("");
+  const [originalLevel, setOriginalLevel] = useState("");
+  const [originalTitle, setOriginalTitle] = useState("");
   const [show, setShow] = useState(false);
   const [showMap, setShowMap] = useState(false);
-
   const [dataUpdated, setDataUpdated] = useState(false);
   const [noMore, setNoMore] = useState(true);
   const [nextPage, setNextPage] = useState(2);
@@ -76,7 +77,9 @@ function Posts() {
   };
 
   // Function to get the value entered in the update form
-  const handleOnChange = (event) => setOriginalDesc(event.target.value);
+  const handleOnChangeDesc = (event) => setOriginalDesc(event.target.value);
+  const handleOnChangeTitle = (event) => setOriginalTitle(event.target.value);
+  const handleOnChangeLevel = (event) => setOriginalLevel(event.target.value);
 
   const handleUpdate = (e) => {
     console.log(
@@ -99,6 +102,8 @@ function Posts() {
       console.log(response.data);
       setItemToUpdate(response.data);
       setOriginalDesc(response.data.description);
+      setOriginalLevel(response.data.difficulty_level);
+      setOriginalTitle(response.data.title);
     } catch (err) {
       console.log(err);
       alert(`Oops Something Wrong: ${err}`);
@@ -113,7 +118,9 @@ function Posts() {
         `${`http://${import.meta.env.VITE_BASE_URL
         }/api/userposts/`}${e.target.getAttribute("post_id")}/`,
         {
+          title: originalTitle, 
           description: originalDesc,
+          difficulty_level: originalLevel,
         },
         options
       )
@@ -163,8 +170,6 @@ function Posts() {
       <>
         <div name={item.id} id="post-container">
           <h3>{item.title}</h3>
-          <h2>Latitude{item.latitude}</h2>
-          <h2>Longitude{item.longitude}</h2>
           <img
             className="util-map"
             id="map-btn"
@@ -172,8 +177,6 @@ function Posts() {
             src={mapMarker}
             onClick={handleMap}
           />
-          <h4>Test</h4>
-
           <img
             className="util-btn"
             id="pencil-btn"
@@ -188,10 +191,15 @@ function Posts() {
             src={trash}
             onClick={handleDelete}
           />
-          <img
-            src={`http://${import.meta.env.VITE_BASE_URL}:8000/${item.image_url
+          {/* <img
+            src={`http://${import.meta.env.VITE_BASE_URL}:8000${item.image_url
               }`}
+          /> */}
+
+          <img
+            src={item.photo}
           />
+
         </div>
         <Description description={item.description} />
         <div id="modal-container">
@@ -199,7 +207,11 @@ function Posts() {
             show={show}
             handleClose={handleClose}
             originalDesc={originalDesc}
-            handleOnChange={handleOnChange}
+            originalLevel={originalLevel}
+            originalTitle={originalTitle}
+            handleOnChangeDesc={handleOnChangeDesc}
+            handleOnChangeTitle={handleOnChangeTitle}
+            handleOnChangeLevel={handleOnChangeLevel}
             handleClickSaveUpdate={handleClickSaveUpdate}
             itemToUpdate={itemToUpdate}
           />

@@ -38,12 +38,14 @@ import base64
 class PostDB(models.Model):
    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="posts")
    title = models.CharField(max_length=255, blank=True) 
-   image = models.ImageField(upload_to='uploadPhotos')
+   image = models.ImageField(upload_to='uploadPhotos', blank=True)
    difficulty_level = models.CharField(max_length=255, blank=True)
    description = models.TextField()
    latitude = models.CharField(max_length=255, blank=True)
    longitude = models.CharField(max_length=255, blank=True)
    date_posted = models.DateTimeField(default=timezone.now)
+   photo = models.CharField(max_length=255, blank=True)
+
 
    def get_image_url(self):
       if self.image:
