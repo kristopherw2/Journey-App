@@ -12,13 +12,14 @@ const Videos = () => {
   const [limit] = useState(6);
   const lastVideoElementRef = useRef(null);
 
+  // Define a function to fetch videos for a given park from the API
   const fetchVideos = async (parkCode, start, end) => {
-    setLoading(true);
+    setLoading(true); // Set loading to true while fetching videos
     try {
       const token = localStorage.getItem('token');
       console.log('Selected parkCode:', parkCode);
 
-
+      // Make a GET request to the API endpoint to retrieve videos for the selected park
       const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/videos/`, {
         headers: { Authorization: `Token ${token}` },
         params: {
@@ -27,27 +28,32 @@ const Videos = () => {
         },
       });
       console.log('Videos response:', response);
+
+      // Update the videos state variable by concatenating the new videos to the existing ones
       setVideos((prevVideos) => [...prevVideos, ...response.data.data.slice(start, end)]);
     } catch (error) {
       console.error('Error fetching videos:', error);
     } finally {
-      setLoading(false);
+      setLoading(false); // Set loading back to false when the fetch is done
     }
   };
 
+  // Use the useEffect hook to fetch videos whenever the selectedPark, offset, or limit state variables change
   useEffect(() => {
     if (selectedPark) {
       fetchVideos(selectedPark, offset, offset + limit);
     }
   }, [selectedPark, offset, limit]);
 
+  // Use the useEffect hook to set up an IntersectionObserver for infinite scrolling
   useEffect(() => {
-    if (loading) return;
+    if (loading) return; // If loading is true, do nothing
 
+    // Create an IntersectionObserver object to monitor the last video element in the videos grid
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          setOffset((prevOffset) => prevOffset + limit);
+          setOffset((prevOffset) => prevOffset + limit); // If the last video element is in view, update the offset state variable to trigger the next fetch of videos
         }
       },
       { threshold: 1 }
@@ -57,6 +63,7 @@ const Videos = () => {
       observer.observe(lastVideoElementRef.current);
     }
 
+    // Clean up the observer when the component unmounts
     return () => {
       if (lastVideoElementRef.current) {
         observer.unobserve(lastVideoElementRef.current);
@@ -64,11 +71,12 @@ const Videos = () => {
     };
   }, [loading, limit]);
 
+  // Define a function to handle changes to the selected park in the dropdown menu
   const handleParkChange = (e) => {
     const parkCode = e.target.value;
-    setSelectedPark(parkCode);
-    setOffset(0);
-    setVideos([]);
+    setSelectedPark(parkCode); // Update the selectedPark state variable
+    setOffset(0); // Reset the offset state variable
+    setVideos([]); // Clear the videos state variable
   };
 
 
