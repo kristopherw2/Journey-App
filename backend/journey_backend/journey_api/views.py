@@ -19,37 +19,60 @@ import os  # for getting environment variables
 
 ########PARKS API VIEWS##################################################
 
-class ToDoAPIView(generics.GenericAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+# class ToDoAPIView(generics.GenericAPIView):
+#     permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request, *args, **kwargs):
-        api_key = os.getenv("PARK_API_KEY")
-        park_name = request.GET.get('park_name', '')
-        todo_url = f"https://developer.nps.gov/api/v1/thingstodo?api_key={api_key}&limit=50"
+#     def get(self, request, *args, **kwargs):
+#         api_key = os.getenv("PARK_API_KEY")
+#         park_code = request.query_params.get('parkCode', '')
+#         todo_url = f"https://developer.nps.gov/api/v1/thingstodo?api_key={api_key}&limit=200"
 
-        if park_name:
-            todo_url += f"&q={park_name}"
+#         if park_code:
+#             todo_url += f"&parkCode={park_code}"
 
-        todo_response = requests.get(todo_url)
+#         todo_response = requests.get(todo_url)
 
-        if todo_response.status_code == 200:
-            data = todo_response.json()["data"]
-            return Response({"data": data})
-        else:
-            print(f"Error: National Parks API returned status code {todo_response.status_code}")
-            print(todo_response.text)
-            return Response({"error": "Error fetching National Parks to do data."}, status=400)
+#         if todo_response.status_code == 200:
+#             data = todo_response.json()["data"]
+#             return Response({"data": data})
+#         else:
+#             print(f"Error: National Parks API returned status code {todo_response.status_code}")
+#             print(todo_response.text)
+#             return Response({"error": "Error fetching National Parks to do data."}, status=400)
+
+# class ToDoAPIView(generics.GenericAPIView):
+#     permission_classes = [permissions.IsAuthenticated]
+
+#     def get(self, request, *args, **kwargs):
+#         api_key = os.getenv("PARK_API_KEY")
+#         park_code = request.query_params.get('parkCode', '')
+#         limit = request.query_params.get('limit', 6)
+#         offset = request.query_params.get('offset', 0)
+#         todo_url = f"https://developer.nps.gov/api/v1/thingstodo?api_key={api_key}&limit={limit}&start={offset}"
+
+#         if park_code:
+#             todo_url += f"&parkCode={park_code}"
+
+#         todo_response = requests.get(todo_url)
+
+#         if todo_response.status_code == 200:
+#             data = todo_response.json()["data"]
+#             return Response({"data": data})
+#         else:
+#             print(f"Error: National Parks API returned status code {todo_response.status_code}")
+#             print(todo_response.text)
+#             return Response({"error": "Error fetching National Parks to do data."}, status=400)
+
 
 class CampgroundsAPIView(generics.GenericAPIView):
-    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, *args, **kwargs):
         api_key = os.getenv("PARK_API_KEY")
-        park_name = request.GET.get('park_name', '')
-        campgrounds_url = f"https://developer.nps.gov/api/v1/campgrounds?api_key={api_key}&limit=50"
+        park_code = request.query_params.get('parkCode', '')
+        campgrounds_url = f"https://developer.nps.gov/api/v1/campgrounds?api_key={api_key}&limit=2000"
 
-        if park_name:
-            campgrounds_url += f"&q={park_name}"
+        if park_code:
+            campgrounds_url += f"&parkCode={park_code}"
 
         campgrounds_response = requests.get(campgrounds_url)
 
@@ -58,7 +81,6 @@ class CampgroundsAPIView(generics.GenericAPIView):
             return Response({"campgrounds": data})
         else:
             return Response({"error": "Error fetching National Parks data."}, status=400)
-
 
 
 class TourDetailAPIView(generics.GenericAPIView):
@@ -82,44 +104,83 @@ class TourDetailAPIView(generics.GenericAPIView):
         return Response(tour)
 
 
-# class ToursAPIView(generics.GenericAPIView):
-#     def get(self, request):
-#         response = requests.get(
-#             "https://developer.nps.gov/api/v1/tours",
-#             params={"api_key": os.getenv("PARK_API_KEY"), "limit": 500},
-#         )
-#         return Response(response.json())
+class ToursAPIView(generics.GenericAPIView):
+    def get(self, request):
+        response = requests.get(
+            "https://developer.nps.gov/api/v1/tours",
+            params={"api_key": os.getenv("PARK_API_KEY"), "limit": 500},
+        )
+        return Response(response.json())
 
 
 # views.py
-class ToursAPIView(generics.GenericAPIView):
+# class ToursAPIView(generics.GenericAPIView):
+#     def get(self, request):
+#         api_key = os.getenv("PARK_API_KEY")
+#         park_code = request.query_params.get('parkCode', '')
+#         response = requests.get(
+#             "https://developer.nps.gov/api/v1/tours",
+#             params={"api_key": api_key, "limit": 500, "parkCode": park_code},
+#         )
+#         return Response(response.json())
+
+# class ToDoAPIView(generics.GenericAPIView):
+#     def get(self, request):
+#         api_key = os.getenv("PARK_API_KEY")
+#         park_code = request.query_params.get('parkCode', '')
+#         todo_url = f"https://developer.nps.gov/api/v1/thingstodo?api_key={api_key}"
+
+#         if park_code:
+#             todo_url += f"&parkCode={park_code}"
+
+#         todo_response = requests.get(todo_url)
+
+#         if todo_response.status_code == 200:
+#             data = todo_response.json()["data"]
+#             return Response({"data": data})
+#         else:
+#             print(f"Error: National Parks API returned status code {todo_response.status_code}")
+#             print(todo_response.text)
+#             return Response({"error": "Error fetching National Parks to do data."}, status=400)
+
+
+class ToDoAPIView(generics.GenericAPIView):
     def get(self, request):
         api_key = os.getenv("PARK_API_KEY")
         park_code = request.query_params.get('parkCode', '')
+        
         response = requests.get(
-            "https://developer.nps.gov/api/v1/tours",
-            params={"api_key": api_key, "limit": 500, "parkCode": park_code},
+            "https://developer.nps.gov/api/v1/thingstodo",
+            params={"api_key": api_key, "limit": 25, "parkCode": park_code},
         )
+        print("NPS API response:", response.json())
         return Response(response.json())
+
 
 
 class VideosAPIView(generics.GenericAPIView):
     def get(self, request):
         api_key = os.getenv("PARK_API_KEY")
         park_code = request.query_params.get('parkCode', '')
+        
         response = requests.get(
             "https://developer.nps.gov/api/v1/multimedia/videos",
-            params={"api_key": api_key, "limit": 50, "parkCode": park_code},
+            params={"api_key": api_key, "limit": 25, "parkCode": park_code},
         )
+        print("NPS API response:", response.json())
         return Response(response.json())
 
 
-class ParksAPIView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
 
+class ParksAPIView(APIView):
+    
     def get(self, request, *args, **kwargs):
         api_key = os.getenv("PARK_API_KEY")
-        activities_parks_url = f"https://developer.nps.gov/api/v1/activities/parks?api_key={api_key}&limit=500"
+        park_code = request.query_params.get('parkCode', '')
+        activities_parks_url = f"https://developer.nps.gov/api/v1/activities/parks?api_key={api_key}&limit=200"
+
+        if park_code:
+            activities_parks_url += f"&parkCode={park_code}"
 
         activities_parks_response = requests.get(activities_parks_url)
 
@@ -130,9 +191,6 @@ class ParksAPIView(APIView):
             return Response(data)
         else:
             return Response({"error": "Error fetching National Parks data."}, status=400)
-
-
-
 
 class WebcamsAPIView(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
@@ -146,6 +204,9 @@ class WebcamsAPIView(generics.ListAPIView):
             return Response(filtered_webcams, status=status.HTTP_200_OK)
         else:
             return Response({"error": "Unable to fetch webcams"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 
 
 
@@ -257,8 +318,6 @@ class ExtractLocationAPIView(APIView):
 
 
 #######docker prod fix###########
-
-
 
 # from django.views.generic.edit import CreateView, UpdateView
 # from django.shortcuts import get_object_or_404

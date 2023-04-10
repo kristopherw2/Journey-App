@@ -7,33 +7,23 @@ const Activities = () => {
   const [filteredActivities, setFilteredActivities] = useState([]);
   const [parkFilter, setParkFilter] = useState("");
 
-  useEffect(() => {
-    const fetchActivitiesParks = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/parks/`, {
-          headers: { Authorization: `Token ${token}` },
-        });
-        console.log("API response:", response);
-        setActivitiesParks(response.data.activities_parks);
-        setFilteredActivities([]);
-      } catch (error) {
-        console.error("Error fetching activities parks data: ", error);
-      }
-    };
-
-    fetchActivitiesParks();
-  }, []);
-
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const parkName = e.target.value;
     setParkFilter(parkName);
     if (parkName) {
-      const filtered = activitiesParks.filter((activity) => {
-        const parkMatch = activity.parks.some((park) => park.fullName.toLowerCase() === parkName.toLowerCase());
-        return parkMatch;
-      });
-      setFilteredActivities(filtered);
+      try {
+        const token = localStorage.getItem("token");
+        const parkCode = Object.entries(ParkCodes).find(([, name]) => name === parkName)[0];
+        const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/parks/`, {
+          headers: { Authorization: `Token ${token}` },
+          params: { parkCode },
+        });
+        console.log("API Activites response:", response);
+        setActivitiesParks(response.data.activities_parks);
+        setFilteredActivities(response.data.activities_parks);
+      } catch (error) {
+        console.error("Error fetching activities parks data: ", error);
+      }
     } else {
       setFilteredActivities([]);
     }

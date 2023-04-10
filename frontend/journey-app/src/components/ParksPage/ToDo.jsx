@@ -1,57 +1,82 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import ParkCodes from './ParkCodes';
 
-const addTargetBlankToLinks = (htmlString) => {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(htmlString, 'text/html');
-  const links = doc.getElementsByTagName('a');
-  for (const link of links) {
-    link.setAttribute('target', '_blank');
-  }
-  return doc.body.innerHTML;
-};
-
 const ToDo = () => {
   const [toDoData, setToDoData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedPark, setSelectedPark] = useState('');
   const [loading, setLoading] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const [limit] = useState(6);
+  const lastToDoElementRef = useRef(null);
 
-  const handleChange = async (e) => {
-    const parkName = e.target.value;
-    setSearchTerm(parkName);
+  const fetchToDo = async (parkCode, start, end) => {
     setLoading(true);
-
-    // Fetch to-do data based on the selected park
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
+      console.log('Selected parkCode:', parkCode);
+
       const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/todo/`, {
         headers: { Authorization: `Token ${token}` },
-        params: { park_name: parkName },
+        params: {
+          parkCode,
+          start,
+          end,
+        },
       });
-      setToDoData(response.data.data);
+
+      console.log('To Do response:', response);
+      setToDoData((prevToDoData) => [...prevToDoData, ...response.data.data]);
     } catch (error) {
-      console.error("Error fetching to-do data:", error);
+      console.error('Error fetching to-do data:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  const displayImages = (images) => {
-    return images.map((image, index) => (
-      <div key={index}>
-        <img src={image.url} alt={image.altText} title={image.title} />
-      </div>
-    ));
+  useEffect(() => {
+    if (selectedPark) {
+      fetchToDo(selectedPark, offset, offset + limit);
+    }
+  }, [selectedPark, offset, limit]);
+
+  useEffect(() => {
+    if (loading) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setOffset((prevOffset) => prevOffset + limit);
+        }
+      },
+      { threshold: 1 }
+    );
+
+    if (lastToDoElementRef.current) {
+      observer.observe(lastToDoElementRef.current);
+    }
+
+    return () => {
+      if (lastToDoElementRef.current) {
+        observer.unobserve(lastToDoElementRef.current);
+      }
+    };
+  }, [loading, limit]);
+
+  const handleParkChange = (e) => {
+    const parkCode = e.target.value;
+    setSelectedPark(parkCode);
+    setOffset(0);
+    setToDoData([]);
   };
 
   return (
     <div>
       <h1>National Park To Do</h1>
-      <select onChange={handleChange}>
+      <select onChange={handleParkChange}>
         <option value="">Select a park</option>
         {Object.entries(ParkCodes).map(([code, name]) => (
-          <option key={code} value={name}>
+          <option key={code} value={code}>
             {name}
           </option>
         ))}
@@ -59,21 +84,28 @@ const ToDo = () => {
       {loading && <p>Loading...</p>}
       <ul>
         {toDoData.map((item, index) => (
-          <li key={index}>
+          <li
+            key={index}
+            ref={index === toDoData.length - 1 ? lastToDoElementRef : null}
+          >
             <h3>{item.title}</h3>
             <p>{item.shortDescription}</p>
             <p>Duration: {item.duration}</p>
             <div
               dangerouslySetInnerHTML={{
-                __html: addTargetBlankToLinks(item.durationDescription),
+                __html: item.durationDescription,
               }}
             />
             <div
               dangerouslySetInnerHTML={{
-                __html: addTargetBlankToLinks(item.accessibilityInformation),
+                __html: item.accessibilityInformation,
               }}
             />
-            {displayImages(item.images)}
+            {item.images.map((image, index) => (
+              <div key={index}>
+                <img src={image.url} alt={image.altText} title={image.title} />
+              </div>
+            ))}
           </li>
         ))}
       </ul>
@@ -82,3 +114,122 @@ const ToDo = () => {
 };
 
 export default ToDo;
+
+
+
+// // ToDo.jsx
+// import React, { useState, useEffect, useRef } from 'react';
+// import axios from 'axios';
+// import ParkCodes from './ParkCodes';
+
+// const ToDo = () => {
+//   const [toDoData, setToDoData] = useState([]);
+//   const [selectedPark, setSelectedPark] = useState('');
+//   const [loading, setLoading] = useState(false);
+//   const [offset, setOffset] = useState(0);
+//   const [limit] = useState(6);
+//   const lastToDoElementRef = useRef(null);
+
+//   const fetchToDo = async (parkCode, start, end) => {
+//     setLoading(true);
+//     try {
+//       const token = localStorage.getItem('token');
+//       console.log('Selected parkCode:', parkCode);
+
+//       const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/todo/`, {
+//         headers: { Authorization: `Token ${token}` },
+//         params: {
+//           parkCode,
+//           limit: end,
+//         },
+//       });
+
+//       console.log('To Do response:', response);
+//       setToDoData((prevToDoData) => [...prevToDoData, ...response.data.data.slice(start, end)]);
+//     } catch (error) {
+//       console.error('Error fetching to-do data:', error);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   useEffect(() => {
+//     if (selectedPark) {
+//       fetchToDo(selectedPark, offset, offset + limit);
+//     }
+//   }, [selectedPark, offset, limit]);
+
+//   useEffect(() => {
+//     if (loading) return;
+
+//     const observer = new IntersectionObserver(
+//       (entries) => {
+//         if (entries[0].isIntersecting) {
+//           setOffset((prevOffset) => prevOffset + limit);
+//         }
+//       },
+//       { threshold: 1 }
+//     );
+
+//     if (lastToDoElementRef.current) {
+//       observer.observe(lastToDoElementRef.current);
+//     }
+
+//     return () => {
+//       if (lastToDoElementRef.current) {
+//         observer.unobserve(lastToDoElementRef.current);
+//       }
+//     };
+//   }, [loading, limit]);
+
+//   const handleParkChange = (e) => {
+//     const parkCode = e.target.value;
+//     setSelectedPark(parkCode);
+//     setOffset(0);
+//     setToDoData([]);
+//   };
+
+//   return (
+//     <div>
+//       <h1>National Park To Do</h1>
+//       <select onChange={handleParkChange}>
+//         <option value="">Select a park</option>
+//         {Object.entries(ParkCodes).map(([code, name]) => (
+//           <option key={code} value={code}>
+//             {name}
+//           </option>
+//         ))}
+//       </select>
+//       {loading && <p>Loading...</p>}
+//       <ul>
+//         {toDoData.map((item, index) => (
+//           <li
+//             key={index}
+//             ref={index === toDoData.length - 1 ? lastToDoElementRef : null}
+//           >
+//             <h3>{item.title}</h3>
+//             <p>{item.shortDescription}</p>
+//             <p>Duration: {item.duration}</p>
+//             <div
+//               dangerouslySetInnerHTML={{
+//                 __html: item.durationDescription,
+//               }}
+//             />
+//             <div
+//               dangerouslySetInnerHTML={{
+//                 __html: item.accessibilityInformation,
+//               }}
+//             />
+//             {item.images.map((image, index) => (
+//               <div key={index}>
+//                 <img src={image.url} alt={image.altText} title={image.title} />
+//               </div>
+//             ))}
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
+
+// export default ToDo;

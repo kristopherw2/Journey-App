@@ -14,7 +14,7 @@ const WebcamPage = () => {
         const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/webcams/`, {
           headers: { Authorization: `Token ${token}` },
         });
-        console.log("API response:", response);
+        console.log("API WEBCAM response:", response);
         const activeWebcams = response.data.filter(
           (webcam) => webcam.status === "Active" && webcam.isStreaming !== false
         );

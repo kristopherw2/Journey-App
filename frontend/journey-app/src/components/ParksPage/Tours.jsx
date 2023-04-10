@@ -22,6 +22,7 @@ const Tours = () => {
         headers: { Authorization: `Token ${token}` },
         params: { parkCode },
       });
+      console.log('Tours response:', response);
       setTours(response.data.data);
     } catch (error) {
       console.error("Error fetching tours:", error);
