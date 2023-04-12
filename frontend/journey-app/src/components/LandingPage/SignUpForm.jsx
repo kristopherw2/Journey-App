@@ -49,11 +49,35 @@ function SignUpForm() {
   }
 
   return (
-    <Container>
-      <Row>
-        <Col md="4">
+    <div
+      style={{
+        backgroundImage: "url(./landingbackground.jpg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        height: "100vh",
+        width: "100vw",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgba(0,0,0,0.8)",
+      }}
+    >
+      <img
+        src="landinglogo.png"
+        alt="Image"
+        style={{
+          width: "60vw",
+          maxWidth: "600px",
+          position: "fixed",
+          top: 0,
+          marginTop: "50px",
+        }}
+      />
+      <Container style={{ backgroundColor: "transparent" }}>
+        <Row>
           <center>
-            <h1>Sign up</h1>
+            <h1 style={{ color: "white" }}>Create Your Account</h1>
           </center>
           <Formik
             initialValues={{
@@ -62,8 +86,7 @@ function SignUpForm() {
               password: "",
             }}
             validationSchema={Yup.object().shape({
-              username: Yup.string()
-                .required("Username is required"),
+              username: Yup.string().required("Username is required"),
               email: Yup.string()
                 .email("Invalid email")
                 .required("Email is required"),
@@ -86,8 +109,17 @@ function SignUpForm() {
               isSubmitting,
             }) => (
               <Form noValidate onSubmit={handleSubmit}>
-                <Form.Group controlId="usernameId">
-                  <Form.Label>Username</Form.Label>
+                <Form.Group
+                  controlId="usernameId"
+                  style={{
+                    margin: "0 auto",
+                    width: "60%",
+                    textAlign: "center",
+                  }}
+                >
+                  <Form.Label style={{ color: "white", fontWeight: "bold" }}>
+                    Username
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     name="username"
@@ -102,8 +134,17 @@ function SignUpForm() {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group controlId="emailId">
-                  <Form.Label>E-mail</Form.Label>
+                <Form.Group
+                  controlId="emailId"
+                  style={{
+                    margin: "0 auto",
+                    width: "60%",
+                    textAlign: "center",
+                  }}
+                >
+                  <Form.Label style={{ color: "white", fontWeight: "bold" }}>
+                    E-mail
+                  </Form.Label>
                   <Form.Control
                     type="email"
                     name="email"
@@ -118,8 +159,17 @@ function SignUpForm() {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group controlId="passwordId">
-                  <Form.Label>Your password</Form.Label>
+                <Form.Group
+                  controlId="passwordId"
+                  style={{
+                    margin: "0 auto",
+                    width: "60%",
+                    textAlign: "center",
+                  }}
+                >
+                  <Form.Label style={{ color: "white", fontWeight: "bold" }}>
+                    Your password
+                  </Form.Label>
                   <Form.Control
                     type="password"
                     name="password"
@@ -134,11 +184,7 @@ function SignUpForm() {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Button
-                  type="submit"
-                  color="primary"
-                  disabled={isSubmitting}
-                >
+                <Button type="submit" color="sky-blue" disabled={isSubmitting}>
                   {isSubmitting ? "Submitting..." : "Sign up"}
                 </Button>
                 {submitError && (
@@ -150,25 +196,22 @@ function SignUpForm() {
 
           <center>
             <p className="mt-2">
-              Already have an account? <Link to="/signin">Login</Link>
+              Already have an account?{" "}
+              <Link to="/signin" style={{ color: "skyblue" }}>
+                Login
+              </Link>
             </p>
           </center>
-        </Col>
-      </Row>
-      {redirect && <Navigate to="/signin" replace={true} />}
-    </Container>
+        </Row>
+        {redirect && <Navigate to="/signin" replace={true} />}
+      </Container>
+    </div>
   );
-
-};
+}
 
 export default SignUpForm;
 
-
-
-
-
 // Kris intial code below and chads new code above that has error validation for name, email, and password
-
 
 // import React, { useState } from "react";
 // import { Link, Navigate } from "react-router-dom";

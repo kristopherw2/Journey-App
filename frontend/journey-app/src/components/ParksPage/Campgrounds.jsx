@@ -1,32 +1,4 @@
-// import React, { useState } from 'react';
-// import axios from 'axios';
-// import ParkCodes from './ParkCodes';
-
-// const Campgrounds = () => {
-//   const [campgrounds, setCampgrounds] = useState([]);
-//   const [searchTerm, setSearchTerm] = useState('');
-//   const [loading, setLoading] = useState(false);
-
-//   const handleChange = async (e) => {
-//     const parkName = e.target.value;
-//     setSearchTerm(parkName);
-//     setLoading(true);
-
-//     // Fetch campgrounds based on the selected park
-//     try {
-//       const token = localStorage.getItem("token");
-//       const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/campgrounds/`, {
-//         headers: { Authorization: `Token ${token}` },
-//         params: { park_name: parkName },
-//       });
-//       setCampgrounds(response.data.campgrounds);
-//     } catch (error) {
-//       console.error("Error fetching campgrounds data:", error);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ParkCodes from './ParkCodes';
 

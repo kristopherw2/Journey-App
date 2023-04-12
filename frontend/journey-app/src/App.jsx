@@ -19,10 +19,7 @@ import Tours from "./components/ParksPage/Tours";
 import TourDetails from "./components/ParksPage/TourDetails";
 import PostDetail from "./components/PostInteraction/PostDetail";
 import Campgrounds from "./components/ParksPage/Campgrounds";
-import ToDo from "./components/ParksPage/ToDo";
-import CreatePost2 from "./components/CreatePost/CreatePost2";
-
-
+import Experiences from "./components/ParksPage/Experiences";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -56,10 +53,12 @@ function App() {
             <Route exact path="/videos" element={<Videos />} />
             <Route exact path="/tours" element={<Tours />} />
             <Route exact path="/tours/:id" element={<TourDetails />} />
-            <Route path="/userposts/:id" element={<PostDetail onDelete={() => { }} />} />
+            <Route
+              path="/userposts/:id"
+              element={<PostDetail onDelete={() => {}} />}
+            />
             <Route exact path="/campgrounds" element={<Campgrounds />} />
-            <Route exact path="/todo" element={<ToDo />} />
-
+            <Route exact path="/Experiences" element={<Experiences />} />
           </Route>
         </Routes>
       </Router>

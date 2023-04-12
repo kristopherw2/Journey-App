@@ -69,3 +69,14 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+}

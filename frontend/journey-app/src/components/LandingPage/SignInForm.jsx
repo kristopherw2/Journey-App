@@ -1,13 +1,6 @@
 import React, { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import {
-  Container,
-  Button,
-  Row,
-  Col,
-  Form,
-  FormControl,
-} from "react-bootstrap";
+import { Container, Button, Row, Form, FormControl } from "react-bootstrap";
 import axios from "axios";
 import { Formik } from "formik";
 import * as Yup from "yup";
@@ -46,12 +39,38 @@ function SignIn({ onLogin }) {
 
   if (redirect) {
     return <Navigate to="/dashboard" replace={true} />;
-  } return (
-    <Container>
-      <Row>
-        <Col md="4">
+  }
+  return (
+    <div
+      div
+      style={{
+        backgroundImage: "url(./landingbackground.jpg)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        height: "100vh",
+        width: "100vw",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "rgba(0,0,0,0.8)",
+      }}
+    >
+      <img
+        src="landinglogo.png"
+        alt="Image"
+        style={{
+          width: "60vw",
+          maxWidth: "600px",
+          position: "fixed",
+          top: 0,
+          marginTop: "50px",
+        }}
+      />
+      <Container style={{ backgroundColor: "transparent" }}>
+        <Row>
           <center>
-            <h1>Sign-in</h1>
+            <h1 style={{ color: "white" }}>Sign-in</h1>
           </center>
           <Formik
             initialValues={{
@@ -64,8 +83,7 @@ function SignIn({ onLogin }) {
               email: Yup.string()
                 .email("Invalid email")
                 .required("Email is required"),
-              password: Yup.string()
-                .required("Password is required"),
+              password: Yup.string().required("Password is required"),
             })}
             onSubmit={onLoginClick}
           >
@@ -79,8 +97,17 @@ function SignIn({ onLogin }) {
               isSubmitting,
             }) => (
               <Form noValidate onSubmit={handleSubmit}>
-                <Form.Group controlId="usernameId">
-                  <Form.Label>Username</Form.Label>
+                <Form.Group
+                  controlId="usernameId"
+                  style={{
+                    margin: "0 auto",
+                    width: "60%",
+                    textAlign: "center",
+                  }}
+                >
+                  <Form.Label style={{ color: "white", fontWeight: "bold" }}>
+                    Username
+                  </Form.Label>
                   <Form.Control
                     type="text"
                     name="username"
@@ -95,8 +122,17 @@ function SignIn({ onLogin }) {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group controlId="emailId">
-                  <Form.Label>E-mail</Form.Label>
+                <Form.Group
+                  controlId="emailId"
+                  style={{
+                    margin: "0 auto",
+                    width: "60%",
+                    textAlign: "center",
+                  }}
+                >
+                  <Form.Label style={{ color: "white", fontWeight: "bold" }}>
+                    E-mail
+                  </Form.Label>
                   <Form.Control
                     type="email"
                     name="email"
@@ -111,8 +147,17 @@ function SignIn({ onLogin }) {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group controlId="passwordId">
-                  <Form.Label>Your password</Form.Label>
+                <Form.Group
+                  controlId="passwordId"
+                  style={{
+                    margin: "0 auto",
+                    width: "60%",
+                    textAlign: "center",
+                  }}
+                >
+                  <Form.Label style={{ color: "white", fontWeight: "bold" }}>
+                    Your password
+                  </Form.Label>
                   <Form.Control
                     type="password"
                     name="password"
@@ -127,11 +172,7 @@ function SignIn({ onLogin }) {
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Button
-                  type="submit"
-                  color="primary"
-                  disabled={isSubmitting}
-                >
+                <Button type="submit" color="primary" disabled={isSubmitting}>
                   {isSubmitting ? "Submitting..." : "Sign in"}
                 </Button>
                 {submitError && (
@@ -145,10 +186,10 @@ function SignIn({ onLogin }) {
               Don't have an account? <Link to="/signup">Sign up</Link>
             </p>
           </center>
-        </Col>
-      </Row>
-      {redirect && <Navigate to="/dashboard" replace={true} />}
-    </Container>
+        </Row>
+        {redirect && <Navigate to="/dashboard" replace={true} />}
+      </Container>
+    </div>
   );
 }
 export default SignIn;
@@ -268,5 +309,3 @@ export default SignIn;
 // }
 
 // export default SignIn;
-
-

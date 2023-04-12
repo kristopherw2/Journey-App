@@ -1,12 +1,12 @@
 // Videos.jsx
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
-import ParkCodes from './ParkCodes';
-import './Videos.css';
+import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import ParkCodes from "./ParkCodes";
+import "./Videos.css";
 
 const Videos = () => {
   const [videos, setVideos] = useState([]);
-  const [selectedPark, setSelectedPark] = useState('');
+  const [selectedPark, setSelectedPark] = useState("");
   const [loading, setLoading] = useState(false);
   const [offset, setOffset] = useState(0);
   const [limit] = useState(6);
@@ -16,23 +16,29 @@ const Videos = () => {
   const fetchVideos = async (parkCode, start, end) => {
     setLoading(true); // Set loading to true while fetching videos
     try {
-      const token = localStorage.getItem('token');
-      console.log('Selected parkCode:', parkCode);
+      const token = localStorage.getItem("token");
+      console.log("Selected parkCode:", parkCode);
 
       // Make a GET request to the API endpoint to retrieve videos for the selected park
-      const response = await axios.get(`http://${import.meta.env.VITE_BASE_URL}/api/videos/`, {
-        headers: { Authorization: `Token ${token}` },
-        params: {
-          parkCode,
-          limit: end,
-        },
-      });
-      console.log('Videos response:', response);
+      const response = await axios.get(
+        `http://${import.meta.env.VITE_BASE_URL}/api/videos/`,
+        {
+          headers: { Authorization: `Token ${token}` },
+          params: {
+            parkCode,
+            limit: end,
+          },
+        }
+      );
+      console.log("Videos response:", response);
 
       // Update the videos state variable by concatenating the new videos to the existing ones
-      setVideos((prevVideos) => [...prevVideos, ...response.data.data.slice(start, end)]);
+      setVideos((prevVideos) => [
+        ...prevVideos,
+        ...response.data.data.slice(start, end),
+      ]);
     } catch (error) {
-      console.error('Error fetching videos:', error);
+      console.error("Error fetching videos:", error);
     } finally {
       setLoading(false); // Set loading back to false when the fetch is done
     }
@@ -79,14 +85,16 @@ const Videos = () => {
     setVideos([]); // Clear the videos state variable
   };
 
-
-
   return (
     <div className="videos-container">
       <h2 className="videos-header">Videos</h2>
       <div>
         <label htmlFor="parkFilter">Select a park: </label>
-        <select id="parkFilter" value={selectedPark} onChange={handleParkChange}>
+        <select
+          id="parkFilter"
+          value={selectedPark}
+          onChange={handleParkChange}
+        >
           <option value="">Select a park</option>
           {Object.entries(ParkCodes).map(([code, name]) => (
             <option key={code} value={code}>
@@ -94,10 +102,9 @@ const Videos = () => {
             </option>
           ))}
         </select>
-
       </div>
       {loading && <p>Loading videos...</p>}
-      {!loading && videos.length === 0 && selectedPark !== '' && (
+      {!loading && videos.length === 0 && selectedPark !== "" && (
         <p>Sorry, no videos are available for this park.</p>
       )}
       <div className="videos-grid">
@@ -109,10 +116,11 @@ const Videos = () => {
           >
             <h3>{video.title}</h3>
             <video width="320" height="240" controls>
-              {video.versions.map((version) =>
-                version.heightPixels === 720 && (
-                  <source src={version.url} type={version.fileType} />
-                )
+              {video.versions.map(
+                (version) =>
+                  version.heightPixels === 720 && (
+                    <source src={version.url} type={version.fileType} />
+                  )
               )}
               Your browser does not support the video tag.
             </video>
@@ -123,5 +131,5 @@ const Videos = () => {
     </div>
   );
 };
-export default Videos;
 
+export default Videos;
