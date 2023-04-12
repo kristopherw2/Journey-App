@@ -103,19 +103,23 @@ const CreatePost = () => {
 
     console.log("Calling Cloudinary");
 
+
     axios
       .post(
         "https://api.cloudinary.com/v1_1/dnstta9dr/image/upload",
         formData2
       )
+
+
       .then((response) => {
         setImageURL(response.data.url);
         console.log("URL FROM CLOUDINARY");
         console.log(response.data.url);
         formik.setFieldValue("photo", response.data.url);
+
       })
       .catch((error) => {
-        console.error("Error uploading image to Cloudinary:", error);
+
       });
   };
 
@@ -128,10 +132,10 @@ const CreatePost = () => {
           <input
             type="text"
             id="title"
-            name="title"  // added name attribute
+            name="title" // added name attribute
             value={formik.values.title}
             onChange={formik.handleChange}
-          // onBlur={formik.handleBlur}
+            // onBlur={formik.handleBlur}
           />
           {formik.touched.title && formik.errors.title && (
             <div className="error">{formik.errors.title}</div>
@@ -147,10 +151,10 @@ const CreatePost = () => {
                 <input
                   type="file"
                   id="image"
-                  name="image"  // added name attribute
+                  name="image" // added name attribute
                   accept="image/*"
                   onChange={handleImageSelect}
-                  onBlur={formik.handleBlur}  // added onBlur event
+                  onBlur={formik.handleBlur} // added onBlur event
                   style={{ display: "none" }}
                 />
               </>
@@ -168,7 +172,7 @@ const CreatePost = () => {
           <label htmlFor="description">Description:</label>
           <textarea
             id="description"
-            name="description"  // added name attribute
+            name="description" // added name attribute
             rows="10"
             cols="22"
             value={formik.values.description}
@@ -186,7 +190,7 @@ const CreatePost = () => {
           <div>
             <select
               id="difficulty_level"
-              name="difficulty_level"  // added name attribute
+              name="difficulty_level" // added name attribute
               value={formik.values.difficulty_level}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -199,9 +203,10 @@ const CreatePost = () => {
               ))}
             </select>
           </div>
-          {formik.touched.difficulty_level && formik.errors.difficulty_level && (
-            <div className="error">{formik.errors.difficulty_level}</div>
-          )}
+          {formik.touched.difficulty_level &&
+            formik.errors.difficulty_level && (
+              <div className="error">{formik.errors.difficulty_level}</div>
+            )}
           <div style={{ display: "flex", justifyContent: "center" }}>
             <button
               type="submit"
@@ -212,16 +217,12 @@ const CreatePost = () => {
           </div>
         </div>
       </form>
-
     </div>
   );
 };
 export default CreatePost;
 
-
-
-
-
+// Kris code below chads updated error handle above
 // import React, { useState } from "react";
 // import axios from "axios";
 // import { useFormik } from "formik";
@@ -332,7 +333,6 @@ export default CreatePost;
 //     formData2.append("file", file);
 //     formData2.append("upload_preset", "nwwq4hji");
 
-//     console.log("Calling Cloudinary");
 //   };
 
 //   return (
