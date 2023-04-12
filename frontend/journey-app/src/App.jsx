@@ -55,10 +55,10 @@ function App() {
             <Route exact path="/tours/:id" element={<TourDetails />} />
             <Route
               path="/userposts/:id"
-              element={<PostDetail onDelete={() => {}} />}
+              element={<PostDetail onDelete={() => { }} />}
             />
             <Route exact path="/campgrounds" element={<Campgrounds />} />
-            <Route exact path="/Experiences" element={<Experiences />} />
+            <Route exact path="/experiences" element={<Experiences />} />
           </Route>
         </Routes>
       </Router>

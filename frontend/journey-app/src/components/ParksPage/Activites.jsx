@@ -25,14 +25,15 @@ const Activities = () => {
         );
         console.log("API Activites response:", response);
         setActivitiesParks(response.data.activities_parks);
-        setFilteredActivities([]);
+        setFilteredActivities(response.data.activities_parks); // set the value of filteredActivities
       } catch (error) {
         console.error("Error fetching activities parks data: ", error);
       }
     } else {
-      setFilteredActivities([]);
+      setFilteredActivities([]); // set the value of filteredActivities to empty array
     }
   };
+
 
   return (
     <div>

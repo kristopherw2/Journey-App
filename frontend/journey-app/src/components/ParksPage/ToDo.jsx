@@ -21,14 +21,12 @@ const ToDo = () => {
         headers: { Authorization: `Token ${token}` },
         params: {
           parkCode,
-          start,
-          end,
+          limit: end,
         },
       });
 
       console.log('To Do response:', response);
-      const newData = response.data.data.slice(0, limit);
-      setToDoData((prevToDoData) => [...prevToDoData, ...newData]);
+      setToDoData((prevToDoData) => [...prevToDoData, ...response.data.data.slice(start, end)]);
     } catch (error) {
       console.error('Error fetching to-do data:', error);
     } finally {
@@ -70,7 +68,8 @@ const ToDo = () => {
     setSelectedPark(parkCode);
     setOffset(0);
     setToDoData([]);
-  };
+  }
+
 
   return (
     <div>
