@@ -28,7 +28,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #b88181; /* set the background color of the page for chads sanity remove when needed*/
+  background-color: #DCDCDC;
+  /* background-color: #b88181; set the background color of the page for chads sanity remove when needed */
 }
 
 
