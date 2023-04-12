@@ -39,7 +39,7 @@ http://35.91.215.236/
 
 ## App Summary
 
-Journey is an attempt to make a journal app for avid hikers while also being a good source of information for activities at naitonal parks!
+Journey is an attempt to make a journal app for avid hikers while also being a good source of information for activities at national parks!
 
 ## Built With
 

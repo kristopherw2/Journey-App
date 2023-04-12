@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 
 const CreatePost = () => {
   const [navigate, setNavigate] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -30,7 +31,7 @@ const CreatePost = () => {
         console.log("Submitting form data: ", formData);
 
         const response = await axios.post(
-          `http://${import.meta.env.VITE_BASE_URL}/api/posts/`,
+          "http://localhost:8000/api/posts/",
           formData,
           {
             headers: {
@@ -57,7 +58,7 @@ const CreatePost = () => {
 
     try {
       const response = await axios.post(
-        `http://${import.meta.env.VITE_BASE_URL}/api/extract_location/`,
+        "http://localhost:8000/api/extract_location/",
         formData,
         {
           headers: {
@@ -87,22 +88,23 @@ const CreatePost = () => {
     <Navigate to="/dashboard" />
   ) : (
     <div className="wrapper">
-      <form onSubmit={formik.handleSubmit}>
         <div className="box header">
-          <label htmlFor="title">Title:</label>
-          <input
+          <form onSubmit={formik.handleSubmit}>
+            <label htmlFor="title" style={{color: "black", fontWeight: "bold"}}>Title:</label>
+            <input
             type="text"
             id="title"
             value={formik.values.title}
             onChange={formik.handleChange}
           />
+          </form>
         </div>
-        <div className="box content">
+          <div className="box content">
           <div className="file-upload-container">
             {!formik.values.previewImage && (
               <>
-                <label htmlFor="image" className="file-upload-label">
-                  Choose an Image
+                <label htmlFor="image" className="file-upload-label" style={{color: "black", fontWeight: "bold"}}>
+                  Select an Image
                 </label>
                 <input
                   type="file"
@@ -113,34 +115,49 @@ const CreatePost = () => {
                 />
               </>
             )}
-            {formik.values.previewImage && (
+              {formik.values.previewImage && (
+                <>
               <img
                 src={formik.values.previewImage}
                 alt="Preview"
-                style={{ maxWidth: "100%" }}
+                style={{ maxWidth: "100%", borderRadius: "20px" }}
               />
-            )}
+              <p/>
+              <button
+                type="button"
+                style={{ maxWidth: '50vw', display: 'block', margin: 'auto' }}
+                onClick={() => {
+                formik.setFieldValue('image', '');
+                formik.setFieldValue('previewImage', '');
+              }}
+              >
+            Clear Image
+            </button>
+            </>
+          )}
           </div>
         </div>
-        <div className="box sidebar">
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            rows="10"
-            cols="22"
+          <div className="box sidebar">
+            <label htmlFor="description" style={{color: "black", fontWeight: 'bold'}}>Description:</label>
+            <textarea
+              id="description"
+              // rows="10"
+              // cols="18"
             value={formik.values.description}
             onChange={formik.handleChange}
           />
         </div>
         <div className="box footer">
-          <div>
-            <label htmlFor="difficulty_level">Difficulty (optional):</label>
-          </div>
+        <div>
+          <label htmlFor="difficulty_level" style={{color: "black", fontWeight:"bold"}}>Difficulty (optional):</label>
+        </div>
+
           <div>
             <select
               id="difficulty_level"
               value={formik.values.difficulty_level}
               onChange={formik.handleChange}
+              style={{ marginBottom: "10px"}}
             >
               <option value="">Select difficulty</option>
               {[1, 2, 3, 4, 5].map((value) => (
@@ -151,15 +168,15 @@ const CreatePost = () => {
             </select>
           </div>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <button
-              type="submit"
-              style={{ fontSize: "14px", padding: "8px 16px" }}
-            >
-              Submit
-            </button>
+          <button
+            type="submit"
+            className="save-journey-btn"
+            style={{ fontSize: "14px", padding: "8px 16px", color: "primary" }}
+          >
+            Save your journey
+          </button>
           </div>
         </div>
-      </form>
     </div>
   );
 };

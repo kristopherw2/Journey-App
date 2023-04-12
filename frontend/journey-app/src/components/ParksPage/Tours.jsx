@@ -1,13 +1,12 @@
-// Tours.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Tours.css";
+import ParkCodes from './ParkCodes';
 
 const Tours = () => {
   const [tours, setTours] = useState([]);
   const [filteredTours, setFilteredTours] = useState([]);
-  const [stateFilter, setStateFilter] = useState("");
   const [parkFilter, setParkFilter] = useState("");
 
   useEffect(() => {
@@ -19,7 +18,6 @@ const Tours = () => {
         });
         console.log("Tours response:", response);
         setTours(response.data.data);
-        setFilteredTours(response.data.data);
       } catch (error) {
         console.error("Error fetching tours:", error);
       }
@@ -30,21 +28,18 @@ const Tours = () => {
 
   useEffect(() => {
     filterTours();
-  }, [stateFilter, parkFilter]);
+  }, [parkFilter]);
 
   const filterTours = () => {
-    const filtered = tours.filter(
-      (tour) =>
-        (stateFilter === "" ||
-          tour.park.states.toLowerCase().includes(stateFilter.toLowerCase())) &&
-        (parkFilter === "" ||
-          tour.park.fullName.toLowerCase().includes(parkFilter.toLowerCase()))
-    );
-    setFilteredTours(filtered);
-  };
-
-  const handleStateFilterChange = (e) => {
-    setStateFilter(e.target.value);
+    if (parkFilter === "") {
+      setFilteredTours([]);
+    } else {
+      const filtered = tours.filter(
+        (tour) =>
+          tour.park.fullName.toLowerCase().includes(parkFilter.toLowerCase())
+      );
+      setFilteredTours(filtered);
+    }
   };
 
   const handleParkFilterChange = (e) => {
@@ -55,20 +50,15 @@ const Tours = () => {
     <div className="tours-container">
       <h2>Tours</h2>
       <div>
-        <label htmlFor="stateFilter">Filter by state: </label>
-        <input
-          id="stateFilter"
-          type="text"
-          placeholder="State code (e.g., AK)"
-          onChange={handleStateFilterChange}
-        />
-        <label htmlFor="parkFilter">Filter by park name: </label>
-        <input
-          id="parkFilter"
-          type="text"
-          placeholder="Park name"
-          onChange={handleParkFilterChange}
-        />
+        <label htmlFor="parkFilter">Filter by park: </label>
+        <select id="parkFilter" onChange={handleParkFilterChange}>
+          <option value="">Select a park</option>
+          {Object.entries(ParkCodes).map(([code, name]) => (
+            <option key={code} value={name}>
+              {name}
+            </option>
+          ))}
+        </select>
       </div>
       <div className="tours-grid">
         {filteredTours.map((tour) => (

@@ -55,15 +55,27 @@ function SignUpForm() {
   }
 
   return (
-    <Container>
+    <div style={{ 
+      backgroundImage: "url(./landingbackground.jpg)",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      height: "100vh",
+      width: "100vw",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: 'rgba(0,0,0,0.8)',
+    }}>
+      <img src="landinglogo.png" alt="Image" style={{ width: "60vw", maxWidth:"600px", position: "fixed", top: 0, marginTop: "50px" }} />
+    <Container style={{ backgroundColor: "transparent"}}>
       <Row>
-        <Col md="4">
           <center>
-            <h1>Sign up</h1>
+          <h1 style={{ color: "white" }}>Create Your Account</h1>
           </center>
           <Form>
-            <Form.Group controlId="usernameId">
-              <Form.Label>Username</Form.Label>
+          <Form.Group controlId="usernameId" style={{ margin: "0 auto", width: "60%", textAlign:"center" }}>
+            <Form.Label style={{ color: "white", fontWeight: "bold" }}>Username</Form.Label>
               <Form.Control
                 type="text"
                 name="username"
@@ -74,8 +86,8 @@ function SignUpForm() {
               <FormControl.Feedback type="invalid"></FormControl.Feedback>
             </Form.Group>
 
-            <Form.Group controlId="emailId">
-              <Form.Label>E-mail</Form.Label>
+            <Form.Group controlId="emailId" style={{ margin: "0 auto", width: "60%", textAlign:"center" }}>
+            <Form.Label style={{ color: "white", fontWeight: "bold" }}>E-mail</Form.Label>
               <Form.Control
                 type="text"
                 name="email"
@@ -85,12 +97,12 @@ function SignUpForm() {
               />
               <FormControl.Feedback type="invalid"></FormControl.Feedback>
             </Form.Group>
-            <Form.Group controlId="passwordId">
-              <Form.Label>Your password</Form.Label>
+            <Form.Group controlId="passwordId" style={{ margin: "0 auto", width: "60%", textAlign:"center" }}>
+            <Form.Label style={{ color: "white", fontWeight: "bold" }}>Your password</Form.Label>
               <Form.Control
                 type="password"
                 name="password"
-                placeholder="Enter password"
+                placeholder="Enter a password"
                 value={userData.password}
                 onChange={onChange}
               />
@@ -98,16 +110,17 @@ function SignUpForm() {
             </Form.Group>
           </Form>
           <center>
-            <Button color="primary" onClick={onSignupClick}>
-              Sign up
+            <p/>
+            <Button color="skyblue" onClick={onSignupClick}>
+              Start your journey
             </Button>
-            <p className="mt-2">
-              Already have account? <Link to="/signin">Login</Link>
+            <p className="mt-2" style={{ color: "white", fontWeight: "bold" }}>
+                Already have an account? <Link to="/signin" style={{ color: "skyblue" }}>Login</Link>
             </p>
           </center>
-        </Col>
       </Row>
     </Container>
+    </div>
   );
 }
 

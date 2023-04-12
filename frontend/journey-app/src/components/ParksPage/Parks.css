@@ -1,25 +1,23 @@
-
-.parks-header {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  margin-top: 2rem;
-  color: #757575;
-}
-
-
-
+/* components/ParksPage/Parks.css */
 .parks-links {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
+.parks-link-card:hover {
+  filter: brightness(80%);
+}
 
 .parks-link {
   width: 45%;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
 }
 
+.container {
+  background-color: #f8f9fa87;
+  border-radius: 10px;
+  max-width: 725px;
+}
 .parks-link-card {
   background-size: cover;
   background-position: center;
@@ -27,12 +25,28 @@
   margin: 10px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-height: 240px;
-  overflow: hidden;
+  max-width: 285px;
 }
 
 .parks-link-card h2 {
   color: #ffffff;
-  font-size: 1.5rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.parks-title {
+  text-align: center;
+  font-size: rem; /* default font size */
+}
+
+@media screen and (max-width: 768px) {
+  /* adjust font size for screens smaller than 768px */
+  .parks-title {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* adjust font size for screens smaller than 480px */
+  .parks-title {
+    font-size: 1.2rem;
+  }
 }
