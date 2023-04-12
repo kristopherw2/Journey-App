@@ -9,7 +9,20 @@ img {
   position: relative;
   margin-top: 4.5rem;
   overflow: auto;
+  background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
+  padding: 2rem; /* increase padding to make the container slightly larger */
 }
+
+
+
+.description-container {
+  max-height: 10rem; /* set a maximum height for the container */
+  overflow: auto; /* add a scrollbar if the content overflows */
+  margin-top: 1rem; /* add some margin between the title and the description */
+  font-size: 1rem;
+  text-align: left;
+}
+
 
 /* #post-container > img {
   display: block;

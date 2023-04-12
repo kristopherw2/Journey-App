@@ -1,4 +1,10 @@
 .image-description{
   width: 75%;
   height: 50%;
+  max-height: 10rem; /* set a maximum height for the container */
+  overflow: auto; /* add a scrollbar if the content overflows */
+  margin-top: 1rem; /* add some margin between the title and the description */
+  font-size: 1rem;
+  text-align: left;
+  background-color: white; /* add a white background color to the container */
 }

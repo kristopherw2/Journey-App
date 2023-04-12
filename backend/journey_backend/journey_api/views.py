@@ -62,7 +62,7 @@ class ToursAPIView(generics.GenericAPIView):
     def get(self, request):
         response = requests.get(
             "https://developer.nps.gov/api/v1/tours",
-            params={"api_key": os.getenv("PARK_API_KEY"), "limit": 500},
+            params={"api_key": os.getenv("PARK_API_KEY"), "limit": 542},
         )
         return Response(response.json())
 
@@ -87,7 +87,7 @@ class ToDoAPIView(generics.GenericAPIView):
         
         response = requests.get(
             "https://developer.nps.gov/api/v1/thingstodo",
-            params={"api_key": api_key, "limit": 200, "parkCode": park_code},
+            params={"api_key": api_key, "limit": 500, "parkCode": park_code},
         )
         print("NPS API response:", response.json())
         return Response(response.json())
@@ -101,7 +101,7 @@ class VideosAPIView(generics.GenericAPIView):
         
         response = requests.get(
             "https://developer.nps.gov/api/v1/multimedia/videos",
-            params={"api_key": api_key, "limit": 25, "parkCode": park_code},
+            params={"api_key": api_key, "limit": 2000, "parkCode": park_code},
         )
         print("NPS API response:", response.json())
         return Response(response.json())

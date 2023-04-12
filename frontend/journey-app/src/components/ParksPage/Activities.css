@@ -1,8 +1,11 @@
 .activities-container {
-  max-width: 90vw;
+  padding: 2rem;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
 }
+
 
 .activities-header {
   font-size: 1.5rem;
@@ -105,4 +108,43 @@
 
 .activities-list li.activities-sublist-item:last-child {
   margin-bottom: 0;
+}
+
+.dropdown-wrapper {
+  margin-top: 2rem;
+}
+
+.activities-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: -5%;
+  margin-top: 2rem;
+}
+
+.activities-card {
+  padding: 1rem;
+  margin-bottom: 2rem;
+  background-color: #f0f0f0;
+  border-radius: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media screen and (min-width: 768px) {
+  .activities-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    margin-left: 0;
+  }
+
+  .activities-card {
+    margin-right: 0;
+    width: 100%;
+  }
 }

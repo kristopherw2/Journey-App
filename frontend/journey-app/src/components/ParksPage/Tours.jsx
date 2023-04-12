@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./Tours.css";
@@ -6,10 +6,8 @@ import ParkCodes from "./ParkCodes";
 
 const Tours = () => {
   const [tours, setTours] = useState([]);
-  const [allTours, setAllTours] = useState([]); // New state variable to store the entire response
   const [selectedPark, setSelectedPark] = useState("");
   const [loading, setLoading] = useState(false);
-  const lastTourElementRef = useRef(null);
 
   const fetchTours = async (parkCode) => {
     setLoading(true);
@@ -21,13 +19,15 @@ const Tours = () => {
         `http://${import.meta.env.VITE_BASE_URL}/api/tours/`,
         {
           headers: { Authorization: `Token ${token}` },
-          params: {
-            park_code: parkCode,
-          },
         }
       );
       console.log("Tours response:", response);
-      setAllTours(response.data.data); // Save the entire response in allTours
+
+      const filteredTours = response.data.data.filter(
+        (tour) => tour.park.parkCode === parkCode
+      );
+
+      setTours(filteredTours);
     } catch (error) {
       console.error("Error fetching tours:", error);
     } finally {
@@ -38,19 +38,8 @@ const Tours = () => {
   const handleParkChange = (e) => {
     const parkCode = e.target.value;
     setSelectedPark(parkCode);
-    if (parkCode === "") {
-      setTours(allTours); // If no park is selected, display all tours
-    } else {
-      const filteredTours = allTours.filter(
-        (tour) => tour.park.parkCode === parkCode
-      );
-      setTours(filteredTours); // Display only the tours with the selected park code
-    }
+    fetchTours(parkCode);
   };
-
-  useEffect(() => {
-    fetchTours();
-  }, []);
 
   return (
     <div className="tours-container">
@@ -75,12 +64,8 @@ const Tours = () => {
         <p>No tours data available for this park.</p>
       )}
       <div className="tours-grid">
-        {tours.map((tour, index) => (
-          <div
-            key={tour.id}
-            className="tour-card"
-            ref={index === tours.length - 1 ? lastTourElementRef : null}
-          >
+        {tours.map((tour) => (
+          <div key={tour.id} className="tour-card">
             <h3>
               <Link to={`/tours/${tour.id}`}>{tour.title}</Link>
             </h3>
@@ -96,3 +81,4 @@ const Tours = () => {
 };
 
 export default Tours;
+
