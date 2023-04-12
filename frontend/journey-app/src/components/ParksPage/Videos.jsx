@@ -88,21 +88,20 @@ const Videos = () => {
   return (
     <div className="videos-container">
       <h2 className="videos-header">Videos</h2>
-      <div>
-        <label htmlFor="parkFilter">Select a park: </label>
-        <select
-          id="parkFilter"
-          value={selectedPark}
-          onChange={handleParkChange}
-        >
-          <option value="">Select a park</option>
-          {Object.entries(ParkCodes).map(([code, name]) => (
-            <option key={code} value={code}>
-              {name}
-            </option>
-          ))}
-        </select>
+      <div className="dropdown-wrapper">
+        <div>
+          <label htmlFor="parkFilter">Select a park: </label>
+          <select id="parkFilter" value={selectedPark} onChange={handleParkChange}>
+            <option value="">Select a park</option>
+            {Object.entries(ParkCodes).map(([code, name]) => (
+              <option key={code} value={code}>
+                {name}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
+
       {loading && <p>Loading videos...</p>}
       {!loading && videos.length === 0 && selectedPark !== "" && (
         <p>Sorry, no videos are available for this park.</p>
