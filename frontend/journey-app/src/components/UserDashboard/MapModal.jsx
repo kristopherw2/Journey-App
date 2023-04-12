@@ -2,22 +2,26 @@ import { Button, Form } from 'react-bootstrap'
 import Modal from 'react-bootstrap/Modal'
 import testMap from "../../assets/map.jpeg";
 import Map from "../PostInteraction/Map"
+import React from 'react';
+import './MapModal.css';
+
+
+
 
 
 
 function MapModal(props) {
   return (
     <>
-      <Modal show={props.showMap} onHide={props.handleCloseMap}>
+      <Modal show={props.showMap} onHide={props.handleCloseMap} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>Map</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="map-modal-body">
           <h2>MAP</h2>
-          {/* <img src={testMap} /> */}
-          {/* <Map lat={"18.340"} lng={"-64.75"} /> */}
           <Map lat={props.lat} lng={props.long} />
         </Modal.Body>
+
         <Modal.Footer>
           <Button variant="secondary" onClick={props.handleCloseMap}>
             Close
@@ -29,7 +33,6 @@ function MapModal(props) {
       </Modal>
     </>
   )
-
 }
 
 export default MapModal

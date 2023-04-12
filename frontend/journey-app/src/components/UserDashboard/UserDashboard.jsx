@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../Navigation/Navbar";
 import Posts from "./Posts";
-import Description from "./Description";
-import Comments from "./Comments";
+// import Description from "./Description"; strech goals
+// import Comments from "./Comments"; strech goals
 import { Link } from "react-router-dom";
 import map from "../../assets/map.jpeg";
 
@@ -39,9 +39,9 @@ function UserDashBoard() {
           zIndex: 1,
         }}
       >
-        <Link to="/userposts" style={{ paddingLeft: "20px" }}>
+        {/* <Link to="/userposts" style={{ paddingLeft: "20px" }}>
           MapIT
-        </Link>
+        </Link> */}
       </div>
       <div style={{ paddingTop: "100px" }}>
         <Posts />
