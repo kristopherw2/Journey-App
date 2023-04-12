@@ -14,11 +14,13 @@ function MapModal(props) {
   return (
     <>
       <Modal show={props.showMap} onHide={props.handleCloseMap} size="lg" centered>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Map</Modal.Title>
         </Modal.Header>
         <Modal.Body className="map-modal-body">
-          <h2>MAP</h2>
+          <p>
+            Latitude : {props.lat}  Longitude : {props.long}
+          </p>
           <Map lat={props.lat} lng={props.long} />
         </Modal.Body>
 
@@ -26,9 +28,9 @@ function MapModal(props) {
           <Button variant="secondary" onClick={props.handleCloseMap}>
             Close
           </Button>
-          <Button variant="primary" post_id={props.itemToUpdate ? props.itemToUpdate.id : null} onClick={props.handleCloseMap}>
+          {/* <Button variant="primary" post_id={props.itemToUpdate ? props.itemToUpdate.id : null} onClick={props.handleCloseMap}>
             Save Changes
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal>
     </>

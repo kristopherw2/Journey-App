@@ -7,7 +7,7 @@ function UpdateForm(props) {
   return(
     <>
     <Modal show={props.show} onHide={props.handleClose} id="update-modal">
-        <Modal.Header closeButton id = "modal-header">
+        <Modal.Header>
           <Modal.Title>Edit Post</Modal.Title>
         </Modal.Header>
         <Modal.Body id="modal-update-body">
@@ -18,12 +18,14 @@ function UpdateForm(props) {
               value = {props.originalTitle}
               onChange={props.handleOnChangeTitle}
               />
+              {}
               <Form.Label>Description</Form.Label>
               <Form.Control as="textarea" id = "update_desc"
               value = {props.originalDesc}
               rows={10}
               onChange={props.handleOnChangeDesc}
               />
+              {}
               <Form.Label>Difficulty Level</Form.Label>
               <Form.Control type="text" id = "update_level"
               value = {props.originalLevel}

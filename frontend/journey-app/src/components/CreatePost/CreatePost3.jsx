@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import { Navigate } from "react-router-dom";
 import "./CreatePost.css";
 
-const CreatePost = () => {
+const CreatePost3 = () => {
   const [navigate, setNavigate] = useState(false);
   const [imageURL, setImageURL] = useState("");
   const formik = useFormik({
@@ -56,6 +56,12 @@ const CreatePost = () => {
       if (!values.description) {
         errors.description = "Description is required";
       }
+      // if (!values.image) {
+      //   errors.image = "Image is required";
+      // }
+      // if (!values.photo) {
+      //   errors.photo = "Photo is required";
+      // }
       if (!values.difficulty_level) {
         errors.difficulty_level = "Difficulty level is required";
       }
@@ -97,22 +103,21 @@ const CreatePost = () => {
       formik.setFieldValue("previewImage", reader.result);
     };
 
+    const file2 = event.target.files[0];
     const formData2 = new FormData();
     formData2.append("file", file);
     formData2.append("upload_preset", "nwwq4hji");
 
     console.log("Calling Cloudinary");
 
-    axios
-      .post("https://api.cloudinary.com/v1_1/dnstta9dr/image/upload", formData2)
+    axios.post("https://api.cloudinary.com/v1_1/dnstta9dr/image/upload", formData2)
+    .then((response) =>{
+      setImageURL(response.data.url)
+      console.log("URL FROM CLOUDINARY")
+      console.log(response.data.url)
+      formik.setFieldValue("photo", response.data.url);
 
-      .then((response) => {
-        setImageURL(response.data.url);
-        console.log("URL FROM CLOUDINARY");
-        console.log(response.data.url);
-        formik.setFieldValue("photo", response.data.url);
-      })
-      .catch((error) => {});
+    })
   };
 
   return (
@@ -120,78 +125,53 @@ const CreatePost = () => {
       {navigate && <Navigate to="/dashboard" />}
       <form onSubmit={formik.handleSubmit}>
         <div className="box header">
-          {/* <form onSubmit={formik.handleSubmit}> */}
-          <label htmlFor="title" style={{ color: "black", fontWeight: "bold" }}>
-            Title:
-          </label>
+          <label htmlFor="title">Title:</label>
           <input
             type="text"
             id="title"
-            name="title" // added name attribute
+            name="title"  // added name attribute
             value={formik.values.title}
             onChange={formik.handleChange}
-            // onBlur={formik.handleBlur}
+          // onBlur={formik.handleBlur}
           />
           {formik.touched.title && formik.errors.title && (
             <div className="error">{formik.errors.title}</div>
           )}
-          {/* </form> */}
         </div>
         <div className="box content">
           <div className="file-upload-container">
             {!formik.values.previewImage && (
               <>
-                <label
-                  htmlFor="image"
-                  className="file-upload-label"
-                  style={{ color: "black", fontWeight: "bold" }}
-                >
-                  Select an Image
+                <label htmlFor="image" className="file-upload-label">
+                  Choose an Image
                 </label>
                 <input
                   type="file"
                   id="image"
-                  name="image" // added name attribute
+                  name="image"  // added name attribute
                   accept="image/*"
                   onChange={handleImageSelect}
-                  onBlur={formik.handleBlur} // added onBlur event
+                  onBlur={formik.handleBlur}  // added onBlur event
                   style={{ display: "none" }}
                 />
               </>
             )}
             {formik.values.previewImage && (
-              <>
-                <img
-                  src={formik.values.previewImage}
-                  alt="Preview"
-                  style={{ maxWidth: "100%", borderRadius: "20px" }}
-                />
-                <p />
-                <button
-                  type="button"
-                  style={{ maxWidth: "50vw", display: "block", margin: "auto" }}
-                  onClick={() => {
-                    formik.setFieldValue("image", "");
-                    formik.setFieldValue("previewImage", "");
-                  }}
-                >
-                  Clear Image
-                </button>
-              </>
+              <img
+                src={formik.values.previewImage}
+                alt="Preview"
+                style={{ maxWidth: "100%" }}
+              />
             )}
           </div>
         </div>
         <div className="box sidebar">
-          <label
-            htmlFor="description"
-            style={{ color: "black", fontWeight: "bold" }}
-          >
-            Description:
-          </label>
+          <label htmlFor="description">Description:</label>
           <textarea
             id="description"
+            name="description"  // added name attribute
             rows="10"
-            cols="18"
+            cols="22"
             value={formik.values.description}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -202,22 +182,15 @@ const CreatePost = () => {
         </div>
         <div className="box footer">
           <div>
-            <label
-              htmlFor="difficulty_level"
-              style={{ color: "black", fontWeight: "bold" }}
-            >
-              Difficulty:
-            </label>
+            <label htmlFor="difficulty_level">Difficulty (optional):</label>
           </div>
-
           <div>
             <select
               id="difficulty_level"
-              name="difficulty_level" // added name attribute
+              name="difficulty_level"  // added name attribute
               value={formik.values.difficulty_level}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              style={{ marginBottom: "10px" }}
             >
               <option value="">Select difficulty</option>
               {[1, 2, 3, 4, 5].map((value) => (
@@ -227,26 +200,21 @@ const CreatePost = () => {
               ))}
             </select>
           </div>
-          {formik.touched.difficulty_level &&
-            formik.errors.difficulty_level && (
-              <div className="error">{formik.errors.difficulty_level}</div>
-            )}
+          {formik.touched.difficulty_level && formik.errors.difficulty_level && (
+            <div className="error">{formik.errors.difficulty_level}</div>
+          )}
           <div style={{ display: "flex", justifyContent: "center" }}>
             <button
               type="submit"
-              className="save-journey-btn"
-              style={{
-                fontSize: "14px",
-                padding: "8px 16px",
-                color: "primary",
-              }}
+              style={{ fontSize: "14px", padding: "8px 16px" }}
             >
-              Save your journey
+              Submit
             </button>
           </div>
         </div>
       </form>
+
     </div>
   );
 };
-export default CreatePost;
+export default CreatePost3;

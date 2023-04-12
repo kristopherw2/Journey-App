@@ -36,9 +36,8 @@ body {
   display: grid;
   position:relative;
   width: 80vw;
-  height: 85vh;
-  margin-top: 50px;
-  /* grid-gap: 10px; */
+  height: 85vh; 
+  margin-top: 75px;
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: 1fr 3fr 1fr 1fr;
   grid-template-areas:
@@ -48,6 +47,13 @@ body {
   "footer";
   background-color: #f8f9fa;
   border-radius: 20px;
+  /* display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 40%;
+  border-radius: 20px;
+  background-color: #f8f9fa; */
+
 }
 
 
@@ -238,4 +244,8 @@ select {
   .box.footer {
     margin-top: 8px;
   }
+}
+
+.error {
+  color:red;
 }
