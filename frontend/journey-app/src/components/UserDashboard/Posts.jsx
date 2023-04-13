@@ -1,18 +1,15 @@
-import testPhoto from "../../assets/testphoto.jpg";
+// Post.jsx
 import pencilEdit from "../../assets/pencil-edit.svg";
 import trash from "../../assets/trash.svg";
 import mapMarker from "../../assets/map-marker.png";
 import Description from "./Description";
-import Comments from "./Comments";
 import "./Posts.css";
 import "./UpdateForm.css";
-import LeaveComment from "./LeaveComment";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import UpdateForm from "./UpdateForm";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../../utils/Loader";
-import EndMessage from "../../utils/EndMessage";
 import MapModal from "./MapModal";
 
 function Posts() {
@@ -118,7 +115,7 @@ function Posts() {
         `${`http://${import.meta.env.VITE_BASE_URL
         }/api/userposts/`}${e.target.getAttribute("post_id")}/`,
         {
-          title: originalTitle, 
+          title: originalTitle,
           description: originalDesc,
           difficulty_level: originalLevel,
         },
@@ -191,11 +188,6 @@ function Posts() {
             src={trash}
             onClick={handleDelete}
           />
-          {/* <img
-            src={`http://${import.meta.env.VITE_BASE_URL}:8000${item.image_url
-              }`}
-          /> */}
-
           <img
             src={item.photo}
           />
