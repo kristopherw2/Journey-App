@@ -60,8 +60,8 @@ function SignIn({ onLogin }) {
         src="landinglogo.png"
         alt="Image"
         style={{
-          width: "60vw",
-          maxWidth: "600px",
+          width: "50vw",
+          maxWidth: "500px",
           position: "fixed",
           top: 0,
           marginTop: "50px",
@@ -121,7 +121,7 @@ function SignIn({ onLogin }) {
                     {errors.username}
                   </Form.Control.Feedback>
                 </Form.Group>
-
+                <br />
                 <Form.Group
                   controlId="emailId"
                   style={{
@@ -146,7 +146,7 @@ function SignIn({ onLogin }) {
                     {errors.email}
                   </Form.Control.Feedback>
                 </Form.Group>
-
+                <br />
                 <Form.Group
                   controlId="passwordId"
                   style={{
@@ -171,7 +171,7 @@ function SignIn({ onLogin }) {
                     {errors.password}
                   </Form.Control.Feedback>
                 </Form.Group>
-
+                <br />
                 <Button type="submit" color="primary" disabled={isSubmitting}>
                   {isSubmitting ? "Submitting..." : "Sign in"}
                 </Button>
@@ -182,8 +182,8 @@ function SignIn({ onLogin }) {
             )}
           </Formik>
           <center>
-            <p className="mt-2">
-              Don't have an account? <Link to="/signup">Sign up</Link>
+            <p className="mt-2" style={{ color: "white", fontWeight: "bold" }}>
+              Don't have an account? <Link to="/signup" style={{ color: "skyblue", fontWeight: "bold" }}>Sign up</Link>
             </p>
           </center>
         </Row>

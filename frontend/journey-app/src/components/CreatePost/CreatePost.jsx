@@ -121,9 +121,11 @@ const CreatePost = () => {
       <form onSubmit={formik.handleSubmit}>
         <div className="box header">
           {/* <form onSubmit={formik.handleSubmit}> */}
-          <label htmlFor="title" style={{ color: "black", fontWeight: "bold" }}>
+          <div>
+            <label htmlFor="title" style={{ color: "black", fontWeight: "bold" }}>
             Title:
-          </label>
+            </label>
+          </div>
           <input
             type="text"
             id="title"
@@ -182,15 +184,17 @@ const CreatePost = () => {
           </div>
         </div>
         <div className="box sidebar">
-          <label
-            htmlFor="description"
-            style={{ color: "black", fontWeight: "bold" }}
-          >
-            Description:
-          </label>
+          <div>
+            <label
+              htmlFor="description"
+              style={{ color: "black", fontWeight: "bold" }}
+            >
+              Description:
+            </label>
+          </div>
           <textarea
             id="description"
-            rows="10"
+            rows="20"
             cols="18"
             value={formik.values.description}
             onChange={formik.handleChange}
