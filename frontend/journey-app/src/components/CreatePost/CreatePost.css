@@ -89,13 +89,14 @@ button {
   align-items: center;
 }
 
-.file-upload label {
-  display: none;
-  width: 100%;
-  max-width: 300px;
-  margin-bottom: 10px;
-  text-align: center;
+.file-upload-label {
+  background-color: #20aedd;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
 }
+
 
 .file-upload label button {
   font-size: 10px;
@@ -175,7 +176,8 @@ button {
   max-height: 200px;
   overflow: hidden;
 }
-textarea {
+
+.textarea {
   width: 100%;
   resize: none;
   height: 100%;
