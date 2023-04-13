@@ -1,9 +1,19 @@
 body {
   margin: 40px;
 }
+label{
+  
+}
 .save-journey-btn:hover {
   background-color: #0d6efd;
   color: white;
+}
+.save-journey-btn {
+  position: fixed;
+  bottom: 8vh;
+}
+div.file-upload-container{
+  margin-top: 5vh;
 }
 .sidebar {
     grid-area: sidebar;
@@ -20,7 +30,10 @@ body {
   grid-area: content;
   /* height: 100%;  */
 }
-
+div.box.sidebar{
+  position:absolute;
+  bottom: 12vh;
+}
 .header {
   grid-area: header;
   max-width: 350px;
@@ -34,7 +47,7 @@ body {
 
 .wrapper {
   display: grid;
-  position:relative;
+  position:absolute;
   width: 80vw;
   height: 85vh;
   margin-top: 50px;
@@ -46,7 +59,7 @@ body {
   "content"
   "sidebar"
   "footer";
-  background-color: #f8f9fa;
+  background-color: #f8f9fa91;
   border-radius: 20px;
 }
 
@@ -81,7 +94,13 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
+div.box.footer {
+  position: absolute;
+  bottom: 10vh;
+}
+
 
 .file-upload label {
   display: none;
@@ -153,12 +172,15 @@ button {
     display: grid;
     justify-content: center;
     align-items: center;
+    position: relative;
+    top: 0vh;
+    width: 75vw;
 }
 
 
 .file-upload-label {
-  position: relative;
-  top: 50%;
+  position: fixed;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   cursor: pointer;
@@ -182,7 +204,7 @@ textarea {
   width: 50vw;
 }
 input[type="text"], textarea {
-  background-color: #e3e3e3; /* change this to the desired color */
+  background-color: #ffffff; /* change this to the desired color */
   color: #333; /* change this to the desired text color */
   border: none;
   border-radius: 5px;
@@ -223,7 +245,7 @@ select {
     margin-bottom: 8px;
   } */
   #title {
-    max-height: 20px;
+    max-height: 30px;
   }
   
   #image img {
@@ -232,10 +254,23 @@ select {
   body {
     font-size: 12px;
   }
-  .box.sidebar {
-    margin-top: 15px;
-  }
   .box.footer {
     margin-top: 8px;
+  }
+  .box.sidebar {
+    position: absolute;
+    bottom: 4vh;
+  }
+  .save-journey-btn {
+    position: fixed;
+    bottom: 5vh;
+  }
+  div.box.footer{
+    position:absolute;
+    bottom: 6vh;
+  }
+  .file-upload-container{
+    position: inherit;
+
   }
 }

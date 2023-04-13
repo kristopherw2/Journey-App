@@ -17,6 +17,7 @@
   background-color: #f8f9fa87;
   border-radius: 10px;
   max-width: 725px;
+  margin-top: 65px;
 }
 .parks-link-card {
   background-size: cover;
@@ -26,27 +27,46 @@
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: 285px;
+  min-width: 155px;
 }
 
 .parks-link-card h2 {
   color: #ffffff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-.parks-title {
-  text-align: center;
-  font-size: rem; /* default font size */
+  font-size: 1.5em;
+  transform: translate(-15px, 8px);
 }
 
-@media screen and (max-width: 768px) {
-  /* adjust font size for screens smaller than 768px */
-  .parks-title {
-    font-size: 1rem;
-  }
+.parks-title {
+  text-align: center;
+  font-size: 3rem; /* default font size */
 }
 
 @media screen and (max-width: 480px) {
   /* adjust font size for screens smaller than 480px */
   .parks-title {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
+    margin-top: 65px;
+  }
+  .parks-links {
+    justify-content: center; /* Center the cards */
+  }
+  
+  .parks-link {
+    width: 100%; /* Full width of container */
+    margin-bottom: 10px;
+    flex-grow: 1; /* Take up equal amount of horizontal space */
+  }
+  
+  .parks-link-card {
+    padding: 0;
+    margin: 0;
+    min-height: 80px;
+  }
+  .parks-link-card h2{
+    transform: translate(20px, 25px);
+  }
+  .container {
+    background-color: #f8f9fa00;
   }
 }

@@ -116,6 +116,18 @@ const CreatePost = () => {
   };
 
   return (
+    <div style={{ 
+      backgroundImage: "url(./createbg.jpg)",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      height: "100vh",
+      width: "100vw",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: 'rgba(0,0,0,0.8)',
+    }}>
     <div className="wrapper">
       {navigate && <Navigate to="/dashboard" />}
       <form onSubmit={formik.handleSubmit}>
@@ -247,6 +259,7 @@ const CreatePost = () => {
         </div>
       </form>
     </div>
+  </div>
   );
 };
 export default CreatePost;

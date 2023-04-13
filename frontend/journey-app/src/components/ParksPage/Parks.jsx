@@ -48,9 +48,9 @@ const Parks = () => {
             <h2>Camping</h2>
           </div>
         </Link>
-        <Link to="/todo" className="parks-link">
+        <Link to="/experiences" className="parks-link">
           <div className="parks-link-card" style={{ backgroundImage: "url('/explore6.jpg')", textAlign:"left", backgroundPosition: "center 18%" }}>
-            <h2>To Do</h2>
+            <h2>Experiences</h2>
           </div>
         </Link>
         </div>

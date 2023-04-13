@@ -1,9 +1,10 @@
 .navbar {
   position: fixed;
-  width: 100%;
+  width: 100vw;
   top: 0;
   left: 0;
   z-index: 1;
+  flex-wrap: nowrap;
 }
 
 .navbar-nav {
@@ -11,12 +12,25 @@
   padding: .5rem, .5rem;
   display: flex;;
   list-style: none;
+  justify-content: center;
 }
+
 
 .nav-item {
   padding: .5rem;
 }
 
-/* .nav-link {
-  color: #007bff !important;
-} */
+.navbar-brand {
+  max-width: 30vw;
+
+}
+@media screen and (max-width: 768px) {
+  .navbar-nav .nav-link {
+    font-size: 12px; /* set the font size to a smaller value */
+  }
+}
+@media screen and (max-width: 768px) {
+  .navbar-nav .nav-brand {
+    max-width: 200px; /* set the font size to a smaller value */
+  }
+}

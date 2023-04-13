@@ -1,7 +1,8 @@
 img {
   width: 75%;
   height: auto;
-  /* border-radius: 10px; */
+  border-radius: 10px;
+  max-height: 850px;
 }
 
 #post-container {
@@ -33,4 +34,10 @@ img {
 
 #pencil-btn {
   right: 4.5rem;
+}
+@media only screen and (max-width: 600px) {
+  /* adjust max-height for screens smaller than 600px */
+  img {
+    max-height: 300px;
+  }
 }
