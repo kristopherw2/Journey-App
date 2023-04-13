@@ -35,8 +35,8 @@ body {
 .wrapper {
   display: grid;
   position:relative;
-  width: 80vw;
-  height: 85vh; 
+  /* width: 80vw; */
+  height: 70vh; 
   margin-top: 75px;
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: 1fr 3fr 1fr 1fr;
@@ -81,7 +81,7 @@ button {
   /* background-color: #b9b9b91e; */
   color: #FBFBFB;
   border-radius: 5px;
-  padding: 5px;
+  padding: 15px;
   font-size: 100%;
   display: flex;
   flex-direction: column;
@@ -89,12 +89,18 @@ button {
   align-items: center;
 }
 
-.file-upload label {
-  display: none;
+.file-upload-label {
+  /* display: none;
   width: 100%;
   max-width: 300px;
   margin-bottom: 10px;
-  text-align: center;
+  text-align: center; */
+  background-color: #20aedd;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+
 }
 
 .file-upload label button {
@@ -151,6 +157,8 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+
 }
 /* .box.header {
   margin-top: 50px;
@@ -162,20 +170,20 @@ button {
 }
 
 
-.file-upload-label {
+/* .file-upload-label {
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   cursor: pointer;
-}
+} */
 
 .image-preview-container {
   width: 90vw;
   max-height: 200px;
   overflow: hidden;
 }
-textarea {
+.textarea {
   width: 100%;
   resize: none;
   height: 100%;

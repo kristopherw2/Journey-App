@@ -1,7 +1,10 @@
 img {
   width: 75%;
   height: auto;
-  /* border-radius: 10px; */
+  max-height: 200px; /* Set a maximum height for the image */
+  max-width: 200px; /* Set a maximum width for the image */
+  object-fit: cover; /* Preserve the aspect ratio */
+  border-radius: 5px; /* Add border-radius to give some curve to the corners */
 }
 
 #post-container {
@@ -11,6 +14,8 @@ img {
   overflow: auto;
   background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
   padding: 2rem; /* increase padding to make the container slightly larger */
+  border: 1px solid #ddd; /* add a border to the container */
+  border-radius: 10px;
 }
 
 
@@ -21,6 +26,10 @@ img {
   margin-top: 1rem; /* add some margin between the title and the description */
   font-size: 1rem;
   text-align: left;
+  background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
+  padding: 1rem; /* add some padding to the container */
+  border: 1px solid #ddd; /* add a border to the container */
+  border-radius: 5px; /* add border-radius to give some curve to the corners */
 }
 
 
@@ -30,15 +39,19 @@ img {
 
 .util-btn {
     width: 20px;
-      height: 20px;
-      border-style: solid;
-      box-shadow: 0 0 8px 3px #B8B8B8;
-      position: absolute; top: 0; right: 3rem;
+    height: 20px;
+    border-style: solid;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    box-shadow: 0 0 8px 3px #B8B8B8;
+    position: absolute; top: 0; right: 3rem;
 }
 
 .util-map {
   width: 20px;
   height: 20px;
+  margin-top: 10px;
+  margin-bottom: 5px;
   border-style: solid;
   box-shadow: 0 0 8px 3px #B8B8B8;
   position: absolute; top: 0; right: 6rem;
@@ -47,3 +60,7 @@ img {
 #pencil-btn {
   right: 4.5rem;
 }
+
+/* .icon-holder {
+  padding-top: 5px;
+} */

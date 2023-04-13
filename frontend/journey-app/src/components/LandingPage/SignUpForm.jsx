@@ -67,8 +67,8 @@ function SignUpForm() {
         src="landinglogo.png"
         alt="Image"
         style={{
-          width: "60vw",
-          maxWidth: "600px",
+          width: "50vw",
+          maxWidth: "500px",
           position: "fixed",
           top: 0,
           marginTop: "50px",
@@ -133,6 +133,7 @@ function SignUpForm() {
                     {errors.username}
                   </Form.Control.Feedback>
                 </Form.Group>
+                <br />
 
                 <Form.Group
                   controlId="emailId"
@@ -158,7 +159,7 @@ function SignUpForm() {
                     {errors.email}
                   </Form.Control.Feedback>
                 </Form.Group>
-
+                <br />
                 <Form.Group
                   controlId="passwordId"
                   style={{
@@ -184,6 +185,7 @@ function SignUpForm() {
                   </Form.Control.Feedback>
                 </Form.Group>
 
+                <br />
                 <Button type="submit" color="sky-blue" disabled={isSubmitting}>
                   {isSubmitting ? "Submitting..." : "Sign up"}
                 </Button>
@@ -195,10 +197,10 @@ function SignUpForm() {
           </Formik>
 
           <center>
-            <p className="mt-2">
+            <p className="mt-2" style={{ color: "white", fontWeight: "bold" }}>
               Already have an account?{" "}
-              <Link to="/signin" style={{ color: "skyblue" }}>
-                Login
+              <Link to="/signin" style={{ color: "skyblue", fontWeight: "bold" }}>
+                Log in
               </Link>
             </p>
           </center>

@@ -1,18 +1,14 @@
-import testPhoto from "../../assets/testphoto.jpg";
 import pencilEdit from "../../assets/pencil-edit.svg";
 import trash from "../../assets/trash.svg";
 import mapMarker from "../../assets/map-marker.png";
 import Description from "./Description";
-import Comments from "./Comments";
 import "./Posts.css";
 import "./UpdateForm.css";
-import LeaveComment from "./LeaveComment";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import UpdateForm from "./UpdateForm";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Loader from "../../utils/Loader";
-import EndMessage from "../../utils/EndMessage";
 import MapModal from "./MapModal";
 
 function Posts() {
@@ -169,39 +165,41 @@ function Posts() {
     return (
       <>
         <div name={item.id} id="post-container">
+          <div className = "icon-holder">
+            <img
+              className="util-map"
+              id="map-btn"
+              post_id={item.id}
+              src={mapMarker}
+              onClick={handleMap}
+            />
+            <img
+              className="util-btn"
+              id="pencil-btn"
+              post_id={item.id}
+              src={pencilEdit}
+              onClick={handleUpdate}
+            />
+            <img
+              className="util-btn"
+              id="trash-btn"
+              post_id={item.id}
+              src={trash}
+              onClick={handleDelete}
+            />
+          </div>
+          
           <h3>{item.title}</h3>
-          <img
-            className="util-map"
-            id="map-btn"
-            post_id={item.id}
-            src={mapMarker}
-            onClick={handleMap}
-          />
-          <img
-            className="util-btn"
-            id="pencil-btn"
-            post_id={item.id}
-            src={pencilEdit}
-            onClick={handleUpdate}
-          />
-          <img
-            className="util-btn"
-            id="trash-btn"
-            post_id={item.id}
-            src={trash}
-            onClick={handleDelete}
-          />
-          {/* <img
-            src={`http://${import.meta.env.VITE_BASE_URL}:8000${item.image_url
-              }`}
-          /> */}
-
           <img
             src={item.photo}
           />
+          <div className = "description-container">
+            <Description description={item.description} />
+          </div>
 
         </div>
-        <Description description={item.description} />
+
+        
         <div id="modal-container">
           <UpdateForm
             show={show}
