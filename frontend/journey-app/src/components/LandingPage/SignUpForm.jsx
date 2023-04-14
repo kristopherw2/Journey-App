@@ -195,7 +195,7 @@ function SignUpForm() {
           </Formik>
 
           <center>
-            <p className="mt-2">
+            <p className="mt-2" style={{ color: "white" }}>
               Already have an account?{" "}
               <Link to="/signin" style={{ color: "skyblue" }}>
                 Login

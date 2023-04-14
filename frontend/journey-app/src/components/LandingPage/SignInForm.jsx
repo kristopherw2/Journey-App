@@ -182,7 +182,7 @@ function SignIn({ onLogin }) {
             )}
           </Formik>
           <center>
-            <p className="mt-2">
+            <p className="mt-2" style={{ color: "white" }}>
               Don't have an account? <Link to="/signup">Sign up</Link>
             </p>
           </center>
