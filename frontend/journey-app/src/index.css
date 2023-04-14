@@ -32,8 +32,6 @@ body {
   /* background-color: #b88181; set the background color of the page for chads sanity remove when needed */
 }
 
-
-
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -46,7 +44,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #20aedd;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -62,22 +60,12 @@ button:focus-visible {
   :root {
     color: #213547;
     background-color: #ffffff;
+    max-width: 100px;
   }
   a:hover {
     color: #747bff;
   }
   button {
     background-color: #f9f9f9;
-  }
-}
-@media screen and (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  h1 {
-    font-size: 1.5rem;
   }
 }
